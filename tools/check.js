@@ -44,6 +44,9 @@ function combos(enc) {
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
+  for (const d of enc.decisions || []) {
+    if (!d.options || d.options.length < 2) fail(id + " decision " + d.id + " offers fewer than two options — every step is a choice");
+  }
   let anyKeeper = false;
   for (const choices of combos(enc)) {
     let r;

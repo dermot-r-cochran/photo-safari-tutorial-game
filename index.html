@@ -628,7 +628,20 @@ const ENCOUNTERS = {
       {
         id: "settings", prompt: "And the camera?",
         options: [
-          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" }
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting, in case something happens.",
+            text: ["S, 1/2000 s, for a hyena that was going to do nothing " +
+                   "for an hour. The camera paid for the speed in ISO."],
+            settings: "birds", set: { focal: 200 }
+          },
+          {
+            label: "f/16, for depth from the pool to the skyline.",
+            text: ["You stopped down for depth. At ninety metres the lens " +
+                   "already had all the depth there was; what it did not " +
+                   "have any more was sharpness."],
+            settings: "walkAround", set: { aperture: 16, focal: 200 }
+          }
         ]
       }
     ],
@@ -706,7 +719,21 @@ const ENCOUNTERS = {
       {
         id: "settings", prompt: "And the camera?",
         options: [
-          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" }
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
+          {
+            label: "f/16. It is a landscape, and landscapes want f/16.",
+            text: ["You gave it the landscape aperture. The mountain was " +
+                   "forty kilometres away and the elephants a hundred and " +
+                   "twenty metres; f/8 had both. f/16 had both, softer."],
+            settings: "walkAround", set: { aperture: 16 }
+          },
+          {
+            label: "ISO 100, fixed. There is plenty of light for once.",
+            text: ["You pinned the ISO at 100 for the cleanest file. The " +
+                   "camera, told to hold f/8 as well, had only the shutter " +
+                   "left to give."],
+            settings: "walkAround", set: { iso: 100 }
+          }
         ]
       }
     ],
@@ -832,9 +859,21 @@ const ENCOUNTERS = {
         ]
       },
       {
-        id: "settings", prompt: "And the camera?",
+        id: "settings", prompt: "And the camera, at three metres?",
         options: [
-          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" }
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
+          {
+            label: "Wide open, for the eyelashes and nothing else.",
+            text: ["You opened up. At three metres the depth of field was " +
+                   "a hand's width: eyelashes sharp, the nose already going."],
+            settings: "walkAround", set: { aperture: 5 }
+          },
+          {
+            label: "f/11, for the whole head.",
+            text: ["You stopped down a notch for the whole head, muzzle to " +
+                   "ossicones. The light could spare it."],
+            settings: "walkAround", set: { aperture: 11 }
+          }
         ]
       }
     ],
@@ -1085,7 +1124,19 @@ const ENCOUNTERS = {
       {
         id: "settings", prompt: "And the camera?",
         options: [
-          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround", set: { focal: 300 } }
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround", set: { focal: 300 } },
+          {
+            label: "The shooting-birds setting. It is calling; it might lift.",
+            text: ["S, 1/2000 s. It did not lift. The camera spent ISO on " +
+                   "the speed anyway."],
+            settings: "birds", set: { focal: 300 }
+          },
+          {
+            label: "Wide open at 300 mm, for a soft sea behind it.",
+            text: ["You opened the lens for the background. The sea went " +
+                   "soft, and so did the bird's tail."],
+            settings: "walkAround", set: { focal: 300, aperture: 6 }
+          }
         ]
       }
     ],
@@ -1119,7 +1170,20 @@ const ENCOUNTERS = {
       {
         id: "settings", prompt: "The camera?",
         options: [
-          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround", set: { focal: 300 } }
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround", set: { focal: 300 } },
+          {
+            label: "The shooting-birds setting. It might bolt.",
+            text: ["S, 1/2000 s, under broken cloud. The goat did not " +
+                   "bolt; goats seldom do. The ISO went where the shutter " +
+                   "sent it."],
+            settings: "birds", set: { focal: 300 }
+          },
+          {
+            label: "f/16, the heather sharp front to back.",
+            text: ["You stopped down for the heather. The heather was " +
+                   "sharp front to back, in the way that f/16 is sharp."],
+            settings: "walkAround", set: { focal: 300, aperture: 16 }
+          }
         ]
       },
       {
@@ -1130,6 +1194,15 @@ const ENCOUNTERS = {
             text: ["You took the goat and the heather and nothing of the " +
                    "city below."],
             frame: { framing: "tight" }
+          },
+          {
+            label: "Loose, with the city below it.",
+            text: ["You stepped back and took the goat above the whole " +
+                   "city: chimneys, cranes, the bay. A free-living animal " +
+                   "in a built view."],
+            frame: { framing: "loose", built: true,
+                     tells: [{ label: "the city below", excludable: false }] },
+            set: { focal: 70 }
           }
         ]
       }
@@ -1368,6 +1441,14 @@ const LESSONS = {
   closeUp: { title: "Close-up, not macro", text: "At about 1:{ratio} this is close-up work; true macro is 1:1 and even conventional close-up starts near 1:4. It files as Nature, not Macro — magnification is the test, and it is worth measuring rather than eyeballing." },
   macro: { title: "Macro", text: "One cap filling the frame at 1:1 is macro: the frame is very close and the subject genuinely enlarged. Depth of field is about a millimetre at f/8, so the focal plane goes on the cap edge and the rest falls away on purpose." },
   waited: { title: "You waited", text: "The cloud came, the light went from EV 15 to EV 13 and from hard to kind, and the subject was still there. Waiting is a setting." }
+};
+
+/* What the page says when the player winds a stop back to the moment
+   before the shutter. */
+const RETRY = {
+  label: "Try again.",
+  text: ["You wound back to the moment before the shutter. The light " +
+         "held, and so, being a tutorial animal, did the animal."]
 };
 
 /* Drives. A fixed one for the tutorial, a fixed one for home ground, and
@@ -1672,7 +1753,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES,
+  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -1686,7 +1767,7 @@ function boot() {
   let currentRoute = 0;
   let stops = [];
   let state = { stop: 0, decision: 0, choices: [], history: [] };
-  /* history: {kind:"stop"|"chosen"|"examined"|"rulebook"|"frame", stop, decision, choice, key, choices}
+  /* history: {kind:"stop"|"chosen"|"examined"|"rulebook"|"frame"|"retry", stop, decision, choice, key, choices}
      — saves hold structure, not prose; prose re-renders from the data. */
 
   const $ = (id) => document.getElementById(id);
@@ -1867,8 +1948,32 @@ function boot() {
       return h;
     } else if (entry.kind === "frame") {
       return renderFrame(t, entry);
+    } else if (entry.kind === "retry") {
+      const label = document.createElement("p");
+      label.className = "chosen";
+      label.textContent = RETRY.label;
+      t.appendChild(label);
+      addParas(t, RETRY.text, "prose");
+      return label;
     }
     return null;
+  }
+
+  /* The frame that stands for a stop is the last one pressed there, so a
+     retried stop counts once — on the contact sheet and in the tally. */
+  function latestFrames() {
+    const byStop = new Map();
+    for (const h of state.history) if (h.kind === "frame") byStop.set(h.stop, h);
+    return [...byStop.values()].sort((a, b) => a.stop - b.stop);
+  }
+  function takenAtStop() {
+    for (let i = state.history.length - 1; i >= 0; i--) {
+      const h = state.history[i];
+      if (h.stop !== state.stop) continue;
+      if (h.kind === "frame") return true;
+      if (h.kind === "retry" || h.kind === "stop") return false;
+    }
+    return false;
   }
 
   function renderStopLine() {
@@ -1946,8 +2051,7 @@ function boot() {
     const ul = $("sheet");
     ul.innerHTML = "";
     let any = false;
-    for (const h of state.history) {
-      if (h.kind !== "frame") continue;
+    for (const h of latestFrames()) {
       const e = enc(h.stop);
       const r = develop(e, h.choices);
       const li = document.createElement("li");
@@ -1998,8 +2102,7 @@ function boot() {
     const h = document.createElement("h2");
     h.textContent = r.end.title;
     card.appendChild(h);
-    const frames = state.history.filter((x) => x.kind === "frame")
-      .map((x) => develop(enc(x.stop), x.choices));
+    const frames = latestFrames().map((x) => develop(enc(x.stop), x.choices));
     const kept = frames.filter((f) => f.keeper).length;
     const tally = {};
     for (const f of frames) for (const t of f.tags) tally[t] = (tally[t] || 0) + 1;
@@ -2048,7 +2151,7 @@ function boot() {
         btn.addEventListener("click", () => choose(i));
         choices.appendChild(btn);
       });
-    } else if (!state.history.some((h) => h.kind === "frame" && h.stop === state.stop)) {
+    } else if (!takenAtStop()) {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "shutter";
@@ -2061,6 +2164,11 @@ function boot() {
       btn.textContent = state.stop + 1 < stops.length ? "Drive on." : "Call it a day.";
       btn.addEventListener("click", driveOn);
       choices.appendChild(btn);
+      const again = document.createElement("button");
+      again.type = "button";
+      again.textContent = RETRY.label;
+      again.addEventListener("click", retry);
+      choices.appendChild(again);
     }
     box.appendChild(choices);
 
@@ -2119,6 +2227,18 @@ function boot() {
     const el = renderHistoryEntry(entry);
     saveState();
     renderSheet();
+    renderActions();
+    scrollToNew(el);
+  }
+
+  function retry() {
+    const entry = { kind: "retry", stop: state.stop };
+    state.history.push(entry);
+    const el = renderHistoryEntry(entry);
+    state.decision = 0;
+    state.choices = [];
+    saveState();
+    renderCamera();
     renderActions();
     scrollToNew(el);
   }

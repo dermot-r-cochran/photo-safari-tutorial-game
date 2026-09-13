@@ -122,9 +122,26 @@ Add an entry to `ENCOUNTERS` (light, subject, frame, presences, examine,
 enter, decisions, note, afterword), add any new examinables to `EXAMINE`
 and any new finding the engine raises to `LESSONS`, and list the stop in
 a route in `ROUTES` (today's drive picks from the whole pool by itself).
+**Every decision offers at least two options, and the camera decisions
+two or three** (Dermot's direction, 2026-09-13: *always have at least two
+or three choices for the camera settings at each step*). A single option
+is a paragraph, not a choice; the check fails a decision with fewer than
+two. Each alternative costs something real in the model — ISO spent on a
+speed the subject did not need, diffraction bought for depth the distance
+already had, a hand's width of focus at three metres — so the verdict has
+something to say about it.
+
+**A stop can be tried again before driving on** (same direction). After
+the verdict the page offers *Try again* beside *Drive on*: a `retry`
+history entry winds the stop back to its first decision, the earlier
+frame stays in the transcript as part of the record, and the contact
+sheet and the endcard count only the last frame pressed at each stop
+(`latestFrames`).
+
 Then `node tools/check.js`: it develops every combination of the stop's
-options, requires at least one to be a keeper, and holds every finding to
-a lesson and every tag to a rulebook. Prose is general-audience, in the
+options, requires at least one to be a keeper, holds every finding to a
+lesson and every tag to a rulebook, and refuses a decision with a single
+option. Prose is general-audience, in the
 register of the existing stops; every situation so far is one the author
 was actually in, and the animals did what they did.
 
