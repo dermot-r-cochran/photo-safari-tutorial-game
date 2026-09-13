@@ -1970,14 +1970,16 @@ function boot() {
     for (const h of state.history) if (h.kind === "frame") byStop.set(h.stop, h);
     return [...byStop.values()].sort((a, b) => a.stop - b.stop);
   }
-  function takenAtStop() {
+  /* The frame pressed at the current stop since its last retry, or null
+     while the shutter has not been pressed. */
+  function frameAtStop() {
     for (let i = state.history.length - 1; i >= 0; i--) {
       const h = state.history[i];
       if (h.stop !== state.stop) continue;
-      if (h.kind === "frame") return true;
-      if (h.kind === "retry" || h.kind === "stop") return false;
+      if (h.kind === "frame") return h;
+      if (h.kind === "retry" || h.kind === "stop") return null;
     }
-    return false;
+    return null;
   }
 
   function renderStopLine() {
@@ -2155,7 +2157,7 @@ function boot() {
         btn.addEventListener("click", () => choose(i));
         choices.appendChild(btn);
       });
-    } else if (!takenAtStop()) {
+    } else if (!frameAtStop()) {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "shutter";
@@ -2168,11 +2170,15 @@ function boot() {
       btn.textContent = state.stop + 1 < stops.length ? "Drive on." : "Call it a day.";
       btn.addEventListener("click", driveOn);
       choices.appendChild(btn);
-      const again = document.createElement("button");
-      again.type = "button";
-      again.textContent = RETRY.label;
-      again.addEventListener("click", retry);
-      choices.appendChild(again);
+      // a keeper is a keeper; only a frame for the folder invites another go
+      const taken = frameAtStop();
+      if (!develop(e, taken.choices).keeper) {
+        const again = document.createElement("button");
+        again.type = "button";
+        again.textContent = RETRY.label;
+        again.addEventListener("click", retry);
+        choices.appendChild(again);
+      }
     }
     box.appendChild(choices);
 

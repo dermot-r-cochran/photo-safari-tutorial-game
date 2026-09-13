@@ -132,8 +132,9 @@ already had, a hand's width of focus at three metres — so the verdict has
 something to say about it.
 
 **A stop can be tried again before driving on** (same direction). After
-the verdict the page offers *Try again* beside *Drive on*: a `retry`
-history entry winds the stop back to its first decision, the earlier
+a verdict that is not a keeper the page offers *Try again* beside *Drive
+on* (Dermot, same day: no need to offer it when the frame is a keeper): a
+`retry` history entry winds the stop back to its first decision, the earlier
 frame stays in the transcript as part of the record, and the contact
 sheet and the endcard count only the last frame pressed at each stop
 (`latestFrames`).
