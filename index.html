@@ -917,15 +917,15 @@ const ENCOUNTERS = {
     stop: "18:20", place: "the Mara, the last of the light",
     title: "Lion portrait at dusk",
     light: { ev: 8, label: "dusk, the colour gone, the shapes still there" },
-    subject: { name: "a lioness sitting up, watching the dark come", motion: "still", distance: 20, depth: 0.4 },
+    subject: { name: "a lion sitting up, watching the dark come", motion: "still", distance: 20, depth: 0.4 },
     frame: { kind: "wildlife", tells: [] },
-    presences: ["the lioness", "the dark", "the window sill, and a beanbag on it"],
-    examine: ["light", "lioness", "beanbag"],
+    presences: ["the lion", "the dark", "the window sill, and a beanbag on it"],
+    examine: ["light", "dusklion", "beanbag"],
     enter: [
-      "The lioness sat up in the last of the light and looked at " +
-      "something a long way off that was going to be dinner. She was " +
-      "twenty metres away and perfectly still, and the light was nearly " +
-      "gone.",
+      "The lion sat up in the last of the light, mane full and dark, and " +
+      "looked at something a long way off that was going to be dinner. " +
+      "He was twenty metres away and perfectly still, and the light was " +
+      "nearly gone.",
       "There was a beanbag on the window sill. There was also the ISO " +
       "dial, which would go a great deal higher than you wanted it to."
     ],
@@ -946,9 +946,9 @@ const ENCOUNTERS = {
             settings: "walkAround", set: { iso: 3200 }
           },
           {
-            label: "The lens on the beanbag, ISO cap at 800, and let the shutter run long. She is not moving.",
+            label: "The lens on the beanbag, ISO cap at 800, and let the shutter run long. He is not moving.",
             text: ["You pressed the lens into the beanbag on the sill, " +
-                   "let go, and let the camera take its time. She did " +
+                   "let go, and let the camera take its time. He did " +
                    "not move. Neither did you."],
             settings: "walkAround", set: { support: "beanbag", minShutter: 1 / 30 }
           }
@@ -957,8 +957,8 @@ const ENCOUNTERS = {
     ],
     photo: { file: "images/lion-portrait-at-dusk.jpg", title: "Lion Portrait at Dusk",
              alt: "Close portrait of a male lion with a full mane, lit by soft evening light, a second lion visible behind",
-             caption: "Soft evening light and a second lion behind. The stop's lioness is a different animal from the same hour." },
-    note: "She is watching a herd of zebra come down to drink at the " +
+             caption: "Soft evening light and a second lion behind: the same animal, the same twenty metres, the last frame of the day." },
+    note: "He is watching a herd of zebra come down to drink at the " +
           "river a kilometre off, and will go for them after full dark. " +
           "The rest of the pride is behind the vehicle, out of frame and " +
           "out of the light.",
@@ -1244,8 +1244,8 @@ const EXAMINE = {
     text: () => "A courting pair, out of the pride. She stands, walks, " +
       "lies down; he follows. There will be a before and an after."
   },
-  lioness: {
-    label: "the lioness",
+  dusklion: {
+    label: "the lion",
     text: () => "Sitting up, perfectly still, twenty metres. The light is " +
       "about EV 8 — five stops below a bright afternoon."
   },

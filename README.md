@@ -44,7 +44,7 @@ Three drives:
   light to dusk. A topi against the sunrise, a young lion on a vehicle
   track, a roller in eight colours, vultures at a kill, a hyena nobody
   can find, elephants under Kilimanjaro at noon, a fish eagle and a
-  boatman with a bucket, a giraffe at a rail, a courting pair, a lioness
+  boatman with a bucket, a giraffe at a rail, a courting pair, a lion
   in the last of the light.
 - **Home ground** — a beech wood, an island and a hill near home, the
   week after: the one mode the safari never needed, a ringed gull, a
