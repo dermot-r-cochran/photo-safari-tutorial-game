@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Every stop develops, every finding is a lesson
+      - name: Every stop develops, every finding is a lesson, every photograph is shown
         run: node tools/check.js
 
       - name: The page is one file with its two sections

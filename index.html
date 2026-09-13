@@ -89,6 +89,13 @@
   #camera b { color: var(--ink); }
   #sheet li { font-size: 0.95em; }
   #sheet .tags { color: var(--dim); }
+  .author-frame { margin: 1rem 0 0.4rem; }
+  .author-frame img {
+    display: block; max-width: 100%; height: auto; border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .author-frame figcaption { color: var(--dim); font-size: 0.95em; margin-top: 0.4rem; }
+  .author-frame figcaption b { color: var(--earth); }
   #endcard {
     border: 1px solid var(--grass); border-radius: 8px;
     background: var(--panel); padding: 1rem 1.2rem; margin-top: 1.6rem;
@@ -135,9 +142,12 @@
   <div class="card">
     <h2>About</h2>
     <p style="margin:0">A one-file tutorial game: no server, no build, no
-       network, no pictures. You make the choices a photographer makes in
-       the field, and the page develops the frame you would have got.
+       network. You make the choices a photographer makes in the field,
+       and the page develops the frame you would have got.
        Progress saves to this browser only.</p>
+    <p style="margin:0.6rem 0 0">Written by a novice for other novices:
+       every lesson here was learned by getting it wrong first, and the
+       photographs are the frames it was learned on.</p>
     <button id="restart" type="button" style="margin-top:0.6rem">
       Restart this drive</button>
   </div>
@@ -262,6 +272,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/topi-at-sunrise.jpg", title: "Topi at Sunrise",
+             alt: "A topi standing in full silhouette on a ridge as the sun rises behind it, ranges of hills receding in orange haze",
+             caption: "The silhouette, exposed for the sky. The hills behind it are the escarpment in haze." },
     note: "The mound is a termite mound; topi stand on them to see over the " +
           "grass and to be seen, and this one had been up there since before " +
           "the sun. What the frame does not say is that the plain behind the " +
@@ -323,6 +336,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/balloon-over-the-mara.jpg", title: "Balloon over the Mara",
+             alt: "A hot air balloon drifting high over the open plains at dawn, with two topi grazing below",
+             caption: "Filed as Documentary, DCC and WNPA only, for the balloon. Two topi under it rather than a herd; the stop borrowed the wildebeest from later in the morning." },
     note: "The balloon takes off before dawn from a camp on the far side of " +
           "the river and lands wherever the wind puts it; a vehicle follows " +
           "it the whole way with breakfast aboard. The wildebeest under it " +
@@ -387,6 +403,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/young-lion-in-morning-light.jpg", title: "Young Lion in Morning Light",
+             alt: "A young lion lying in green grass in low morning sunlight, faint juvenile spotting still visible on its flank, looking away to one side",
+             caption: "Filed as Wildlife, DCC and WNPA: the ground he chose had tyre marks in it, so the federation's sections were out. The frame stayed loose." },
     note: "The track is warm before the grass is, which is why he is on it; " +
           "by nine he will be under a bush and invisible. The patchy mane " +
           "puts him at about three years old, recently pushed out of his " +
@@ -460,6 +479,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/lilac-breasted-roller.jpg", title: "Lilac-Breasted Roller",
+             alt: "A lilac-breasted roller perched at the top of a thorn bush against a clear blue sky",
+             caption: "The perch, taken while it was there. The take-off was not got that day." },
     note: "The roller is looking at a grasshopper it will drop onto in a " +
           "moment; the thorn is its hunting perch and it will come back to " +
           "it. The name is the display flight, a rolling tumble the males " +
@@ -537,6 +559,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/vulture-landing.jpg", title: "Vulture Landing",
+             alt: "A vulture with both wings still raised, settling onto the crown of a thorn bush against a pale sky",
+             caption: "The shutter-priority frame: both wings still up. This one settled on a thorn bush rather than the carcass." },
     note: "The carcass is a wildebeest, one of the migration's stragglers, " +
           "and the lions that took it are lying two hundred metres away " +
           "under a croton bush, full. The vultures have an hour before the " +
@@ -599,6 +624,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/hyena-below-the-migration.jpg", title: "Hyena Below the Migration",
+             alt: "A spotted hyena sunk to the shoulders in a muddy pool, head and wet ginger back above the surface, with wildebeest standing along the skyline beyond",
+             caption: "The whole frame, kept as shot, with the note doing the finding. Look low and centre." },
     note: "Spotted hyenas lie up in water through the heat of the day to " +
           "cool off, which is why this one is sunk to the shoulders in a " +
           "muddy pool rather than out on the grass with the herd behind it. " +
@@ -674,6 +702,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/elephants-beneath-kilimanjaro.jpg", title: "Elephants Beneath Kilimanjaro",
+             alt: "A family of elephants crossing open grassland at dawn with the cone of Kilimanjaro standing in pink haze behind them",
+             caption: "The family crossing at dawn, not noon. The cloud in the stop stands in for the hour this was actually taken." },
     note: "Kilimanjaro is in the next country; the border runs along the " +
           "foot of it. The marsh is fed by snowmelt that goes underground " +
           "on the mountain and comes up here, forty kilometres away, which " +
@@ -738,6 +769,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/fish-eagle-with-a-catch.jpg", title: "Fish Eagle with a Catch",
+             alt: "An African fish eagle lifting away from the surface of the lake with a fish gripped in its talons, wings fully spread, water streaming from its feet",
+             caption: "The thrown fish. No competition tags, and a note on the site that says why." },
     note: "The eagles along this stretch of the lake know the boats and " +
           "come to them; when a fish is thrown, the stoop and the catch are " +
           "the bird's own but the opportunity was arranged, and the picture " +
@@ -857,6 +891,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/the-pair.jpg", title: "The Pair",
+             alt: "A male lion with a full dark-fringed mane lying on bare pale ground with a lioness resting close beside him, both with their heads up and facing the same way",
+             caption: "The after: heads up, facing the same way. The sequence stayed in the folder." },
     note: "A courting pair leaves the pride and keeps its own company for " +
           "several days, which is why these two are out on the open pan with " +
           "no other lions anywhere in sight.",
@@ -910,6 +947,9 @@ const ENCOUNTERS = {
         ]
       }
     ],
+    photo: { file: "images/lion-portrait-at-dusk.jpg", title: "Lion Portrait at Dusk",
+             alt: "Close portrait of a male lion with a full mane, lit by soft evening light, a second lion visible behind",
+             caption: "Soft evening light and a second lion behind. The stop's lioness is a different animal from the same hour." },
     note: "She is watching a herd of zebra come down to drink at the " +
           "river a kilometre off, and will go for them after full dark. " +
           "The rest of the pride is behind the vehicle, out of frame and " +
@@ -1714,8 +1754,31 @@ function boot() {
       box.appendChild(n);
     }
     if (e.afterword) addParas(box, e.afterword, "prose");
+    if (e.photo) box.appendChild(renderPhoto(e.photo));
     t.appendChild(box);
     return box;
+  }
+
+  /* The frame a stop was learned on: the author's own photograph, shown
+     only after the player's verdict so it is a comparison and never the
+     answer. The page works without the file — a missing picture hides
+     its own card. */
+  function renderPhoto(photo) {
+    const fig = document.createElement("figure");
+    fig.className = "author-frame";
+    const img = document.createElement("img");
+    img.src = photo.file;
+    img.alt = photo.alt;
+    img.loading = "lazy";
+    img.addEventListener("error", () => { fig.hidden = true; });
+    fig.appendChild(img);
+    const cap = document.createElement("figcaption");
+    const b = document.createElement("b");
+    b.textContent = "The frame this stop was learned on — " + photo.title + ". ";
+    cap.appendChild(b);
+    cap.appendChild(document.createTextNode(photo.caption));
+    fig.appendChild(cap);
+    return fig;
   }
 
   /* Renders one history entry into the transcript and returns the first
