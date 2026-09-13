@@ -70,6 +70,9 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
     for (const t of r.tags) if (!S.RULEBOOKS[t]) fail(id + " tagged " + t + ", which is not a rulebook");
     if (!["Wildlife", "Urban Wildlife", "Landscape", "Nature", "Macro", "Documentary"].includes(r.category)) fail(id + ": category " + r.category);
     if (r.unpublishable && r.tags.length) fail(id + ": an unpublishable frame carries tags");
+    // a frame that is not a keeper always says why
+    if (!r.keeper && !r.findings.some((f) => (r.unpublishable ? f.bars : f.sinks))) fail(id + " " + JSON.stringify(choices) + ": not a keeper, but no finding says why");
+    if (r.keeper && r.findings.some((f) => f.sinks || f.bars)) fail(id + " " + JSON.stringify(choices) + ": a keeper with a sinking finding");
     if (r.tags.includes("IPF-Wildlife") && !r.tags.includes("IPF-Nature")) fail(id + ": IPF-Wildlife without IPF-Nature");
     if (r.keeper) { keepers++; anyKeeper = true; }
   }
