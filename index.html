@@ -133,7 +133,7 @@
     <div id="routes"></div>
   </div>
   <div class="card">
-    <h2>The drive</h2>
+    <h2 id="stops-heading">The drive</h2>
     <ul id="stops"></ul>
   </div>
   <div class="card">
@@ -825,8 +825,9 @@ const ENCOUNTERS = {
     afterword: [
       "A baited encounter is a real bird doing a real thing for an " +
       "arranged reason. The picture is yours to keep and to show; what it " +
-      "cannot do is enter a nature competition, and what it must do is " +
-      "carry a note that says how it was got. And a white head in " +
+      "cannot do is enter a nature or a wildlife competition — baiting " +
+      "is barred in both, everywhere the author has looked — and what it " +
+      "must do is carry a note that says how it was got. And a white head in " +
       "sunlight is where vivid clips first — the calmer picture control " +
       "keeps the feather detail a judge looks for."
     ]
@@ -1020,6 +1021,7 @@ const ENCOUNTERS = {
 
   woodland: {
     stop: "10:15", place: "a beech wood near home, the week after",
+    onward: "Walk on.",
     title: "The woodland floor",
     light: { ev: 6, label: "bright overcast through beech leaves, the floor nearly still" },
     subject: { name: "a troop of small bonnets on a mossy stump", motion: "stirs", distance: 0.35, depth: 0.01 },
@@ -1102,6 +1104,7 @@ const ENCOUNTERS = {
 
   gull: {
     stop: "11:00", place: "an island off the coast, near home",
+    onward: "Walk on.",
     title: "The ringed gull",
     light: { ev: 14, label: "sea light, bright, the sky white behind the bird" },
     subject: { name: "a herring gull calling from a rock, a blue ring on its leg", motion: "stirs", distance: 6, depth: 0.2, white: true },
@@ -1164,6 +1167,7 @@ const ENCOUNTERS = {
 
   goat: {
     stop: "15:30", place: "the hills above the city, near home",
+    onward: "Walk on.",
     title: "The feral goat",
     light: { ev: 12, label: "broken cloud, the light coming and going" },
     subject: { name: "a feral goat on the heather", motion: "stirs", distance: 15, depth: 0.8 },
@@ -1406,9 +1410,10 @@ const RULEBOOKS = {
     name: "Irish Photographic Federation, wildlife section",
     url: "https://irishphoto.ie/",
     text: [
-      "Everything the nature section asks, and the subject must be a " +
-      "zoological one living wild and free. A captive animal may appear " +
-      "in a nature section at some events, never in wildlife."
+      "Everything the nature section asks — no human element, no " +
+      "baiting, no composites — and the subject must be a zoological one " +
+      "living wild and free. A captive animal may appear in a nature " +
+      "section at some events, never in wildlife; a baited one in neither."
     ]
   }
 };
@@ -1436,7 +1441,7 @@ const LESSONS = {
   tell: { title: "A human element in frame", text: "{tell} is in the frame. The world awards do not mind; the federation's nature and wildlife sections do. A frame that keeps it is still a picture — it just files elsewhere." },
   tellExcluded: { title: "The tell is out of the frame", text: "{tell} lies outside the edge of this framing, so nothing built is in the picture and the federation's sections stay open. Walk the frame for tells before pressing, not after." },
   ring: { title: "A ring is allowed", text: "Scientific tags, collars and bands are specifically permitted by the nature definition. Do not under-claim on a ring." },
-  baited: { title: "Baited", text: "The opportunity was arranged, so the frame is out of every nature competition, whatever it shows. It is still yours to show; it must carry a note that says how it was got, because the picture cannot." },
+  baited: { title: "Baited", text: "The opportunity was arranged, so the frame is out of every nature and wildlife competition, whatever it shows — the world awards, the federation's nature section and its wildlife section alike; the open competition is the one that remains. It is still yours to show; it must carry a note that says how it was got, because the picture cannot." },
   captive: { title: "Captive", text: "A captive animal is out of the world awards and out of the federation's wildlife section, however wild the frame looks. Tag it honestly." },
   feral: { title: "Feral", text: "A free-living animal descended from domestic stock qualifies for the world awards, which ban only captive and restrained animals, and not for the federation's nature sections, which exclude feral and domestic animals. Same picture, different tags." },
   people: { title: "A recognisable person", text: "No recognisable person goes on the site. The frame is deleted, blurred or cropped — and cropping is usually the honest one, because it changes nothing about the pixels that remain." },
@@ -1480,7 +1485,7 @@ const SCORE = {
    everyone the same drive, and tomorrow gives a different one. */
 const ROUTES = [
   {
-    id: "safari",
+    id: "safari", noun: "drive",
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
     stops: ["topi", "balloon", "lion", "roller", "vultures", "hyena",
@@ -1496,9 +1501,9 @@ const ROUTES = [
     }
   },
   {
-    id: "home",
+    id: "home", noun: "walk",
     title: "Home ground",
-    sub: "a wood, an island and a hill near home, the week after",
+    sub: "a wood, an island and a hill near home, the week after, on foot",
     stops: ["woodland", "gull", "goat"],
     end: {
       title: "End of the week",
@@ -1511,7 +1516,7 @@ const ROUTES = [
     }
   },
   {
-    id: "today",
+    id: "today", noun: "drive",
     title: "Today's drive",
     sub: "six stops chosen by the date, in the order of the day",
     daily: true, count: 6,
@@ -2064,6 +2069,8 @@ function boot() {
   function renderStops() {
     const ul = $("stops");
     ul.innerHTML = "";
+    $("stops-heading").textContent = "The " + (route().noun || "drive");
+    $("restart").textContent = "Restart this " + (route().noun || "drive");
     stops.forEach((id, i) => {
       if (i > state.stop) return; // stops ahead stay unspoiled
       const li = document.createElement("li");
@@ -2239,7 +2246,7 @@ function boot() {
     } else {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.textContent = state.stop + 1 < stops.length ? "Drive on." : "Call it a day.";
+      btn.textContent = state.stop + 1 < stops.length ? (e.onward || "Drive on.") : "Call it a day.";
       btn.addEventListener("click", driveOn);
       choices.appendChild(btn);
       // a keeper is a keeper; only a frame for the folder invites another go
@@ -2372,7 +2379,7 @@ function boot() {
   }
 
   $("restart").addEventListener("click", () => {
-    if (!confirm("Restart this drive? Its transcript and contact sheet will be cleared.")) return;
+    if (!confirm("Restart this " + (route().noun || "drive") + "? Its transcript and contact sheet will be cleared.")) return;
     try { localStorage.removeItem(saveKey(route())); } catch (e) {}
     state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }] };
     saveState();

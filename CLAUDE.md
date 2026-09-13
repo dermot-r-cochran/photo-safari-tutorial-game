@@ -101,8 +101,12 @@ here as tutorial content:
   baiting but not built environments, feral animals or gardens; the
   federation's nature section bars any human element except a scientific
   ring, plus cultivated plants, feral and domestic animals and baiting; its
-  wildlife section adds wild and free. Recognisable people and mating
-  sequences are not published at all.
+  wildlife section adds wild and free. Baiting bars a frame from the
+  nature *and* the wildlife competitions alike (Dermot's correction,
+  2026-09-13: *the fishing eagle baited would also be excluded from most
+  wildlife competitions not just nature*) — the tags always did this; the
+  words now say it. Recognisable people and mating sequences are not
+  published at all.
 
 Change a threshold only when the field notes change; say which note.
 

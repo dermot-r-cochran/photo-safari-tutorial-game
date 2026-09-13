@@ -53,8 +53,8 @@ Three drives:
   boatman with a bucket, a giraffe at a rail, a courting pair, a lion
   in the last of the light.
 - **Home ground** — a beech wood, an island and a hill near home, the
-  week after: the one mode the safari never needed, a ringed gull, a
-  goat that nobody owns.
+  week after, on foot: the one mode the safari never needed, a ringed
+  gull, a goat that nobody owns.
 - **Today's drive** — six stops picked from the whole pool by the date,
   in the order of the day. The same day gives everyone the same drive;
   tomorrow is different.
