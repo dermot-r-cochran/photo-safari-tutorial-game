@@ -24,7 +24,9 @@ jobs:
           grep -q "WORLD DATA" index.html
           grep -q "ENGINE" index.html
           test "$(grep -c '<script' index.html)" = "1"
-          ! grep -qiE '<script[^>]+src=|fetch\(|XMLHttpRequest|<link[^>]+href=' index.html
+          # nothing may be fetched from anywhere: no external script, no
+          # fetch, no stylesheet or icon by URL (an inline data: icon is fine)
+          ! grep -qiE '<script[^>]+src=|fetch\(|XMLHttpRequest|<link[^>]+href="(https?:|//)' index.html
           echo "one file, no network"
 
       - name: No stray build artifacts
