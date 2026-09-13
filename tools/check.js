@@ -95,6 +95,9 @@ const imgDir = path.join(root, "images");
 if (fs.existsSync(imgDir)) for (const f of fs.readdirSync(imgDir)) {
   if (!shown.has("images/" + f)) fail("images/" + f + " is shown at no stop");
 }
+for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "card", "level", "over", "firsts"]) {
+  if (!S.SCORE || !S.SCORE[k]) fail("SCORE has no " + k);
+}
 for (const [key, r] of Object.entries(S.RULEBOOKS)) {
   if (!r.name || !r.text || !r.text.length) fail("rulebook " + key + " has no name or text");
   if (!/^https:\/\//.test(r.url || "")) fail("rulebook " + key + " has no https url to the rules themselves");
