@@ -156,6 +156,9 @@
     <p style="margin:0.6rem 0 0">Written by a novice for other novices:
        every lesson here was learned by getting it wrong first, and the
        photographs are the frames it was learned on.</p>
+    <p style="margin:0.6rem 0 0">A keeper would go on the site. A frame
+       for the folder is kept, not shown, and is where the lessons come
+       from.</p>
     <button id="restart" type="button" style="margin-top:0.6rem">
       Restart this drive</button>
   </div>
@@ -1452,7 +1455,7 @@ const LESSONS = {
 /* What the page says when the player winds a stop back to the moment
    before the shutter. */
 const RETRY = {
-  label: "Try again.",
+  label: "Try the stop again.",
   text: ["You wound back to the moment before the shutter. The light " +
          "held, and so, being a tutorial animal, did the animal."]
 };
@@ -1841,7 +1844,7 @@ function boot() {
     box.className = "frame " + (r.keeper ? "keeper" : "dropped");
     const h = document.createElement("h3");
     h.textContent = r.keeper ? "The frame — a keeper" :
-      (r.unpublishable ? "The frame — not for the site" : "The frame — one for the folder");
+      (r.unpublishable ? "The frame — not for the site" : "The frame — not a keeper; one for the folder");
     box.appendChild(h);
     if (!r.keeper) {
       const why = document.createElement("p");
