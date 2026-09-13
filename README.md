@@ -21,7 +21,10 @@ The frame is a verdict in words, the way a contact sheet is a set of
 decisions, and every verdict names the lesson behind it. Every step is a
 real choice — two or three settings or framings, each with a cost — and
 when a frame is one for the folder — kept, not shown — you can try the
-stop again before driving on; the contact sheet keeps the last frame you pressed. After the
+stop again before driving on; the contact sheet keeps the last frame you
+pressed and scores the drive like golf: every press of the shutter is a
+stroke, a keeper first time is the hole in one, and par is a keeper first
+time at every stop. After the
 verdict, at ten of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better

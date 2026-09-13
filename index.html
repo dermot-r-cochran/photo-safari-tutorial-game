@@ -97,6 +97,7 @@
   #camera b { color: var(--ink); }
   #sheet li { font-size: 0.95em; }
   #sheet .tags { color: var(--dim); }
+  #sheet .card-line { list-style: none; margin-left: -1.1rem; font-weight: bold; color: var(--grass); }
   .author-frame { margin: 1rem 0 0.4rem; }
   .author-frame img {
     display: block; max-width: 100%; height: auto; border-radius: 6px;
@@ -1460,6 +1461,20 @@ const RETRY = {
          "held, and so, being a tutorial animal, did the animal."]
 };
 
+/* The scorecard. The game scores like golf: every press of the shutter
+   at a stop is a stroke, a keeper first time is the hole in one, and par
+   for a drive is a keeper first time at every stop. */
+const SCORE = {
+  first: "keeper first time",
+  keeperIn: "keeper in {n}",
+  folderAfter: "folder after {n}",
+  barredAfter: "not published after {n}",
+  card: "{strokes} for {stops} — {standing}",
+  level: "level par, a keeper first time at every stop",
+  over: "{n} over par",
+  firsts: "{n} first time"
+};
+
 /* Drives. A fixed one for the tutorial, a fixed one for home ground, and
    one that picks from the whole pool by the date — the same day gives
    everyone the same drive, and tomorrow gives a different one. */
@@ -1768,7 +1783,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY,
+  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, SCORE,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -1992,6 +2007,32 @@ function boot() {
   }
   /* The frame pressed at the current stop since its last retry, or null
      while the shutter has not been pressed. */
+  /* Strokes: every press of the shutter at a stop, retries included. */
+  function strokesAt(stop) {
+    return state.history.filter((h) => h.kind === "frame" && h.stop === stop).length;
+  }
+  function scoreLine(r, strokes) {
+    if (r.keeper) return strokes === 1 ? SCORE.first : fill(SCORE.keeperIn, { n: strokes });
+    return fill(r.unpublishable ? SCORE.barredAfter : SCORE.folderAfter, { n: strokes });
+  }
+  /* The card for the drive so far: strokes over stops played, against a
+     par of one stroke a stop, and how many keepers came first time. */
+  function scorecard() {
+    const played = latestFrames();
+    const strokes = played.reduce((n, h) => n + strokesAt(h.stop), 0);
+    const firsts = played.filter((h) => strokesAt(h.stop) === 1 && develop(enc(h.stop), h.choices).keeper).length;
+    const over = strokes - played.length;
+    const standing = over === 0 ? SCORE.level : fill(SCORE.over, { n: over });
+    return {
+      strokes, stops: played.length, firsts, over,
+      text: fill(SCORE.card, {
+        strokes: strokes + " stroke" + (strokes === 1 ? "" : "s"),
+        stops: played.length + " stop" + (played.length === 1 ? "" : "s"),
+        standing: standing + (firsts ? ", " + fill(SCORE.firsts, { n: firsts }) : "")
+      })
+    };
+  }
+
   function frameAtStop() {
     for (let i = state.history.length - 1; i >= 0; i--) {
       const h = state.history[i];
@@ -2077,13 +2118,20 @@ function boot() {
     const ul = $("sheet");
     ul.innerHTML = "";
     let any = false;
-    for (const h of latestFrames()) {
+    const played = latestFrames();
+    if (played.length) {
+      const card = document.createElement("li");
+      card.className = "card-line";
+      card.textContent = scorecard().text;
+      ul.appendChild(card);
+    }
+    for (const h of played) {
       const e = enc(h.stop);
       const r = develop(e, h.choices);
       const li = document.createElement("li");
       const causes = r.findings.filter((f) => (r.unpublishable ? f.bars : f.sinks))
         .map((f) => LESSONS[f.key] ? LESSONS[f.key].title.toLowerCase() : f.key);
-      li.textContent = e.title + " — " + (r.keeper ? "keeper" : r.unpublishable ? "not published" : "folder") +
+      li.textContent = e.title + " — " + scoreLine(r, strokesAt(h.stop)) +
         (causes.length ? " (" + causes.join(", ") + ")" : "");
       if (r.tags.length) {
         const span = document.createElement("span");
@@ -2136,7 +2184,8 @@ function boot() {
     const tally = {};
     for (const f of frames) for (const t of f.tags) tally[t] = (tally[t] || 0) + 1;
     const p = document.createElement("p");
-    p.textContent = frames.length + " frames, " + kept + " keeper" + (kept === 1 ? "" : "s") + ". Eligible: ";
+    p.textContent = frames.length + " frames, " + kept + " keeper" + (kept === 1 ? "" : "s") +
+      ". The card: " + scorecard().text + ". Eligible: ";
     Object.keys(RULEBOOKS).forEach((k, i, arr) => {
       p.appendChild(tagNodes([k]));
       p.appendChild(document.createTextNode(" " + (tally[k] || 0) + (i < arr.length - 1 ? ", " : ".")));
