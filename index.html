@@ -76,6 +76,8 @@
   .frame .filed { color: var(--dim); font-style: italic; }
   .finding { margin: 0.5rem 0; }
   .finding b { color: var(--earth); }
+  .finding.sinks b { color: var(--drop); }
+  .why { margin: 0.2rem 0 0.6rem; font-weight: bold; color: var(--drop); }
   .note { background: var(--earth-2); border-radius: 6px; padding: 0.6rem 0.9rem; }
   .note::before { content: "Note — "; color: var(--earth); font-weight: bold; }
   button {
@@ -1622,35 +1624,41 @@ function develop(enc, choices) {
   const { settings, subject, light, frame, extraLessons } = assemble(enc, choices);
   const ex = expose(settings, light, frame);
   const findings = [];
-  const add = (key, vars) => findings.push({ key, vars: vars || {} });
   let fatal = false, unpublishable = false;
+  /* A finding may sink the frame (one for the folder) or bar it from the
+     site altogether; the verdict names which, so a player is never told
+     "not a keeper" without being told why. */
+  const add = (key, vars, how) => {
+    findings.push({ key, vars: vars || {}, sinks: how === "sinks", bars: how === "bars" });
+    if (how === "sinks") fatal = true;
+    if (how === "bars") unpublishable = true;
+  };
 
   // exposure
-  if (frame.exposeFor === "subject") { add("blownSky"); fatal = true; }
+  if (frame.exposeFor === "subject") add("blownSky", null, "sinks");
   else if (frame.exposeFor === "sky") add("silhouette");
-  if (ex.delta < -1.5) { add(settings.mode === "M" ? "manualDark" : "under", { stops: Math.abs(ex.delta).toFixed(1) }); if (ex.delta < -2.5) fatal = true; }
-  else if (ex.delta > 1) { add("over", { stops: ex.delta.toFixed(1) }); fatal = true; }
+  if (ex.delta < -1.5) add(settings.mode === "M" ? "manualDark" : "under", { stops: Math.abs(ex.delta).toFixed(1) }, ex.delta < -2.5 ? "sinks" : null);
+  else if (ex.delta > 1) add("over", { stops: ex.delta.toFixed(1) }, "sinks");
 
   // sharpness
   const need = motionNeed(subject.motion, settings.focal, settings.support);
   if (ex.shutter > need * 1.05) {
     if (subject.motion === "flying" || subject.motion === "running" || subject.motion === "walking") {
-      add("motionBlur", { need: fmtShutter(need), got: fmtShutter(ex.shutter), motion: subject.motion });
+      add("motionBlur", { need: fmtShutter(need), got: fmtShutter(ex.shutter), motion: subject.motion }, "sinks");
     } else if (settings.support !== "hand") {
-      add("windBlur", { got: fmtShutter(ex.shutter) });
+      add("windBlur", { got: fmtShutter(ex.shutter) }, "sinks");
     } else {
-      add("shake", { need: fmtShutter(need), got: fmtShutter(ex.shutter), focal: settings.focal });
+      add("shake", { need: fmtShutter(need), got: fmtShutter(ex.shutter), focal: settings.focal }, "sinks");
     }
-    fatal = true;
   }
   if (settings.support !== "hand" && !settings.liveView && ex.shutter >= 1 / 15 && ex.shutter <= 1 / 2) {
-    add("mirrorSlap"); fatal = true;
+    add("mirrorSlap", null, "sinks");
   }
   const mag = frame.magnification || 0;
   const effN = ex.aperture * (1 + mag);
   // softens from f/11, obvious by f/16, and at 1:1 the effective aperture
   // doubles — so f/8 at 1:1 passes and f/11 at 1:1 does not
-  if (ex.aperture >= 16 || effN >= 22) { add("diffraction"); fatal = effN >= 22 || fatal; }
+  if (ex.aperture >= 16 || effN >= 22) add("diffraction", null, effN >= 22 ? "sinks" : null);
   const dof = depthOfField(ex.aperture, settings.focal, subject.distance);
   if (dof < subject.depth * 0.6 && !(mag >= 1)) {
     add("thinDepth", { aperture: ex.aperture, dof: dof < 0.1 ? Math.round(dof * 1000) + " mm" : dof.toFixed(2) + " m", depth: subject.depth < 0.1 ? Math.round(subject.depth * 1000) + " mm" : subject.depth + " m" });
@@ -1663,8 +1671,8 @@ function develop(enc, choices) {
 
   // picture control
   if (settings.picture === "vivid") {
-    if (subject.white) { add("vividWhite"); fatal = true; }
-    else if (subject.saturated) { add("vividSaturated"); fatal = true; }
+    if (subject.white) add("vividWhite", null, "sinks");
+    else if (subject.saturated) add("vividSaturated", null, "sinks");
     else if (frame.harsh || ex.iso >= CAMERA.noise.chroma) add("vividHarsh");
   } else if (frame.kind === "landscape" && !subject.white) {
     add("flat");
@@ -1678,14 +1686,14 @@ function develop(enc, choices) {
   const humanIn = tellsIn.filter((t) => !t.ring);
   for (const t of tellsIn) add(t.ring ? "ring" : "tell", { tell: cap(t.label) });
   for (const t of tellsOut) add("tellExcluded", { tell: cap(t.label) });
-  if (frame.people === "recognisable") { add("people"); unpublishable = true; }
+  if (frame.people === "recognisable") add("people", null, "bars");
   else if (frame.people === "distant" && frame.framing === "loose") add("distantPeople");
-  if (frame.mating) { add("mating"); unpublishable = true; }
+  if (frame.mating) add("mating", null, "bars");
   if (frame.baited) add("baited");
   if (frame.captive) add("captive");
   if (frame.feral) add("feral");
   if (subject.tiny) {
-    if (subject.framedAlone) { add("tinyAlone"); fatal = true; }
+    if (subject.framedAlone) add("tinyAlone", null, "sinks");
     else add("tiny", { share: "a tenth" });
   }
   if (frame.kind === "plant") {
@@ -1835,6 +1843,15 @@ function boot() {
     h.textContent = r.keeper ? "The frame — a keeper" :
       (r.unpublishable ? "The frame — not for the site" : "The frame — one for the folder");
     box.appendChild(h);
+    if (!r.keeper) {
+      const why = document.createElement("p");
+      why.className = "why";
+      const causes = r.findings.filter((f) => (r.unpublishable ? f.bars : f.sinks))
+        .map((f) => LESSONS[f.key] ? LESSONS[f.key].title.toLowerCase() : f.key);
+      why.textContent = (r.unpublishable ? "Not for the site: " : "Not a keeper: ") +
+        causes.join(" · ") + ".";
+      box.appendChild(why);
+    }
     const s = r.settings, x = r.exposure;
     const line = document.createElement("p");
     line.className = "filed";
@@ -1846,7 +1863,7 @@ function boot() {
       const L = LESSONS[f.key];
       if (!L) continue;
       const p = document.createElement("p");
-      p.className = "finding";
+      p.className = "finding" + (f.sinks || f.bars ? " sinks" : "");
       const b = document.createElement("b");
       b.textContent = L.title + ". ";
       p.appendChild(b);
@@ -2061,7 +2078,10 @@ function boot() {
       const e = enc(h.stop);
       const r = develop(e, h.choices);
       const li = document.createElement("li");
-      li.textContent = e.title + " — " + (r.keeper ? "keeper" : r.unpublishable ? "not published" : "folder");
+      const causes = r.findings.filter((f) => (r.unpublishable ? f.bars : f.sinks))
+        .map((f) => LESSONS[f.key] ? LESSONS[f.key].title.toLowerCase() : f.key);
+      li.textContent = e.title + " — " + (r.keeper ? "keeper" : r.unpublishable ? "not published" : "folder") +
+        (causes.length ? " (" + causes.join(", ") + ")" : "");
       if (r.tags.length) {
         const span = document.createElement("span");
         span.className = "tags";

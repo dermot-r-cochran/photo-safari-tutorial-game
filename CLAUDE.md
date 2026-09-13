@@ -139,10 +139,20 @@ frame stays in the transcript as part of the record, and the contact
 sheet and the endcard count only the last frame pressed at each stop
 (`latestFrames`).
 
+**A frame that is not a keeper says why** (Dermot's direction,
+2026-09-13). Every finding the engine raises is marked as one that
+*sinks* the frame (one for the folder), one that *bars* it from the site
+altogether (a recognisable person, a mating sequence), or neither; the
+verdict opens with *Not a keeper: …* naming the sinking findings, those
+findings are set in the drop colour, and the contact sheet carries the
+same names in brackets. A new finding that should sink a frame is added
+with `"sinks"` (or `"bars"`), never by setting the flag beside it; the
+check fails a non-keeper with no such finding and a keeper with one.
+
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a
-lesson and every tag to a rulebook, and refuses a decision with a single
-option. Prose is general-audience, in the
+lesson and every tag to a rulebook, refuses a decision with a single
+option, and holds every non-keeper to a finding that says why. Prose is general-audience, in the
 register of the existing stops; every situation so far is one the author
 was actually in, and the animals did what they did.
 
