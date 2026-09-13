@@ -33,9 +33,40 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **No pictures.** The frame is a verdict in words. This is the design, not
-  a gap: a photograph would make the game about that photograph, and the
-  lessons are about the decisions.
+- **The verdict is words; a photograph comes only after it.** Ten stops
+  carry a `photo` — the author's own frame from that outing, at portfolio
+  site size under `images/` — rendered as a comparison card *after* the
+  player's verdict, never at the top of a stop (it would answer the
+  framing decision) and never as the result (one picture cannot stand in
+  for every outcome). Dermot's ruling, 2026-09-13, on *add existing photos
+  as illustrations or would that be confusing?*: the card only. The page
+  works without the files — a missing picture hides its own card — and
+  `tools/check.js` requires every picture to be shown at a stop and every
+  `photo` to have a file, title, alt and caption. The site JPEGs carry no
+  EXIF, so the card states no settings; do not invent them. Only the
+  author's own photographs, copied from the portfolio, under its licence.
+
+## The register
+
+**Written by a novice for other novices and younger photographers**
+(Dermot, 2026-09-13: *I am a novice teaching other novices or younger
+photographers, not claiming to be an expert (yet)*). The lessons are what
+one photographer learned, usually by getting it wrong first; the
+photographs are the frames it was learned on, captioned as such — *the
+frame this stop was learned on*, never *the right answer*. Keep that
+voice: no claims of expertise, no judging register, and where a photograph
+differs from its stop (a different hour, a different animal) the caption
+says so.
+
+**Lessons learned from now on may be worked into the tutorial** (Dermot's
+standing direction, 2026-09-13). When a day in the field adds to or
+corrects an entry in the portfolio's `FIELD-NOTES.md`, or a site rule
+changes, the tutorial may take it up without being asked: a new stop, a
+new option at an existing stop, or a corrected threshold in the model, in
+the same register and with the same discipline — the situation was real,
+the number has a note behind it, and `tools/check.js` still passes. Say
+which note it came from. The tutorial is a work in progress by design and
+may say so.
 
 ## The model, and where its numbers come from
 
@@ -89,15 +120,15 @@ was actually in, and the animals did what they did.
 
 ## Publishing
 
-`.github/workflows/pages.yml` serves `index.html` from GitHub Pages on
-every push to `main` (Dermot's choice, 2026-09-13, over a subdomain of the
+`.github/workflows/pages.yml` serves `index.html` and `images/` from
+GitHub Pages on every push to `main` (Dermot's choice, 2026-09-13, over a subdomain of the
 photography site; a subdomain can point at the same Pages site later with
 a CNAME). CI (`ci.yml`) runs the check on every PR and installs nothing.
 
 ## Licence
 
 Engine MIT (`LICENSE`); the stops, lessons and notes CC BY 4.0
-(`CONTENT-LICENSE.md`), like the demo world of `four-islands-quest`. The
-field notes the lessons restate are the author's own; the photographs
-they were learned on stay in the photography repository and none is
-reproduced here.
+(`CONTENT-LICENSE.md`), like the demo world of `four-islands-quest`; the
+photographs CC BY-NC-ND 4.0 (`LICENSE-PHOTOS.md`), the portfolio's own
+terms, and excluded from the CC BY grant. The field notes the lessons
+restate are the author's own.

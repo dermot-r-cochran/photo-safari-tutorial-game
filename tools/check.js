@@ -72,6 +72,22 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   }
   if (!anyKeeper) fail(id + " has no combination of choices that yields a keeper");
   for (const key of enc.examine || []) if (!S.EXAMINE[key]) fail(id + " looks at " + key + ", which is not in EXAMINE");
+  if (enc.photo) {
+    const ph = enc.photo;
+    if (!/^images\/[a-z0-9-]+\.jpg$/.test(ph.file || "")) fail(id + ": photo file must live under images/: " + ph.file);
+    else {
+      const full = path.join(root, ph.file);
+      if (!fs.existsSync(full)) fail(id + ": photo " + ph.file + " is not in the repository");
+      else if (fs.statSync(full).size > 800 * 1024) fail(id + ": photo " + ph.file + " is over 800 KB — site size is 1600 px, roughly 250–550 KB");
+    }
+    for (const k of ["title", "alt", "caption"]) if (!ph[k]) fail(id + ": photo has no " + k);
+  }
+}
+// every picture in images/ belongs to a stop
+const shown = new Set(Object.values(S.ENCOUNTERS).map((e) => e.photo && e.photo.file).filter(Boolean));
+const imgDir = path.join(root, "images");
+if (fs.existsSync(imgDir)) for (const f of fs.readdirSync(imgDir)) {
+  if (!shown.has("images/" + f)) fail("images/" + f + " is shown at no stop");
 }
 for (const key of Object.keys(S.LESSONS)) if (!lessonsUsed.has(key)) console.log("  warn: lesson " + key + " is never raised");
 for (const key of Object.keys(S.EXAMINE)) {
@@ -93,6 +109,6 @@ for (const r of S.ROUTES) {
   }
 }
 
-console.log(`  ${Object.keys(S.ENCOUNTERS).length} stops, ${frames} frames developed, ${keepers} keepers, ${Object.keys(S.LESSONS).length} lessons`);
+console.log(`  ${Object.keys(S.ENCOUNTERS).length} stops, ${frames} frames developed, ${keepers} keepers, ${Object.keys(S.LESSONS).length} lessons, ${shown.size} photographs`);
 console.log(fails ? `${fails} failure(s)` : "check: ok");
 process.exit(fails ? 1 : 0);

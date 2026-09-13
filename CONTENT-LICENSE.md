@@ -32,6 +32,13 @@ The rulebook summaries are the author's reading of public competition
 rules, written for a game; they are not the rules themselves, and an
 entrant should read the current rules of any competition they enter.
 
+## Photographs — CC BY-NC-ND 4.0
+
+The photographs in `images/`, shown after a stop's verdict as the frame
+the stop was learned on, are **not** part of the CC BY grant above.
+They carry the portfolio's licence, CC BY-NC-ND 4.0 — see
+`LICENSE-PHOTOS.md`.
+
 ## The intended fork path
 
 Fork the engine, then either build on these stops (with attribution,

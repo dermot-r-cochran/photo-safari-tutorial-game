@@ -2,7 +2,7 @@
 
 A tutorial game about wildlife photography, in one file. Open
 `index.html` in any browser — no server, no build, no dependencies, no
-network, no pictures — or play it as served from `main` at
+network — or play it as served from `main` at
 https://dermot-r-cochran.github.io/photo-safari-tutorial-game/ , which is
 the same file and nothing else. Progress saves to that browser's
 localStorage only, per drive.
@@ -17,9 +17,16 @@ wait for the cloud, whether to let the boatman throw the fish — and then
 develops the frame you would have got: sharp or blurred, clean or noisy,
 a keeper or one for the folder, and which competitions it can enter.
 
-There are no photographs. The frame is a verdict in words, the way a
-contact sheet is a set of decisions, and every verdict names the lesson
-behind it.
+The frame is a verdict in words, the way a contact sheet is a set of
+decisions, and every verdict names the lesson behind it. After the
+verdict, at ten of the stops, the page shows the frame the stop was
+learned on — the author's own photograph from that outing — as a
+comparison, never as the answer: your choices may have got you a better
+frame, or a worse one, and the words say which.
+
+This is written by a novice for other novices and for younger
+photographers. Nothing in it is expert opinion. Every lesson was
+learned by getting it wrong first, and the photographs are the evidence.
 
 Three drives:
 
@@ -102,5 +109,8 @@ is not a port of it.
 ## Licence
 
 The engine is MIT (`LICENSE`); the tutorial content — the stops, the
-lessons, the notes — is CC BY 4.0 (`CONTENT-LICENSE.md`). Fork the
-engine and write your own drive; a drive you write is yours alone.
+lessons, the notes — is CC BY 4.0 (`CONTENT-LICENSE.md`); the
+photographs are CC BY-NC-ND 4.0 (`LICENSE-PHOTOS.md`), the portfolio's
+own terms. Fork the engine and write your own drive; a drive you write
+is yours alone, and a fork that drops the pictures loses nothing the
+game needs.
