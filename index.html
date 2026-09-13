@@ -58,6 +58,8 @@
   .chosen { color: var(--earth); font-style: italic; margin: 1rem 0 0.2rem; }
   .chosen::before { content: "➤ "; }
   .examined, .rulebook { color: var(--dim); }
+  .rulebook a { color: var(--earth); }
+  abbr[title] { text-decoration: underline dotted; cursor: help; }
   .examined p, .rulebook p { margin: 0.5rem 0; }
   .prompt { margin: 1rem 0 0.3rem; font-weight: bold; }
   .frame {
@@ -1278,7 +1280,8 @@ const EXAMINE = {
    eligibility(), and every rule stated here is one it applies. */
 const RULEBOOKS = {
   DCC: {
-    name: "Camera club open competition",
+    name: "Dublin Camera Club open competition",
+    url: "https://dublincameraclub.ie/",
     text: [
       "Any subject. Wholly the entrant's own work; composites allowed if " +
       "every component is theirs. Nearly every frame qualifies. What " +
@@ -1287,7 +1290,8 @@ const RULEBOOKS = {
     ]
   },
   WNPA: {
-    name: "World nature awards",
+    name: "World Nature Photography Awards",
+    url: "https://www.worldnaturephotographyawards.com/",
     text: [
       "Nature subjects only. No captive or restrained animals; no " +
       "composites, no adding or removing objects; no baiting. Built " +
@@ -1297,7 +1301,8 @@ const RULEBOOKS = {
     ]
   },
   "IPF-Nature": {
-    name: "Federation nature section",
+    name: "Irish Photographic Federation, nature section",
+    url: "https://irishphoto.ie/",
     text: [
       "The strictest book. No human elements at all — vehicles, tracks, " +
       "buildings, balloons, boats disqualify — except a small, " +
@@ -1309,7 +1314,8 @@ const RULEBOOKS = {
     ]
   },
   "IPF-Wildlife": {
-    name: "Federation wildlife section",
+    name: "Irish Photographic Federation, wildlife section",
+    url: "https://irishphoto.ie/",
     text: [
       "Everything the nature section asks, and the subject must be a " +
       "zoological one living wild and free. A captive animal may appear " +
@@ -1715,6 +1721,20 @@ function boot() {
     return div;
   }
 
+  /* A competition tag as an abbreviation that expands to the rulebook's
+     full name, so a reader who has never met "IPF" is told. */
+  function tagNodes(tags) {
+    const frag = document.createDocumentFragment();
+    tags.forEach((tag, i) => {
+      const ab = document.createElement("abbr");
+      ab.textContent = tag;
+      ab.title = RULEBOOKS[tag] ? RULEBOOKS[tag].name : tag;
+      frag.appendChild(ab);
+      if (i < tags.length - 1) frag.appendChild(document.createTextNode(", "));
+    });
+    return frag;
+  }
+
   function renderFrame(t, entry) {
     const e = enc(entry.stop);
     const r = develop(e, entry.choices);
@@ -1744,8 +1764,12 @@ function boot() {
     }
     const filed = document.createElement("p");
     filed.className = "filed";
-    filed.textContent = r.unpublishable ? "Filed as: not published." :
-      "Filed as: " + r.category + " · " + (r.tags.length ? r.tags.join(", ") : "no competitions");
+    if (r.unpublishable) filed.textContent = "Filed as: not published.";
+    else {
+      filed.textContent = "Filed as: " + r.category + " · ";
+      if (r.tags.length) filed.appendChild(tagNodes(r.tags));
+      else filed.appendChild(document.createTextNode("no competitions"));
+    }
     box.appendChild(filed);
     if (r.keeper && e.note) {
       const n = document.createElement("p");
@@ -1820,9 +1844,20 @@ function boot() {
       if (!r) return null;
       const h = document.createElement("div");
       h.className = "stop-title";
-      h.textContent = r.name + " (" + entry.key + ")";
+      h.textContent = entry.key + " — " + r.name;
       t.appendChild(h);
-      addParas(t, r.text, "rulebook");
+      const div = addParas(t, r.text, "rulebook");
+      if (r.url) {
+        const p = document.createElement("p");
+        p.appendChild(document.createTextNode("The rules themselves: "));
+        const a = document.createElement("a");
+        a.href = r.url;
+        a.textContent = r.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+        a.rel = "noopener";
+        p.appendChild(a);
+        p.appendChild(document.createTextNode(". This card is one reader's summary, written for a game; read the current rules before entering."));
+        div.appendChild(p);
+      }
       return h;
     } else if (entry.kind === "frame") {
       return renderFrame(t, entry);
@@ -1909,7 +1944,8 @@ function boot() {
       if (r.tags.length) {
         const span = document.createElement("span");
         span.className = "tags";
-        span.textContent = " · " + r.category + " · " + r.tags.join(", ");
+        span.textContent = " · " + r.category + " · ";
+        span.appendChild(tagNodes(r.tags));
         li.appendChild(span);
       }
       ul.appendChild(li);
@@ -1930,7 +1966,7 @@ function boot() {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "list-btn";
-      btn.textContent = RULEBOOKS[key].name;
+      btn.textContent = key + " — " + RULEBOOKS[key].name;
       btn.addEventListener("click", () => showRulebook(key));
       box.appendChild(btn);
     }
@@ -1957,8 +1993,11 @@ function boot() {
     const tally = {};
     for (const f of frames) for (const t of f.tags) tally[t] = (tally[t] || 0) + 1;
     const p = document.createElement("p");
-    p.textContent = frames.length + " frames, " + kept + " keeper" + (kept === 1 ? "" : "s") + ". " +
-      "Eligible: " + Object.keys(RULEBOOKS).map((k) => k + " " + (tally[k] || 0)).join(", ") + ".";
+    p.textContent = frames.length + " frames, " + kept + " keeper" + (kept === 1 ? "" : "s") + ". Eligible: ";
+    Object.keys(RULEBOOKS).forEach((k, i, arr) => {
+      p.appendChild(tagNodes([k]));
+      p.appendChild(document.createTextNode(" " + (tally[k] || 0) + (i < arr.length - 1 ? ", " : ".")));
+    });
     card.appendChild(p);
     for (const t of r.end.text) {
       const el = document.createElement("p");

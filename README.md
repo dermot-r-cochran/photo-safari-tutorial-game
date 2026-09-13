@@ -66,12 +66,18 @@ into the game as they were learned:
   balloon, a feeding rail, three people on a far vehicle, a numbered leg
   ring — and what each does to the frame's category and to its
   competition eligibility, which are different questions.
-- **The rulebooks**, which disagree with each other on purpose: a camera
-  club's open competition, the world nature awards (no captive animals,
-  no baiting, but built environments and feral animals allowed) and the
-  federation's nature and wildlife sections (no human element at all,
+- **The rulebooks**, which disagree with each other on purpose. The
+  game tags every frame with the competitions it could enter, by the
+  short names the author's portfolio uses: **DCC**, Dublin Camera Club's
+  open competition (any subject, wholly your own work); **WNPA**, the
+  World Nature Photography Awards (no captive animals, no baiting, but
+  built environments and feral animals allowed); and **IPF-Nature** and
+  **IPF-Wildlife**, the Irish Photographic Federation's nature and
+  wildlife sections under the FIAP definitions (no human element at all,
   except a scientific ring; no feral animals; wild and free for the
-  wildlife section).
+  wildlife section). Each tag expands to its full name on the page, and
+  each rulebook card links to the rules themselves — the cards are one
+  reader's summary written for a game, not the rules.
 - **Ethics that the picture cannot show.** A baited eagle, a captive
   giraffe, a mating pair, a driver asked to leave the track, a
   recognisable stranger — and the note each frame must carry, or the
