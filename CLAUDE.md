@@ -58,6 +58,16 @@ voice: no claims of expertise, no judging register, and where a photograph
 differs from its stop (a different hour, a different animal) the caption
 says so.
 
+**Lessons learned from now on may be worked into the tutorial** (Dermot's
+standing direction, 2026-09-13). When a day in the field adds to or
+corrects an entry in the portfolio's `FIELD-NOTES.md`, or a site rule
+changes, the tutorial may take it up without being asked: a new stop, a
+new option at an existing stop, or a corrected threshold in the model, in
+the same register and with the same discipline — the situation was real,
+the number has a note behind it, and `tools/check.js` still passes. Say
+which note it came from. The tutorial is a work in progress by design and
+may say so.
+
 ## The model, and where its numbers come from
 
 The engine's pure section (`assemble`, `expose`, `develop`, `eligibility`)
