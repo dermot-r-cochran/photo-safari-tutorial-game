@@ -28,6 +28,16 @@ This is written by a novice for other novices and for younger
 photographers. Nothing in it is expert opinion. Every lesson was
 learned by getting it wrong first, and the photographs are the evidence.
 
+**The camera is the author's own**, and the numbers are its numbers: an
+older Nikon crop-sensor DSLR, 14 megapixels, with an 18–400 mm zoom and
+a 70 mm macro. The lessons were learned on that body's thresholds —
+where its ISO gets noisy, where its pixels diffract, that it has a
+mirror and no lock-up for it — and they may not carry to yours. A
+newer body is cleaner at high ISO, may have no mirror at all, and may
+call the vivid setting a picture style or a film simulation. The
+decisions generalise; the thresholds are the ones to check against your
+own camera's manual and your own frames.
+
 Three drives:
 
 - **The safari drive** — eleven stops on the Mara and at Amboseli, first
@@ -66,12 +76,18 @@ into the game as they were learned:
   balloon, a feeding rail, three people on a far vehicle, a numbered leg
   ring — and what each does to the frame's category and to its
   competition eligibility, which are different questions.
-- **The rulebooks**, which disagree with each other on purpose: a camera
-  club's open competition, the world nature awards (no captive animals,
-  no baiting, but built environments and feral animals allowed) and the
-  federation's nature and wildlife sections (no human element at all,
+- **The rulebooks**, which disagree with each other on purpose. The
+  game tags every frame with the competitions it could enter, by the
+  short names the author's portfolio uses: **DCC**, Dublin Camera Club's
+  open competition (any subject, wholly your own work); **WNPA**, the
+  World Nature Photography Awards (no captive animals, no baiting, but
+  built environments and feral animals allowed); and **IPF-Nature** and
+  **IPF-Wildlife**, the Irish Photographic Federation's nature and
+  wildlife sections under the FIAP definitions (no human element at all,
   except a scientific ring; no feral animals; wild and free for the
-  wildlife section).
+  wildlife section). Each tag expands to its full name on the page, and
+  each rulebook card links to the rules themselves — the cards are one
+  reader's summary written for a game, not the rules.
 - **Ethics that the picture cannot show.** A baited eagle, a captive
   giraffe, a mating pair, a driver asked to leave the track, a
   recognisable stranger — and the note each frame must carry, or the
