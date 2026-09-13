@@ -176,6 +176,12 @@
    worse, and 3200 is a last resort. */
 const CAMERA = {
   body: "a 14-megapixel crop-sensor DSLR",
+  caveat: "The camera in this game is the author's own: an older Nikon " +
+    "crop-sensor DSLR with an 18–400 mm zoom and a 70 mm macro. The " +
+    "numbers are its numbers. A newer body is cleaner at high ISO, may " +
+    "have mirror lock-up or no mirror at all, and may call the vivid " +
+    "setting a picture style or a film simulation. The decisions carry " +
+    "over; the thresholds may not.",
   cropFactor: 1.5,
   coc: 0.02,            // circle of confusion, mm, for depth of field
   stabiliserStops: 2,   // what the zoom's stabiliser buys, hand-held
@@ -1929,6 +1935,11 @@ function boot() {
       p.appendChild(document.createTextNode(v));
       box.appendChild(p);
     }
+    const cav = document.createElement("p");
+    cav.style.margin = "0.6rem 0 0";
+    cav.style.fontStyle = "italic";
+    cav.textContent = CAMERA.caveat;
+    box.appendChild(cav);
   }
 
   function renderSheet() {

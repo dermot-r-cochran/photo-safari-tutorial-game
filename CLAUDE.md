@@ -106,6 +106,16 @@ here as tutorial content:
 
 Change a threshold only when the field notes change; say which note.
 
+**The numbers are one camera's** (Dermot, 2026-09-13: *my tutorial
+instructions are specific to my own range of Nikon cameras and might not
+generalize*). The game says so on the Camera card (`CAMERA.caveat`) and in
+the README rather than pretending otherwise: the thresholds belong to the
+author's older Nikon crop-sensor body, the decisions carry over, and a
+reader with another camera checks the thresholds against their own. Keep
+that caveat visible; don't generalise a number to make it sound universal,
+and where a term is Nikon's (*picture control*, *vivid*) say what other
+makers call it.
+
 ## Adding a stop
 
 Add an entry to `ENCOUNTERS` (light, subject, frame, presences, examine,

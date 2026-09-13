@@ -28,6 +28,16 @@ This is written by a novice for other novices and for younger
 photographers. Nothing in it is expert opinion. Every lesson was
 learned by getting it wrong first, and the photographs are the evidence.
 
+**The camera is the author's own**, and the numbers are its numbers: an
+older Nikon crop-sensor DSLR, 14 megapixels, with an 18–400 mm zoom and
+a 70 mm macro. The lessons were learned on that body's thresholds —
+where its ISO gets noisy, where its pixels diffract, that it has a
+mirror and no lock-up for it — and they may not carry to yours. A
+newer body is cleaner at high ISO, may have no mirror at all, and may
+call the vivid setting a picture style or a film simulation. The
+decisions generalise; the thresholds are the ones to check against your
+own camera's manual and your own frames.
+
 Three drives:
 
 - **The safari drive** — eleven stops on the Mara and at Amboseli, first
