@@ -14,10 +14,11 @@ against three competition rulebooks. Progress saves to localStorage.
 
 It began on 2026-09-13 as *a new photo safari tutorial game based on ideas
 from several existing repos* (Dermot's direction), after a prototype made
-elsewhere with its own limits. It is not a port of that prototype; the
-prototype lives on as the video-game version of the tutorial at
-https://photo-tutorial.grok.me/ , linked from the About card and the
-README (Dermot's ask, 2026-09-13).
+elsewhere with its own limits. It is not a port of that prototype. A link
+to the prototype (photo-tutorial.grok.me) sat on the About card and in the
+README for one day, 2026-09-13, and came out on 2026-09-14 at Dermot's
+direction: the Grok version is more visual but too simplistic, so this
+tutorial does not point at it.
 
 ## The prime directive
 
