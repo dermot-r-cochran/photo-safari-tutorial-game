@@ -157,9 +157,10 @@
     <p style="margin:0.6rem 0 0">Written by a novice for other novices:
        every lesson here was learned by getting it wrong first, and the
        photographs are the frames it was learned on.</p>
-    <p style="margin:0.6rem 0 0">A keeper would go on the site. A frame
-       for the folder is kept, not shown, and is where the lessons come
-       from.</p>
+    <p style="margin:0.6rem 0 0">A keeper would go on the site and is
+       tagged with the competitions it could enter. A frame for the
+       folder is kept, not shown, entered nowhere, and is where the
+       lessons come from.</p>
     <button id="restart" type="button" style="margin-top:0.6rem">
       Restart this drive</button>
   </div>
@@ -1377,9 +1378,10 @@ const RULEBOOKS = {
     url: "https://dublincameraclub.ie/",
     text: [
       "Any subject. Wholly the entrant's own work; composites allowed if " +
-      "every component is theirs. Nearly every frame qualifies. What " +
-      "rules a frame out is not the rulebook but the site: a recognisable " +
-      "person, or a mating sequence, does not get published at all."
+      "every component is theirs. Nearly every keeper qualifies. What " +
+      "rules a frame out is not the rulebook but the site: a frame for " +
+      "the folder is entered nowhere, and a recognisable person, or a " +
+      "mating sequence, does not get published at all."
     ]
   },
   WNPA: {
@@ -1734,13 +1736,16 @@ function develop(enc, choices) {
   else if (frame.kind === "plant") category = mag >= 1 ? "Macro" : "Nature";
   else if (frame.built) category = "Urban Wildlife";
   else category = documentary ? "Documentary" : "Wildlife";
-  const tags = eligibility({ frame, humanIn, category, unpublishable });
   const keeper = !fatal && !unpublishable;
+  const tags = eligibility({ frame, humanIn, keeper });
   return { settings, subject, light, frame, exposure: ex, dof, findings, category, tags, keeper, unpublishable };
 }
 
-function eligibility({ frame, humanIn, category, unpublishable }) {
-  if (unpublishable) return [];
+/* Only a keeper is tagged. A frame for the folder is not entered
+   anywhere, whatever the rulebooks would have said of it, so it carries no
+   tags — the verdict says what sank it, and that is the whole lesson. */
+function eligibility({ frame, humanIn, keeper }) {
+  if (!keeper) return [];
   const tags = ["DCC"];
   const nature = frame.kind !== "documentary";
   if (nature && !frame.captive && !frame.baited) tags.push("WNPA");
@@ -1896,6 +1901,7 @@ function boot() {
     const filed = document.createElement("p");
     filed.className = "filed";
     if (r.unpublishable) filed.textContent = "Filed as: not published.";
+    else if (!r.keeper) filed.textContent = "Filed as: " + r.category + " · entered nowhere; a frame for the folder is not tagged.";
     else {
       filed.textContent = "Filed as: " + r.category + " · ";
       if (r.tags.length) filed.appendChild(tagNodes(r.tags));
@@ -2140,11 +2146,12 @@ function boot() {
         .map((f) => LESSONS[f.key] ? LESSONS[f.key].title.toLowerCase() : f.key);
       li.textContent = e.title + " — " + scoreLine(r, strokesAt(h.stop)) +
         (causes.length ? " (" + causes.join(", ") + ")" : "");
-      if (r.tags.length) {
+      // the category for any frame the site could show; tags only for a keeper
+      if (!r.unpublishable) {
         const span = document.createElement("span");
         span.className = "tags";
-        span.textContent = " · " + r.category + " · ";
-        span.appendChild(tagNodes(r.tags));
+        span.textContent = " · " + r.category + (r.tags.length ? " · " : "");
+        if (r.tags.length) span.appendChild(tagNodes(r.tags));
         li.appendChild(span);
       }
       ul.appendChild(li);
