@@ -15,7 +15,8 @@ against the sun. The game puts to you the choices a photographer makes
 in the field — what to expose for, which mode, how tight, whether to
 wait for the cloud, whether to let the boatman throw the fish — and then
 develops the frame you would have got: sharp or blurred, clean or noisy,
-a keeper or one for the folder, and which competitions it can enter.
+a keeper or one for the folder, and, if a keeper, which competitions it
+can enter.
 
 The frame is a verdict in words, the way a contact sheet is a set of
 decisions, and every verdict names the lesson behind it. Every step is a
@@ -83,7 +84,7 @@ into the game as they were learned:
   ring — and what each does to the frame's category and to its
   competition eligibility, which are different questions.
 - **The rulebooks**, which disagree with each other on purpose. The
-  game tags every frame with the competitions it could enter, by the
+  game tags every keeper with the competitions it could enter, by the
   short names the author's portfolio uses: **DCC**, Dublin Camera Club's
   open competition (any subject, wholly your own work); **WNPA**, the
   World Nature Photography Awards (no captive animals, no baiting, but
@@ -93,7 +94,9 @@ into the game as they were learned:
   except a scientific ring; no feral animals; wild and free for the
   wildlife section). Each tag expands to its full name on the page, and
   each rulebook card links to the rules themselves — the cards are one
-  reader's summary written for a game, not the rules.
+  reader's summary written for a game, not the rules. A frame that is
+  not a keeper carries no tags: it is entered nowhere, so what the
+  rulebooks would have said of it is beside the point.
 - **Ethics that the picture cannot show.** A baited eagle, a captive
   giraffe, a mating pair, a driver asked to leave the track, a
   recognisable stranger — and the note each frame must carry, or the

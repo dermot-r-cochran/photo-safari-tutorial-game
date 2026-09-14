@@ -9,8 +9,9 @@ A one-file browser tutorial game about wildlife photography. Open
 `index.html` in any browser: no server, no build, no dependencies, no
 network, no framework, no pictures. The player makes the decisions a
 photographer makes in the field and the page develops the frame they would
-have got, names the lessons, files the frame under a category and tags it
-against three competition rulebooks. Progress saves to localStorage.
+have got, names the lessons, files the frame under a category and, if it
+is a keeper, tags it against three competition rulebooks. Progress saves
+to localStorage.
 
 It began on 2026-09-13 as *a new photo safari tutorial game based on ideas
 from several existing repos* (Dermot's direction), after a prototype made
@@ -169,10 +170,22 @@ same names in brackets. A new finding that should sink a frame is added
 with `"sinks"` (or `"bars"`), never by setting the flag beside it; the
 check fails a non-keeper with no such finding and a keeper with one.
 
+**A frame that is not a keeper is tagged for nothing** (Dermot's
+direction, 2026-09-14: *if an image is not a keeper then do not suggest
+competition tags*). `eligibility()` returns no tags unless the frame is a
+keeper; the verdict's *Filed as* line keeps the category and says the
+frame is entered nowhere, the contact sheet shows the category without
+tags, and the endcard's eligible counts are therefore counts of keepers.
+Until this ruling only a frame barred from the site lost its tags, so a
+motion-blurred lion still read as eligible for four competitions. The
+check fails a non-keeper carrying a tag, and a keeper without DCC, since
+the open competition takes any keeper.
+
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a
 lesson and every tag to a rulebook, refuses a decision with a single
-option, and holds every non-keeper to a finding that says why. Prose is general-audience, in the
+option, holds every non-keeper to a finding that says why, and holds
+every non-keeper to no tags at all. Prose is general-audience, in the
 register of the existing stops; every situation so far is one the author
 was actually in, and the animals did what they did.
 
