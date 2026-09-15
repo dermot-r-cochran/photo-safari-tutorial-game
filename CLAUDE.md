@@ -38,7 +38,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Nine stops
+- **The verdict is words; a photograph comes only after it.** Eleven stops
   carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -50,6 +50,17 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   `photo` to have a file, title, alt and caption. The site JPEGs carry no
   EXIF, so the card states no settings; do not invent them. Only the
   author's own photographs, copied from the portfolio, under its licence.
+- **A stop may carry a `miss` beside its `photo`** (Dermot's direction,
+  2026-09-15: his photographs, *especially the near-miss failures*, may be
+  reused in the tutorial, *especially if there are both positive and
+  negative examples of the same scenario*). The miss is the author's own
+  frame of the same scenario got wrong; the two render side by side after
+  the verdict, the miss first under *The frame this stop was got wrong on*,
+  and a miss never stands without the photo it answers (the check holds
+  both). A miss may come straight from the archive, unpublished, at site
+  size, under the same licence; its caption may state the settings it was
+  taken at, because the point of it is the settings. The first pair is
+  `sixtieth`: the 1/60 s dawn run at Nairobi beside *The Break*.
   **A stop carries a photograph only if the frame reads on the card**
   (Dermot, 2026-09-15: *drop the photo from the balloon stop* — the
   balloon was a speck in a flat sky, so the stop now has no card; ten

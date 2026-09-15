@@ -105,6 +105,9 @@
   }
   .author-frame figcaption { color: var(--dim); font-size: 0.95em; margin-top: 0.4rem; }
   .author-frame figcaption b { color: var(--earth); }
+  .frame-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+  .frame-pair .author-frame { margin-top: 1rem; }
+  @media (max-width: 640px) { .frame-pair { grid-template-columns: 1fr; } }
   #endcard {
     border: 1px solid var(--grass); border-radius: 8px;
     background: var(--panel); padding: 1rem 1.2rem; margin-top: 1.6rem;
@@ -439,6 +442,93 @@ const ENCOUNTERS = {
     ]
   },
 
+  sixtieth: {
+    stop: "07:25", place: "Nairobi National Park, first light through haze",
+    title: "The dawn run at a sixtieth",
+    light: { ev: 11, label: "first light through the city's haze, the sun not yet on the grass" },
+    subject: { name: "a group of Thomson's gazelles, about to run", motion: "running", distance: 60, depth: 1.5 },
+    frame: { kind: "wildlife", tells: [{ label: "the railway viaduct", excludable: true }], horizon: true },
+    presences: ["the gazelles", "the viaduct, in haze", "the driver, engine running"],
+    examine: ["light", "gazelles", "viaduct"],
+    enter: [
+      "The first drive of the trip, an hour after the gate. A group of " +
+      "Thomson's gazelles stood in the long grass with their heads up, " +
+      "the way gazelles stand in the second before they are somewhere " +
+      "else. Behind them, on concrete piers across the whole plain, the " +
+      "railway to Mombasa ran through the haze.",
+      "The light was lovely and there was not much of it, and the engine " +
+      "was running under you. The camera was still on yesterday's " +
+      "setting, whatever that was."
+    ],
+    decisions: [
+      {
+        id: "framing", prompt: "What goes in the frame?",
+        options: [
+          {
+            label: "The gazelles with the viaduct behind them. It is part of the place.",
+            text: ["You kept the viaduct. A wild animal under a railway, " +
+                   "which is what the park is now."],
+            frame: { framing: "loose" }
+          },
+          {
+            label: "Tight on the animals, the grass and nothing built.",
+            text: ["You dropped the horizon and took the animals against " +
+                   "the grass alone."],
+            frame: { framing: "tight" }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "And the camera?",
+        options: [
+          {
+            label: "The walking-around setting.",
+            text: ["A, f/8, Auto ISO to 800, with the 1/250 s floor under " +
+                   "the shutter. The camera reached the cap and the floor " +
+                   "at about the same moment. The gazelles went."],
+            settings: "walkAround"
+          },
+          {
+            label: "The walking-around setting, with the shutter floor off. Keep the ISO down; the light is lovely.",
+            text: ["You took the floor out so the ISO would stay low. The " +
+                   "camera, doing as it was told, kept the ISO low and " +
+                   "found the exposure the only other way it had. The " +
+                   "gazelles went."],
+            settings: "walkAround", set: { minShutter: 1 / 60 }
+          },
+          {
+            label: "The shooting-birds setting. They are about to run, and a run is a bird.",
+            text: ["S, 1/2000 s. The ISO went to its cap and the lens to " +
+                   "its widest, and the frame came out a stop and a bit " +
+                   "dark and full of grain. The gazelles went, and the " +
+                   "frame has them going."],
+            settings: "birds"
+          }
+        ]
+      }
+    ],
+    miss: { file: "images/gazelles-at-a-sixtieth.jpg", title: "Gazelles at a Sixtieth",
+            alt: "A single Thomson's gazelle turning away in long grass, everything in the frame soft with motion, the piers and deck of a railway viaduct blurred in haze behind",
+            caption: "1/60 s at 400 mm, from a vehicle with the engine running, aperture priority with no floor under the shutter and the ISO kept at 100. Nothing in it is sharp. Six frames like it were later stacked into a composite that did not survive on the site either." },
+    photo: { file: "images/the-break.jpg", title: "The Break",
+             alt: "Six Thomson's gazelles breaking into a run across dry grass, two of them crossing in mid-stride at the centre, one bounding towards the camera, three more scattering along the top of the frame",
+             caption: "Two days later at Amboseli, in full afternoon sun: the shooting-birds setting, 1/4000 s, and the run stopped mid-stride. In the dawn light of this stop the same setting would have made a grainier frame, and still a sharp one." },
+    note: "The viaduct carries the standard-gauge railway from Mombasa to " +
+          "Nairobi across the park on piers, so that the animals can pass " +
+          "under it; the gazelles pay it no attention at all. The whole " +
+          "of that first morning was shot at a sixtieth, because the " +
+          "shutter floor had never been set on this body and nobody looked.",
+    afterword: [
+      "A moving animal sets the shutter; nothing else gets a say. A " +
+      "sixtieth on a 400 mm lens from a running engine is a blur of " +
+      "whatever is in front of it, and Auto ISO left to itself will " +
+      "choose that blur every time, because a dark frame looks like a " +
+      "mistake to the meter and a soft one does not. The floor under the " +
+      "shutter is the setting that stops it. The frame this was learned on " +
+      "sits below, beside the one from two days later where the " +
+      "shutter was set first."
+    ]
+  },
   roller: {
     stop: "08:00", place: "the Mara, a thorn tree by the track",
     title: "Lilac-breasted roller",
@@ -1254,6 +1344,18 @@ const EXAMINE = {
     text: () => "Backlit, so its edge is a rim of light and its body is a " +
       "shape. It will walk; topi always walk. About sixty metres."
   },
+  gazelles: {
+    label: "the gazelles",
+    text: () => "Heads up, ears forward, all facing the same way: the " +
+      "second before a run. About sixty metres, and they will not be " +
+      "there for a third frame."
+  },
+  viaduct: {
+    label: "the viaduct",
+    text: () => "Concrete piers and a deck, right across the frame behind " +
+      "them, softened by the haze but plainly built. In or out is a " +
+      "framing choice, and it decides which rulebooks the frame can enter."
+  },
   balloon: {
     label: "the balloon",
     text: () => "Orange, drifting, and unmistakably built by someone. It " +
@@ -1490,7 +1592,7 @@ const ROUTES = [
     id: "safari", noun: "drive",
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
-    stops: ["topi", "balloon", "lion", "roller", "vultures", "hyena",
+    stops: ["topi", "balloon", "lion", "sixtieth", "roller", "vultures", "hyena",
             "kilimanjaro", "naivasha", "giraffe", "pair", "dusk"],
     end: {
       title: "End of the day",
@@ -1915,16 +2017,25 @@ function boot() {
       box.appendChild(n);
     }
     if (e.afterword) addParas(box, e.afterword, "prose");
-    if (e.photo) box.appendChild(renderPhoto(e.photo));
+    if (e.miss && e.photo) {
+      const pair = document.createElement("div");
+      pair.className = "frame-pair";
+      pair.appendChild(renderPhoto(e.miss, "The frame this stop was got wrong on"));
+      pair.appendChild(renderPhoto(e.photo));
+      box.appendChild(pair);
+    } else if (e.photo) box.appendChild(renderPhoto(e.photo));
     t.appendChild(box);
     return box;
   }
 
   /* The frame a stop was learned on: the author's own photograph, shown
      only after the player's verdict so it is a comparison and never the
+     answer. A stop may also carry a `miss` — the author's frame of the
+     same scenario got wrong — and then the two render side by side, the
+     miss first, under their own leads. The rest of the comment stands:
      answer. The page works without the file — a missing picture hides
      its own card. */
-  function renderPhoto(photo) {
+  function renderPhoto(photo, lead) {
     const fig = document.createElement("figure");
     fig.className = "author-frame";
     const img = document.createElement("img");
@@ -1935,7 +2046,7 @@ function boot() {
     fig.appendChild(img);
     const cap = document.createElement("figcaption");
     const b = document.createElement("b");
-    b.textContent = "The frame this stop was learned on — " + photo.title + ". ";
+    b.textContent = (lead || "The frame this stop was learned on") + " — " + photo.title + ". ";
     cap.appendChild(b);
     cap.appendChild(document.createTextNode(photo.caption));
     fig.appendChild(cap);
