@@ -907,7 +907,7 @@ const ENCOUNTERS = {
     ],
     photo: { file: "images/fish-eagle-with-a-catch.jpg", title: "Fish Eagle with a Catch",
              alt: "An African fish eagle lifting away from the surface of the lake with a fish gripped in its talons, wings fully spread, water streaming from its feet",
-             caption: "The thrown fish. No competition tags, and a note on the site that says why." },
+             caption: "The thrown fish. Tagged for the club's open competition only, and a note on the site that says why." },
     note: "The eagles along this stretch of the lake know the boats and " +
           "come to them; when a fish is thrown, the stoop and the catch are " +
           "the bird's own but the opportunity was arranged, and the picture " +
@@ -917,8 +917,9 @@ const ENCOUNTERS = {
       "A baited encounter is a real bird doing a real thing for an " +
       "arranged reason. The picture is yours to keep and to show; what it " +
       "cannot do is enter a nature or a wildlife competition — baiting " +
-      "is barred in both, everywhere the author has looked — and what it " +
-      "must do is carry a note that says how it was got. And a white head in " +
+      "is barred in both, everywhere the author has looked, the club's " +
+      "own nature rounds included; the open competition still takes it — " +
+      "and what it must do is carry a note that says how it was got. And a white head in " +
       "sunlight is where vivid clips first — the calmer picture control " +
       "keeps the feather detail a judge looks for."
     ]
@@ -1483,7 +1484,10 @@ const RULEBOOKS = {
       "every component is theirs. Nearly every keeper qualifies. What " +
       "rules a frame out is not the rulebook but the site: a frame for " +
       "the folder is entered nowhere, and a recognisable person, or a " +
-      "mating sequence, does not get published at all."
+      "mating sequence, does not get published at all. This is the open " +
+      "competition: the club's nature rounds run on the federation's " +
+      "definitions, so a baited or captive frame that qualifies here " +
+      "qualifies here only."
     ]
   },
   WNPA: {
@@ -1545,7 +1549,7 @@ const LESSONS = {
   tell: { title: "A human element in frame", text: "{tell} is in the frame. The world awards do not mind; the federation's nature and wildlife sections do. A frame that keeps it is still a picture — it just files elsewhere." },
   tellExcluded: { title: "The tell is out of the frame", text: "{tell} lies outside the edge of this framing, so nothing built is in the picture and the federation's sections stay open. Walk the frame for tells before pressing, not after." },
   ring: { title: "A ring is allowed", text: "Scientific tags, collars and bands are specifically permitted by the nature definition. Do not under-claim on a ring." },
-  baited: { title: "Baited", text: "The opportunity was arranged, so the frame is out of every nature and wildlife competition, whatever it shows — the world awards, the federation's nature section and its wildlife section alike; the open competition is the one that remains. It is still yours to show; it must carry a note that says how it was got, because the picture cannot." },
+  baited: { title: "Baited", text: "The opportunity was arranged, so the frame is out of every nature and wildlife competition, whatever it shows — the world awards, the federation's nature section and its wildlife section, and the club's own nature competitions, which run on the same definitions; the club's open competition is the one that remains. It is still yours to show, filed as wildlife; it must carry a note that says how it was got, because the picture cannot." },
   captive: { title: "Captive", text: "A captive animal is out of the world awards and out of the federation's wildlife section, however wild the frame looks. Tag it honestly." },
   feral: { title: "Feral", text: "A free-living animal descended from domestic stock qualifies for the world awards, which ban only captive and restrained animals, and not for the federation's nature sections, which exclude feral and domestic animals. Same picture, different tags." },
   people: { title: "A recognisable person", text: "No recognisable person goes on the site. The frame is deleted, blurred or cropped — and cropping is usually the honest one, because it changes nothing about the pixels that remain." },
@@ -1848,6 +1852,10 @@ function develop(enc, choices) {
    tags — the verdict says what sank it, and that is the whole lesson. */
 function eligibility({ frame, humanIn, keeper }) {
   if (!keeper) return [];
+  // The club's open competition takes any subject, a baited or captive
+  // frame included; its nature competitions run on the federation's
+  // definitions and are covered by the IPF tags (the author's ruling,
+  // 2026-09-15: allowed in the open, not in nature).
   const tags = ["DCC"];
   const nature = frame.kind !== "documentary";
   if (nature && !frame.captive && !frame.baited) tags.push("WNPA");

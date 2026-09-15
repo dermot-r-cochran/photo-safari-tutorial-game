@@ -118,8 +118,10 @@ here as tutorial content:
 - Category: what the subject is, not what it lies on — a wild lion on a
   track is Wildlife; a balloon, a rail or distant watchers make a frame
   Documentary; a plant is Macro at 1:1 and Nature below it.
-- Eligibility, by rulebook: the camera club takes anything that is the
-  entrant's own work; the world nature awards bar captive animals and
+- Eligibility, by rulebook: the camera club's open competition takes
+  anything that is the entrant's own work (its nature rounds follow the
+  federation's definitions, so `DCC` is the open competition only — Dermot,
+  2026-09-15: a baited eagle is allowed in DCC open but not DCC nature); the world nature awards bar captive animals and
   baiting but not built environments, feral animals or gardens; the
   federation's nature section bars any human element except a scientific
   ring, plus cultivated plants, feral and domestic animals and baiting; its
