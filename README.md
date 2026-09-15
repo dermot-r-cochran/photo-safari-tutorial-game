@@ -26,7 +26,7 @@ stop again before driving on; the contact sheet keeps the last frame you
 pressed and scores the drive like golf: every press of the shutter is a
 stroke, a keeper first time is the hole in one, and par is a keeper first
 time at every stop. After the
-verdict, at eleven of the stops, the page shows the frame the stop was
+verdict, at twelve of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
 frame, or a worse one, and the words say which. At one stop so far the

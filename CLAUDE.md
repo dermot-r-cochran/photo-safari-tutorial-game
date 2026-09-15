@@ -38,7 +38,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Eleven stops
+- **The verdict is words; a photograph comes only after it.** Twelve stops
   carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -61,6 +61,12 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   size, under the same licence; its caption may state the settings it was
   taken at, because the point of it is the settings. The first pair is
   `sixtieth`: the 1/60 s dawn run at Nairobi beside *The Break*.
+- **A card may disagree with its stop's verdict**, as long as the caption
+  says so (Dermot, 2026-09-15, on *Two and a Half Seconds* at the `woodland`
+  stop: "I like the two-and-a-half-seconds as a creative shot despite the
+  blur"). The verdict is the rule for the picture the stop is about; the
+  card can show what the author kept when the rule was broken on purpose,
+  and the caption names the tension rather than hiding it.
   **A stop carries a photograph only if the frame reads on the card**
   (Dermot, 2026-09-15: *drop the photo from the balloon stop* — the
   balloon was a speck in a flat sky, so the stop now has no card; ten
