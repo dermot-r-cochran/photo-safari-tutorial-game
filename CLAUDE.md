@@ -38,7 +38,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Ten stops
+- **The verdict is words; a photograph comes only after it.** Nine stops
   carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -50,6 +50,12 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   `photo` to have a file, title, alt and caption. The site JPEGs carry no
   EXIF, so the card states no settings; do not invent them. Only the
   author's own photographs, copied from the portfolio, under its licence.
+  **A stop carries a photograph only if the frame reads on the card**
+  (Dermot, 2026-09-15: *drop the photo from the balloon stop* — the
+  balloon was a speck in a flat sky, so the stop now has no card; ten
+  stops carried one until then). A frame that was learned on but does
+  not show its subject at card size is left out rather than captioned
+  around.
 
 ## The register
 
