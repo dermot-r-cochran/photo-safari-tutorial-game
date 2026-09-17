@@ -144,11 +144,21 @@ Change a threshold only when the field notes change; say which note.
 instructions are specific to my own range of Nikon cameras and might not
 generalize*). The game says so on the Camera card (`CAMERA.caveat`) and in
 the README rather than pretending otherwise: the thresholds belong to the
-author's older Nikon crop-sensor body, the decisions carry over, and a
+author's older crop-sensor body, the decisions carry over, and a
 reader with another camera checks the thresholds against their own. Keep
 that caveat visible; don't generalise a number to make it sound universal,
-and where a term is Nikon's (*picture control*, *vivid*) say what other
+and where a term is one maker's (*picture control*, *vivid*) say what other
 makers call it.
+
+**No makes or models** (Dermot's rule, 2026-09-17, made for the range game
+and applied here the same day: he is transparent about his gear on the
+photography site, but does not want the tutorial or the game to carry any
+implied product endorsement or criticism). The camera is "an older
+crop-sensor DSLR", the lenses are their focal lengths, and no maker or
+model name appears in the page, the README or the check's messages. The
+quoted direction above keeps its wording because it is his words, not the
+tutorial's. The site JPEGs under `images/` carry no EXIF, so nothing leaks
+that way.
 
 ## Adding a stop
 
