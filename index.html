@@ -280,31 +280,14 @@ const ENCOUNTERS = {
             text: ["You put the meter on the animal. The camera, doing " +
                    "as it was told, opened up three stops to see it."],
             frame: { exposeFor: "subject" }
-          }
-        ]
-      },
-      {
-        id: "lens", prompt: "How much of the dawn?",
-        options: [
-          {
-            label: "The long end. The topi fills the mound and the sun sits behind it.",
-            text: ["400 mm. The animal, the mound, and a sun too big for " +
-                   "the frame to hold whole."],
-            set: { focal: 400 }, frame: { framing: "tight" }
           },
           {
-            label: "Halfway. Mound, topi, sun and the line of the horizon.",
-            text: ["200 mm. The mound became a shape on a plain and the " +
-                   "sun became a disc. The topi was still the point of it."],
-            set: { focal: 200 }, frame: { framing: "loose" }
-          },
-          {
-            label: "The wide end. The whole dawn, and the topi somewhere in it.",
-            text: ["18 mm. The sky did what the sky was doing, from red to " +
-                   "gold. The topi was a mark on a mound a long way off, " +
-                   "and you knew it was a topi because you had been " +
-                   "looking at it."],
-            set: { focal: 18 }, frame: { framing: "loose" }, subject: { tiny: true }
+            label: "The mound. Split the difference and let the raw file sort it out.",
+            text: ["You put the meter on the mound, between the two, and " +
+                   "got between the two: a sky gone pale where it had " +
+                   "been red, and a topi gone brown where it should have " +
+                   "been black."],
+            frame: { exposeFor: "between" }
           }
         ]
       },
@@ -315,12 +298,6 @@ const ENCOUNTERS = {
             label: "The walking-around setting.",
             text: ["A, f/8, Auto ISO. You let the camera find the shutter."],
             settings: "walkAround"
-          },
-          {
-            label: "The walking-around setting, but ISO 100. The light is lovely; keep it clean.",
-            text: ["You took Auto ISO off. The light was lovely. It was " +
-                   "also, at f/8, not much of it."],
-            settings: "walkAround", set: { iso: 100 }
           },
           {
             label: "The shooting-birds setting. It is about to move.",
@@ -385,6 +362,13 @@ const ENCOUNTERS = {
                    "the escarpment on its own. Quieter. Nothing in it " +
                    "that anyone built."],
             frame: { framing: "tight" }, set: { focal: 135 }
+          },
+          {
+            label: "The wide end. Escarpment, plain, herd, and the balloon a dot in all of it.",
+            text: ["You went to 18 mm. The morning was all there, edge to " +
+                   "edge; the balloon was an orange fleck you would have " +
+                   "to point at."],
+            frame: { framing: "loose" }, set: { focal: 18 }, subject: { tiny: true }
           }
         ]
       },
@@ -397,6 +381,13 @@ const ENCOUNTERS = {
             text: ["You stopped down to f/16. A landscape wants depth, you " +
                    "reasoned, and the light could spare the stops."],
             settings: "walkAround", set: { aperture: 16 }
+          },
+          {
+            label: "The shooting-birds setting. The wildebeest are on the move.",
+            text: ["S, 1/2000 s, for a line of animals walking and a " +
+                   "balloon that was not. The lens went to its widest and " +
+                   "the ISO to its cap to pay for it."],
+            settings: "birds", set: { focal: 70 }
           }
         ]
       }
@@ -459,14 +450,6 @@ const ENCOUNTERS = {
                    "a lion being looked at."],
             frame: { framing: "loose", people: "distant", tells: [{ label: "the vehicle track", excludable: true, minor: true }, { label: "the other vehicle and its watchers", excludable: true }] },
             set: { focal: 135 }
-          },
-          {
-            label: "Ask the driver to pull off the track and round, for the eye line and clean grass behind.",
-            text: ["The driver looked at you in the mirror and did not " +
-                   "move. Then he did, slowly, because you had asked, and " +
-                   "the grass behind the lion was clean and the ruts you " +
-                   "left in it were not."],
-            frame: { framing: "tight" }, set: { focal: 400 }, lesson: "offTrack"
           }
         ]
       },
@@ -487,29 +470,6 @@ const ENCOUNTERS = {
                    "and the whole frame went a little soft together, which " +
                    "is not the same thing as sharp."],
             settings: "walkAround", set: { aperture: 16 }
-          }
-        ]
-      },
-      {
-        id: "iso", prompt: "And the ISO?",
-        options: [
-          {
-            label: "Auto, to 800. Let the camera keep the shutter up.",
-            text: ["You left Auto ISO where the walking-around setting " +
-                   "puts it."]
-          },
-          {
-            label: "ISO 100, fixed. Golden light is plenty; keep it clean.",
-            text: ["You pinned it at 100 for the cleanest file the " +
-                   "sensor could give, and the shutter went where the " +
-                   "light sent it."],
-            set: { iso: 100 }
-          },
-          {
-            label: "ISO 1600, fixed. Whatever happens, the shutter stays fast.",
-            text: ["You pinned it high, to be safe. The shutter was very " +
-                   "fast indeed, for a lion that was not moving."],
-            set: { iso: 1600 }
           }
         ]
       }
@@ -564,6 +524,13 @@ const ENCOUNTERS = {
             text: ["You dropped the horizon and took the animals against " +
                    "the grass alone."],
             frame: { framing: "tight" }
+          },
+          {
+            label: "Wide. The whole group, the plain, and the viaduct along the top of it.",
+            text: ["You pulled back to 100 mm for all of it: the herd, " +
+                   "the grass, the piers marching across the haze. The " +
+                   "gazelles were specks with the light behind them."],
+            frame: { framing: "loose" }, set: { focal: 100 }, subject: { tiny: true }
           }
         ]
       },
@@ -649,6 +616,12 @@ const ENCOUNTERS = {
             text: ["You took the dial down a notch. The blues would have " +
                    "to make their own case."],
             set: { picture: "standard" }
+          },
+          {
+            label: "Neutral. Flattest of all; decide the colours later, in the raw.",
+            text: ["You took the dial all the way down and left the " +
+                   "blues for later."],
+            set: { picture: "neutral" }
           }
         ]
       },
@@ -727,6 +700,13 @@ const ENCOUNTERS = {
             text: ["A, f/8. The camera, told to hold f/8, found a shutter " +
                    "speed that was fine for a lion."],
             settings: "walkAround"
+          },
+          {
+            label: "The walking-around setting with the floor raised to 1/1000 s. Halfway to birds.",
+            text: ["A, f/8, and a floor of 1/1000 s under the shutter. " +
+                   "The camera kept that promise exactly, and a landing " +
+                   "vulture wanted twice it."],
+            settings: "walkAround", set: { minShutter: 1 / 1000 }
           }
         ]
       },
@@ -881,6 +861,13 @@ const ENCOUNTERS = {
             frame: { harsh: true }
           },
           {
+            label: "Now, and meter for the elephants. The plain can look after itself.",
+            text: ["You put the meter on the grey backs and the camera " +
+                   "opened up for them. The plain went white, and so did " +
+                   "the sky the mountain had been in."],
+            frame: { harsh: true, exposeFor: "subject" }
+          },
+          {
             label: "Wait for the cloud. The family is walking slowly.",
             text: ["You waited. The cloud came over, the plain went from " +
                    "white to colours, and the family was still crossing."],
@@ -903,26 +890,13 @@ const ENCOUNTERS = {
             text: ["You kept the frame on the family and let the slope " +
                    "of the mountain fill the background."],
             frame: { framing: "tight" }, set: { focal: 200 }
-          }
-        ]
-      },
-      {
-        id: "settings", prompt: "And the camera?",
-        options: [
-          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
-          {
-            label: "f/16. It is a landscape, and landscapes want f/16.",
-            text: ["You gave it the landscape aperture. The mountain was " +
-                   "forty kilometres away and the elephants a hundred and " +
-                   "twenty metres; f/8 had both. f/16 had both, softer."],
-            settings: "walkAround", set: { aperture: 16 }
           },
           {
-            label: "ISO 100, fixed. There is plenty of light for once.",
-            text: ["You pinned the ISO at 100 for the cleanest file. The " +
-                   "camera, told to hold f/8 as well, had only the shutter " +
-                   "left to give."],
-            settings: "walkAround", set: { iso: 100 }
+            label: "The wide end. Marsh, sky, mountain, and the family as dots.",
+            text: ["You went to 18 mm and took the whole of it, Amboseli " +
+                   "at noon with a mountain in it somewhere and a line of " +
+                   "elephants you would have to point out."],
+            frame: { framing: "loose", kind: "landscape" }, set: { focal: 18 }, subject: { tiny: true }
           }
         ]
       }
@@ -978,6 +952,14 @@ const ENCOUNTERS = {
                    "on its own business and crossed the drowned forest " +
                    "in front of you."],
             frame: { baited: false }
+          },
+          {
+            label: "Let him throw it, and keep the boat in the frame: the hand, the bucket, the fish going out.",
+            text: ["The fish went out and the eagle came for it, and you " +
+                   "framed wide enough to keep the hand that threw it. " +
+                   "Not a nature picture. An honest one."],
+            frame: { baited: true, kind: "documentary", tells: [{ label: "the boatman's hand and the bucket", excludable: false }] },
+            subject: { distance: 20 }, set: { focal: 200 }
           }
         ]
       },
@@ -990,6 +972,12 @@ const ENCOUNTERS = {
             text: ["You took the picture control down to standard for " +
                    "the white head and chest."],
             settings: "birds", set: { picture: "standard" }
+          },
+          {
+            label: "The walking-around setting. It is sitting on a branch.",
+            text: ["A, f/8, and the 1/250 s floor. It was sitting on a " +
+                   "branch until it was not."],
+            settings: "walkAround"
           }
         ]
       }
@@ -1047,6 +1035,13 @@ const ENCOUNTERS = {
                    "neck over rail, palm up, tongue out. A picture about " +
                    "a place, not an animal."],
             frame: { framing: "loose" }, set: { focal: 50 }
+          },
+          {
+            label: "The child's face, laughing, and the tongue on the palm.",
+            text: ["You took the laugh. It was the best picture of the " +
+                   "day and it was of a stranger's child, and it went " +
+                   "nowhere."],
+            frame: { framing: "loose", people: "recognisable" }, set: { focal: 50 }
           }
         ]
       },
@@ -1115,6 +1110,13 @@ const ENCOUNTERS = {
                    "the male's head up, the pan going gold behind them. " +
                    "The companionable frame."],
             frame: { mating: false }
+          },
+          {
+            label: "The walk between: the lioness up and moving, the male rising to follow.",
+            text: ["You took the moment she stood and walked, and he " +
+                   "got up to follow, the two of them in step across the " +
+                   "pan."],
+            frame: { mating: false }, subject: { motion: "walking" }
           }
         ]
       },
@@ -1126,6 +1128,13 @@ const ENCOUNTERS = {
             label: "The walking-around setting with the ISO cap raised to 1600. It is getting dark.",
             text: ["You let the ISO run to 1600. The light was going."],
             settings: "walkAround", set: { isoMax: 1600 }
+          },
+          {
+            label: "The shooting-birds setting. She keeps standing up.",
+            text: ["S, 1/2000 s, in the last of the gold. The lens opened " +
+                   "all the way, the ISO ran to its cap, and the frame " +
+                   "came up two stops short and grainy."],
+            settings: "birds"
           }
         ]
       }
@@ -1228,25 +1237,21 @@ const ENCOUNTERS = {
             settings: "macro"
           },
           {
-            label: "The walking-around setting on the tripod. Let the camera choose the shutter.",
-            text: ["A, f/8, Auto ISO to 800. The camera reached 800, " +
-                   "could not make the floor, and did what A does: it " +
-                   "lengthened the shutter until the exposure came right."],
-            settings: "walkAround", set: { lens: "macro", focal: 70, support: "tripod", liveView: false }
+            label: "The walking-around setting on the tripod, ISO 100 for the cleanest file. Let the camera choose the shutter.",
+            text: ["A, f/8, ISO 100. The camera did what A does: it " +
+                   "lengthened the shutter until the exposure came right, " +
+                   "a second and more of it. The tripod did not move. The " +
+                   "caps did."],
+            settings: "walkAround", set: { lens: "macro", focal: 70, support: "tripod", liveView: false, iso: 100 }
           },
           {
-            label: "M, f/8, ISO 100, and let the shutter run to two seconds. It is on a tripod; shake is not a problem.",
-            text: ["You set ISO 100 for the cleanest file and gave the " +
-                   "exposure the two seconds it asked for. The tripod did " +
-                   "not move. The caps did."],
-            settings: "macro", set: { iso: 100, shutter: 2 }
-          },
-          {
-            label: "The macro routine at f/22, for depth. A millimetre is not enough.",
+            label: "The macro routine at f/22, for depth, and focused through the finder: the live-view screen is a fiddle at f/22.",
             text: ["You stopped down as far as the lens would go and " +
-                   "asked for depth. The lens gave you depth, and took " +
-                   "the sharpness to pay for it."],
-            settings: "macro", set: { aperture: 22 }
+                   "asked for depth, and focused through the finder " +
+                   "because the screen had gone dark and grainy at f/22. " +
+                   "The lens gave you depth and took the sharpness to pay " +
+                   "for it, and the mirror's thump took a little more."],
+            settings: "macro", set: { aperture: 22, liveView: false }
           }
         ]
       },
@@ -1264,6 +1269,12 @@ const ENCOUNTERS = {
             text: ["You went in until one cap filled the frame, gills " +
                    "and all, and the world beyond it went to a wash."],
             frame: { magnification: 1.0 }
+          },
+          {
+            label: "Halfway in. Two caps and the moss between them, at about 1:2.",
+            text: ["You went in until two caps filled the frame between " +
+                   "them, and the moss became a landscape."],
+            frame: { magnification: 0.5 }
           }
         ]
       }
@@ -1315,6 +1326,13 @@ const ENCOUNTERS = {
             label: "Standard. Whites first.",
             text: ["You took the dial down for the plumage."],
             set: { picture: "standard" }
+          },
+          {
+            label: "Neutral. Nothing clips, and nothing is decided either.",
+            text: ["You took the dial all the way down. The whites were " +
+                   "safe, and the frame would need telling later what it " +
+                   "was."],
+            set: { picture: "neutral" }
           }
         ]
       },
@@ -1401,6 +1419,13 @@ const ENCOUNTERS = {
             frame: { framing: "loose", built: true,
                      tells: [{ label: "the city below", excludable: false }] },
             set: { focal: 70 }
+          },
+          {
+            label: "From below: the goat on the skyline against the cloud, metered for the goat.",
+            text: ["You dropped down the slope and put the goat on the " +
+                   "sky, and the meter on the goat. The cloud went to " +
+                   "white paper behind it."],
+            frame: { framing: "tight", horizon: true, exposeFor: "subject" }
           }
         ]
       }
@@ -1650,6 +1675,8 @@ const LESSONS = {
   tiny: { title: "The subject does not read", text: "At {share} of the frame width, and the tone of the ground it sits in, the subject fails to read at page size. When the geometry hides it — the herd on the skyline and the animal far below — the note is the fix and the frame stays as shot." },
   tinyAlone: { title: "Cropped, and lost", text: "The crop made the subject a little larger and threw away the skyline that told the viewer where and when this was. A hyena in a puddle, anywhere. The whole frame with a note that says where to look was the better picture." },
   offTrack: { title: "Stay on the track", text: "Leaving the track for a closer frame damages the ground and the rule the park runs on; the driver was right. A picture is never worth the ground it is stood on." },
+  halfway: { title: "Neither side", text: "Metering between a bright sky and a dark subject gets neither: the sky a stop and a half over, its reds gone pale, and the subject a stop and a half under, brown where a silhouette would have been black. A backlit frame wants one side chosen." },
+  neutral: { title: "Neutral decides nothing", text: "Neutral holds every tone and commits to none: the whites are safe, the blue is safe, and the JPEG looks as if nobody chose anything. It wants a pass in the raw editor before it goes anywhere, which is fine if that is the plan and a chore if it was not." },
   silhouette: { title: "A silhouette", text: "The bright side exposed, the dark side a shape: a topi-shaped hole in the dawn, and the honest frame for a backlit subject." },
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
   manualDark: { title: "Manual held the shutter", text: "The exposure came up short and the frame is a little dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. The raw file has the rest." },
@@ -1825,6 +1852,7 @@ function assemble(enc, choices) {
 function expose(settings, light, frame) {
   let ev = light.ev;
   if (frame.exposeFor === "subject") ev -= 3;  // metering the dark side
+  else if (frame.exposeFor === "between") ev -= 1.5;  // splitting the difference
   const maxAp = lensMaxAperture(settings.lens, settings.focal);
   const isoAuto = settings.iso === "auto";
   let iso = isoAuto ? 100 : settings.iso;
@@ -1891,6 +1919,7 @@ function develop(enc, choices) {
 
   // exposure
   if (frame.exposeFor === "subject") add("blownSky", null, "sinks");
+  else if (frame.exposeFor === "between") add("halfway", null, "sinks");
   else if (frame.exposeFor === "sky") add("silhouette");
   if (ex.delta < -1.5) add(settings.mode === "M" ? "manualDark" : "under", { stops: Math.abs(ex.delta).toFixed(1) }, ex.delta < -2.5 ? "sinks" : null);
   else if (ex.delta > 1) add("over", { stops: ex.delta.toFixed(1) }, "sinks");
@@ -1929,6 +1958,8 @@ function develop(enc, choices) {
     if (subject.white) add("vividWhite", null, "sinks");
     else if (subject.saturated) add("vividSaturated", null, "sinks");
     else if (frame.harsh || ex.iso >= CAMERA.noise.chroma) add("vividHarsh");
+  } else if (settings.picture === "neutral") {
+    add("neutral");
   } else if (frame.kind === "landscape" && !subject.white) {
     add("flat");
   }

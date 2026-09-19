@@ -44,8 +44,10 @@ function combos(enc) {
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
+  // a stop asks at most two questions, and every question has three answers
+  if ((enc.decisions || []).length > 2) fail(id + " asks " + enc.decisions.length + " questions — a stop asks at most two");
   for (const d of enc.decisions || []) {
-    if (!d.options || d.options.length < 2) fail(id + " decision " + d.id + " offers fewer than two options — every step is a choice");
+    if (!d.options || d.options.length !== 3) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has three");
   }
   let anyKeeper = false;
   for (const choices of combos(enc)) {

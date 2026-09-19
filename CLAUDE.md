@@ -168,14 +168,28 @@ enter, decisions, note, afterword), add any new examinables to `EXAMINE`
 and any new finding the engine raises to `LESSONS`, and list the stop in
 a route in `ROUTES` (today's drive picks from the safari route's stops by
 itself, so the day stays one day; home ground is its own walk).
-**Every decision offers at least two options, and the camera decisions
-two or three** (Dermot's direction, 2026-09-13: *always have at least two
-or three choices for the camera settings at each step*). A single option
-is a paragraph, not a choice; the check fails a decision with fewer than
-two. Each alternative costs something real in the model — ISO spent on a
-speed the subject did not need, diffraction bought for depth the distance
-already had, a hand's width of focus at three metres — so the verdict has
-something to say about it.
+**A stop asks at most two questions, and every question has three
+answers** (Dermot's direction, 2026-09-19: *max two questions with three
+options each for each stop*, tightening his 2026-09-13 *always have at
+least two or three choices for the camera settings at each step*). The
+check fails a stop with a third decision and a decision with any number
+of options but three. Each alternative costs something real in the model —
+ISO spent on a speed the subject did not need, diffraction bought for
+depth the distance already had, a hand's width of focus at three metres —
+so the verdict has something to say about it. Where a stop had three
+questions, the one whose lesson another stop already carries went (the
+topi's lens, the lion's ISO and its off-track ask, the mountain's camera);
+where a question had two answers, a third was written from the same
+outing with its own cost (a meter split between sky and subject, the
+`halfway` lesson; a `neutral` picture control, which decides nothing and
+costs a raw pass; a shutter floor raised halfway to the birds setting; a
+stranger's child laughing; the lioness walking; the boat and the bucket
+kept in the frame; the wide end with the subject a dot). The woodland's
+three answers carry four lessons between them, so that none of the mode,
+wind, mirror-slap and macro-diffraction lessons became unreachable: the
+aperture-priority option pins ISO 100 so A runs the shutter out to a
+second and the caps move, and the f/22 option is focused through the
+finder, so the mirror's thump lands beside the diffraction.
 
 **A stop can be tried again before driving on** (same direction). After
 a verdict that is not a keeper the page offers *Try again* beside *Drive

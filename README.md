@@ -20,7 +20,7 @@ can enter.
 
 The frame is a verdict in words, the way a contact sheet is a set of
 decisions, and every verdict names the lesson behind it. Every step is a
-real choice — two or three settings or framings, each with a cost — and
+real choice — three settings or framings, each with a cost, and no stop asks more than two questions — and
 when a frame is one for the folder — kept, not shown — you can try the
 stop again before driving on; the contact sheet keeps the last frame you
 pressed and scores the drive like golf: every press of the shutter is a
@@ -116,8 +116,8 @@ seven data structures at the top of its script — `CAMERA`, `PRESETS`,
 `ENCOUNTERS`, `EXAMINE`, `RULEBOOKS`, `LESSONS`, `ROUTES` — and the
 engine below them never needs editing to add a stop. A stop is a scene
 (the light as an exposure value, the subject's motion, distance and
-depth, what else is in the frame), two or three decisions with their
-options, a note and an afterword. An option may name a settings preset,
+depth, what else is in the frame), at most two decisions with three
+options each, a note and an afterword. An option may name a settings preset,
 set individual fields, and override the subject, light or frame. The
 engine assembles the choices, resolves the exposure the camera would
 actually make, and raises findings — each one a key into `LESSONS`.
