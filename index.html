@@ -1680,6 +1680,38 @@ const SCORE = {
   firsts: "{n} first time"
 };
 
+/* The end of a drive: a short friendly summary and one piece of coaching,
+   from the frames that stand for each stop. Added 2026-09-19 at Dermot's
+   direction. The tip is for the lesson that sank or barred the most
+   frames; `other` when the misses were all different. */
+const COACH = {
+  all: "Every stop a keeper. Nothing to coach: go and shoot.",
+  good: "A good drive: {kept} keepers from {n} stops.",
+  hard: "A hard drive, and the honest kind: {kept} keepers from {n} stops. The folder is where the learning is.",
+  once: "One thing for the next drive. ",
+  often: "The same thing sank {c} frames, so one thing for the next drive. ",
+  tips: {
+    motionBlur: "The shutter was too slow for what the animal was doing. Read the motion before the light: flying, running, walking each have a floor, and the meter does not know it.",
+    shake: "Hand-held at the long end with the shutter under the floor. The stabiliser buys two stops, not four; the beanbag or a faster shutter buys the rest.",
+    windBlur: "On a support the shutter was safe from you and not from the wind. Anything that stirs wants faster than half a second.",
+    mirrorSlap: "Between a fifteenth and a half-second on a support, the mirror's thump is in the frame. Live view, or a shutter outside that band.",
+    under: "The frames came out dark: the lens was open and the ISO capped. Raise the cap, or accept a slower shutter on a support.",
+    over: "The frames came out bright: the ISO was pinned too high for the light. Let Auto ISO do its job in good light.",
+    blownSky: "Metering for the dark animal against a bright sky burned the sky out. A silhouette is the honest frame there.",
+    manualDark: "Manual held the shutter and the frame came out dark. Manual is a promise to check the meter; in changing light, A or S keeps the promise for you.",
+    noise3200: "ISO 3200 was the setting spent first. Spend it last: a support, then a slower shutter, then the ISO.",
+    thinDepth: "The eye was sharp and the rest was not. A stop or two down buys the depth; the background will survive it.",
+    diffraction: "Stopped down past where the pixels can follow. f/8 to f/11 is the sweet spot on this sensor; f/16 costs sharpness everywhere.",
+    vividWhite: "Vivid clipped the whites. White birds want the standard picture control, or a third of a stop under.",
+    vividSaturated: "Vivid blew a channel that was already full. Saturated subjects want standard.",
+    people: "A recognisable person was in the frame, and nothing on the site can carry one. Crop tighter, or wait for them to pass.",
+    mating: "The act itself does not go on the site. The pair before or after does, and says as much.",
+    tinyAlone: "Cropping made the animal a little bigger and threw away what told the viewer where it was. Small in a frame that reads beats large in one that does not.",
+    offTrack: "Leaving the track for the frame damaged the ground and the rule. The driver was right; the frame from the track is the one to make.",
+    other: "The misses went for different reasons each time. Read the verdicts again; the pattern is yours to spot."
+  }
+};
+
 /* Drives. A fixed one for the tutorial, a fixed one for home ground, and
    one that picks from the whole pool by the date — the same day gives
    everyone the same drive, and tomorrow gives a different one. */
@@ -2225,6 +2257,22 @@ function boot() {
     return null;
   }
 
+  /* The end-of-drive words: a friendly summary from the frames that
+     stand for the stops, and one tip for the lesson that cost the most. */
+  function coaching(frames) {
+    const n = frames.length, kept = frames.filter((f) => f.keeper).length;
+    if (!n) return [];
+    const out = [kept === n ? COACH.all : fill(kept * 2 >= n ? COACH.good : COACH.hard, { kept, n })];
+    if (kept < n) {
+      const counts = {};
+      for (const f of frames) for (const g of f.findings) if (g.sinks || g.bars) counts[g.key] = (counts[g.key] || 0) + 1;
+      const top = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+      const c = top ? counts[top] : 0;
+      out.push((c >= 2 ? fill(COACH.often, { c }) : COACH.once) + (top && COACH.tips[top] ? COACH.tips[top] : COACH.tips.other));
+    }
+    return out;
+  }
+
   /* The frame that stands for a stop is the last one pressed there, so a
      retried stop counts once — on the contact sheet and in the tally. */
   function latestFrames() {
@@ -2421,6 +2469,7 @@ function boot() {
       p.appendChild(document.createTextNode(" " + (tally[k] || 0) + (i < arr.length - 1 ? ", " : ".")));
     });
     card.appendChild(p);
+    addParas(card, coaching(frames), "prose");
     for (const t of r.end.text) {
       const el = document.createElement("p");
       el.textContent = t;
