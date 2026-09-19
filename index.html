@@ -190,19 +190,30 @@
    worse, and 3200 is a last resort. */
 const CAMERA = {
   body: "a 14-megapixel crop-sensor DSLR",
-  caveat: "The camera in this game is the author's own: an older " +
-    "crop-sensor DSLR with an 18–400 mm zoom and a 70 mm macro. The " +
-    "numbers are its numbers. A newer body is cleaner at high ISO, may " +
-    "have mirror lock-up or no mirror at all, and may call the vivid " +
-    "setting a picture style or a film simulation. The decisions carry " +
-    "over; the thresholds may not.",
+  caveat: "The camera in this game is the author's own: a crop-sensor " +
+    "DSLR with an 18–400 mm zoom, a 75–240 mm zoom, a 50 mm autofocus " +
+    "prime and a 70 mm macro. The numbers are its numbers. The author's " +
+    "other body is a crop-sensor mirrorless with a 150–500 mm zoom: " +
+    "cleaner at high ISO, no mirror to lock up, and it may call the " +
+    "vivid setting a picture style or a film simulation. The decisions " +
+    "carry over; the thresholds may not.",
+  kit: [
+    "18–400 mm zoom (the walking-around lens; most stops here)",
+    "75–240 mm zoom (a lighter reach for the day the long one stays home)",
+    "50 mm autofocus prime (the field and the weather, with the animal in it)",
+    "70 mm macro (1:1; the woodland floor and the garden)",
+    "150–500 mm zoom, on the mirrorless body (the Zambia lens)"
+  ],
   cropFactor: 1.5,
   coc: 0.02,            // circle of confusion, mm, for depth of field
   stabiliserStops: 2,   // what the zoom's stabiliser buys, hand-held
   noise: { clean: 400, fine: 800, chroma: 1600, rough: 3200 },
   lenses: {
     zoom:  { name: "18–400 mm zoom", min: 18, max: 400, apWide: 3.5, apLong: 6.3 },
-    macro: { name: "70 mm macro", min: 70, max: 70, apWide: 2.8, apLong: 2.8 }
+    mid:   { name: "75–240 mm zoom", min: 75, max: 240, apWide: 4, apLong: 5.6 },
+    fifty: { name: "50 mm prime", min: 50, max: 50, apWide: 1.8, apLong: 1.8 },
+    macro: { name: "70 mm macro", min: 70, max: 70, apWide: 2.8, apLong: 2.8 },
+    long:  { name: "150–500 mm zoom", min: 150, max: 500, apWide: 5, apLong: 6.7 }
   }
 };
 
@@ -273,6 +284,31 @@ const ENCOUNTERS = {
         ]
       },
       {
+        id: "lens", prompt: "How much of the dawn?",
+        options: [
+          {
+            label: "The long end. The topi fills the mound and the sun sits behind it.",
+            text: ["400 mm. The animal, the mound, and a sun too big for " +
+                   "the frame to hold whole."],
+            set: { focal: 400 }, frame: { framing: "tight" }
+          },
+          {
+            label: "Halfway. Mound, topi, sun and the line of the horizon.",
+            text: ["200 mm. The mound became a shape on a plain and the " +
+                   "sun became a disc. The topi was still the point of it."],
+            set: { focal: 200 }, frame: { framing: "loose" }
+          },
+          {
+            label: "The wide end. The whole dawn, and the topi somewhere in it.",
+            text: ["18 mm. The sky did what the sky was doing, from red to " +
+                   "gold. The topi was a mark on a mound a long way off, " +
+                   "and you knew it was a topi because you had been " +
+                   "looking at it."],
+            set: { focal: 18 }, frame: { framing: "loose" }, subject: { tiny: true }
+          }
+        ]
+      },
+      {
         id: "settings", prompt: "And the camera?",
         options: [
           {
@@ -290,6 +326,13 @@ const ENCOUNTERS = {
             label: "The shooting-birds setting. It is about to move.",
             text: ["S, 1/2000 s. Nothing walks fast enough to blur at that."],
             settings: "birds"
+          },
+          {
+            label: "Manual. 1/500 s, f/8, ISO 400: the numbers you would have guessed.",
+            text: ["M. You set all three yourself, from what the light " +
+                   "looked like, and the meter's needle sat below the " +
+                   "middle without your looking at it."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 500, iso: 400 }
           }
         ]
       }
@@ -408,6 +451,22 @@ const ENCOUNTERS = {
                    "picture of where he had chosen to lie, which was the " +
                    "point of him."],
             frame: { framing: "loose" }, set: { focal: 200 }
+          },
+          {
+            label: "Looser still. The lion, the track, and the other vehicle waiting its turn.",
+            text: ["You went wider and let the other vehicle in, with the " +
+                   "heads in it turned the same way as yours. A picture of " +
+                   "a lion being looked at."],
+            frame: { framing: "loose", people: "distant", tells: [{ label: "the vehicle track", excludable: true, minor: true }, { label: "the other vehicle and its watchers", excludable: true }] },
+            set: { focal: 135 }
+          },
+          {
+            label: "Ask the driver to pull off the track and round, for the eye line and clean grass behind.",
+            text: ["The driver looked at you in the mirror and did not " +
+                   "move. Then he did, slowly, because you had asked, and " +
+                   "the grass behind the lion was clean and the ruts you " +
+                   "left in it were not."],
+            frame: { framing: "tight" }, set: { focal: 400 }, lesson: "offTrack"
           }
         ]
       },
@@ -421,6 +480,36 @@ const ENCOUNTERS = {
                    "focal length and let the grass behind him go to " +
                    "colour."],
             settings: "walkAround", set: { aperture: 6.3 }
+          },
+          {
+            label: "f/16. Mane, whiskers and the grass behind, all of it sharp.",
+            text: ["You stopped right down, for depth. The camera obliged " +
+                   "and the whole frame went a little soft together, which " +
+                   "is not the same thing as sharp."],
+            settings: "walkAround", set: { aperture: 16 }
+          }
+        ]
+      },
+      {
+        id: "iso", prompt: "And the ISO?",
+        options: [
+          {
+            label: "Auto, to 800. Let the camera keep the shutter up.",
+            text: ["You left Auto ISO where the walking-around setting " +
+                   "puts it."]
+          },
+          {
+            label: "ISO 100, fixed. Golden light is plenty; keep it clean.",
+            text: ["You pinned it at 100 for the cleanest file the " +
+                   "sensor could give, and the shutter went where the " +
+                   "light sent it."],
+            set: { iso: 100 }
+          },
+          {
+            label: "ISO 1600, fixed. Whatever happens, the shutter stays fast.",
+            text: ["You pinned it high, to be safe. The shutter was very " +
+                   "fast indeed, for a lion that was not moving."],
+            set: { iso: 1600 }
           }
         ]
       }
