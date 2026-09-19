@@ -44,8 +44,10 @@ function combos(enc) {
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
+  // a stop asks at most two questions, and every question has three answers
+  if ((enc.decisions || []).length > 2) fail(id + " asks " + enc.decisions.length + " questions — a stop asks at most two");
   for (const d of enc.decisions || []) {
-    if (!d.options || d.options.length < 2) fail(id + " decision " + d.id + " offers fewer than two options — every step is a choice");
+    if (!d.options || d.options.length !== 3) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has three");
   }
   let anyKeeper = false;
   for (const choices of combos(enc)) {
@@ -102,9 +104,17 @@ const imgDir = path.join(root, "images");
 if (fs.existsSync(imgDir)) for (const f of fs.readdirSync(imgDir)) {
   if (!shown.has("images/" + f)) fail("images/" + f + " is shown at no stop");
 }
-for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "card", "level", "over", "firsts"]) {
+for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "abandoned", "card", "level", "over", "firsts"]) {
   if (!S.SCORE || !S.SCORE[k]) fail("SCORE has no " + k);
 }
+// the next day on a route has a label and a confirmation, each naming the route's word
+for (const k of ["label", "confirm"]) if (!S.NEXT_DAY || !S.NEXT_DAY[k] || !S.NEXT_DAY[k].includes("{noun}")) fail("NEXT_DAY." + k + " is missing or does not carry {noun}");
+if (!S.NEXT_DAY || !S.NEXT_DAY.past) fail("NEXT_DAY.past has no heading for the past days");
+if (!S.NEXT_DAY || !(S.NEXT_DAY.keep >= 1)) fail("NEXT_DAY.keep must keep at least one day");
+// abandoning a stop has a price, a label that names it, and words
+if (!S.ABANDON || !(S.ABANDON.strokes > 1)) fail("ABANDON.strokes must be more than one stroke, or abandoning is free");
+if (!S.ABANDON || !S.ABANDON.label || !S.ABANDON.text || !S.ABANDON.text.length) fail("ABANDON has no label or text");
+if (S.ABANDON && !String(S.ABANDON.label).includes(String(S.ABANDON.strokes))) fail("ABANDON.label does not name its price of " + S.ABANDON.strokes);
 for (const [key, r] of Object.entries(S.RULEBOOKS)) {
   if (!r.name || !r.text || !r.text.length) fail("rulebook " + key + " has no name or text");
   if (!/^https:\/\//.test(r.url || "")) fail("rulebook " + key + " has no https url to the rules themselves");

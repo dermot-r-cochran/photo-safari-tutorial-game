@@ -5,7 +5,10 @@ A tutorial game about wildlife photography, in one file. Open
 network — or play it as served from `main` at
 https://dermot-r-cochran.github.io/photo-safari-tutorial-game/ , which is
 the same file and nothing else. Progress saves to that browser's
-localStorage only, per drive.
+localStorage only, per drive, and so do the past days: when you start
+the next day on a drive, that day's scorecard and its stops' lines are
+kept under the date beneath the contact sheet, and the transcript is
+cleared.
 
 ## What it is
 
@@ -20,12 +23,14 @@ can enter.
 
 The frame is a verdict in words, the way a contact sheet is a set of
 decisions, and every verdict names the lesson behind it. Every step is a
-real choice — two or three settings or framings, each with a cost — and
-when a frame is one for the folder — kept, not shown — you can try the
-stop again before driving on; the contact sheet keeps the last frame you
+real choice — three settings or framings, each with a cost, and no stop asks more than two questions — and
+when a frame is one for the folder — kept, not shown — you try the stop
+again until it gives you a keeper, because you cannot drive on from a
+frame for the folder; you can abandon the stop instead, and an abandoned
+stop counts as ten shots. The contact sheet keeps the last frame you
 pressed and scores the drive like golf: every press of the shutter is a
-stroke, a keeper first time is the hole in one, and par is a keeper first
-time at every stop. After the
+stroke, a keeper first time is the hole in one, par is a keeper first
+time at every stop, and an abandoned stop is ten. After the
 verdict, at twelve of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
@@ -116,8 +121,8 @@ seven data structures at the top of its script — `CAMERA`, `PRESETS`,
 `ENCOUNTERS`, `EXAMINE`, `RULEBOOKS`, `LESSONS`, `ROUTES` — and the
 engine below them never needs editing to add a stop. A stop is a scene
 (the light as an exposure value, the subject's motion, distance and
-depth, what else is in the frame), two or three decisions with their
-options, a note and an afterword. An option may name a settings preset,
+depth, what else is in the frame), at most two decisions with three
+options each, a note and an afterword. An option may name a settings preset,
 set individual fields, and override the subject, light or frame. The
 engine assembles the choices, resolves the exposure the camera would
 actually make, and raises findings — each one a key into `LESSONS`.
