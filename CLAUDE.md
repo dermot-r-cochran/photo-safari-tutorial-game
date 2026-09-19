@@ -207,6 +207,13 @@ the data section beside `RETRY`) or the presses made there if more. The
 check holds the price to more than one stroke and the label to naming
 it.
 
+**Starting a route again is the next day on it** (Dermot, 2026-09-19:
+*The Restart Drive button should be Next Day, Tomorrow or similar*). The
+About card's button reads *Next day on this drive* (or *walk*, the
+route's own noun), its confirmation says today's transcript and sheet
+will be cleared, and the words are `NEXT_DAY` in the data section beside
+`RETRY` and `ABANDON`; the check holds both to carrying `{noun}`.
+
 **The contact sheet is a golf scorecard** (Dermot, 2026-09-13: *the game
 scoring is a bit like golf; a keeper on the first shot is a bit like a
 hole-in-one*). Every press of the shutter at a stop is a stroke, retries

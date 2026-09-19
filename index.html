@@ -165,7 +165,7 @@
        folder is kept, not shown, entered nowhere, and is where the
        lessons come from.</p>
     <button id="restart" type="button" style="margin-top:0.6rem">
-      Restart this drive</button>
+      Next day on this drive</button>
   </div>
 </aside>
 </div>
@@ -1704,6 +1704,14 @@ const ABANDON = {
          "behind you, and the card marks the stop at ten."]
 };
 
+/* Starting the drive again is the next day on it, not a restart: the
+   transcript and the sheet are yesterday's and are cleared (Dermot,
+   2026-09-19). {noun} is the route's own word, drive or walk. */
+const NEXT_DAY = {
+  label: "Next day on this {noun}",
+  confirm: "Start the next day on this {noun}? Today's transcript and contact sheet will be cleared."
+};
+
 /* The scorecard. The game scores like golf: every press of the shutter
    at a stop is a stroke, a keeper first time is the hole in one, and par
    for a drive is a keeper first time at every stop. A stop abandoned
@@ -2076,7 +2084,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, SCORE,
+  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, SCORE,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -2402,7 +2410,7 @@ function boot() {
     const ul = $("stops");
     ul.innerHTML = "";
     $("stops-heading").textContent = "The " + (route().noun || "drive");
-    $("restart").textContent = "Restart this " + (route().noun || "drive");
+    $("restart").textContent = fill(NEXT_DAY.label, { noun: route().noun || "drive" });
     stops.forEach((id, i) => {
       if (i > state.stop) return; // stops ahead stay unspoiled
       const li = document.createElement("li");
@@ -2728,7 +2736,7 @@ function boot() {
   }
 
   $("restart").addEventListener("click", () => {
-    if (!confirm("Restart this " + (route().noun || "drive") + "? Its transcript and contact sheet will be cleared.")) return;
+    if (!confirm(fill(NEXT_DAY.confirm, { noun: route().noun || "drive" }))) return;
     try { localStorage.removeItem(saveKey(route())); } catch (e) {}
     state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }] };
     saveState();
