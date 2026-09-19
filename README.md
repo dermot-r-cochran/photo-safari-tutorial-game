@@ -129,7 +129,7 @@ The engine descends from the author's one-file quest engine,
 [four-islands-quest](https://github.com/dermot-r-cochran/four-islands-quest):
 the same transcript, the same look-at row, the same structural saves,
 the same daily seed. The situations, settings and rules come from the
-author's photography portfolio and its field notes. The Grok prototype
+author's photography portfolio and its field notes. The hosted prototype
 that prompted this one is a different program with its own limits; this
 is not a port of it.
 
