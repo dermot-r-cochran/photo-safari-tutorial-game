@@ -16,10 +16,11 @@ to localStorage.
 It began on 2026-09-13 as *a new photo safari tutorial game based on ideas
 from several existing repos* (Dermot's direction), after a prototype made
 elsewhere with its own limits. It is not a port of that prototype. A link
-to the prototype (photo-tutorial.grok.me) sat on the About card and in the
-README for one day, 2026-09-13, and came out on 2026-09-14 at Dermot's
-direction: the Grok version is more visual but too simplistic, so this
-tutorial does not point at it.
+to the prototype sat on the About card and in the README for one day,
+2026-09-13, and came out on 2026-09-14 at Dermot's direction: the prototype
+is more visual but too simplistic, so this tutorial does not point at it.
+On 2026-09-19 he retired the hosted prototypes altogether: they are not
+named or linked anywhere in this repository.
 
 ## The prime directive
 
