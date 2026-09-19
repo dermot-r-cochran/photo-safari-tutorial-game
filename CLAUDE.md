@@ -166,7 +166,8 @@ that way.
 Add an entry to `ENCOUNTERS` (light, subject, frame, presences, examine,
 enter, decisions, note, afterword), add any new examinables to `EXAMINE`
 and any new finding the engine raises to `LESSONS`, and list the stop in
-a route in `ROUTES` (today's drive picks from the whole pool by itself).
+a route in `ROUTES` (today's drive picks from the safari route's stops by
+itself, so the day stays one day; home ground is its own walk).
 **Every decision offers at least two options, and the camera decisions
 two or three** (Dermot's direction, 2026-09-13: *always have at least two
 or three choices for the camera settings at each step*). A single option
