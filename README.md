@@ -38,7 +38,9 @@ photographers. Nothing in it is expert opinion. Every lesson was
 learned by getting it wrong first, and the photographs are the evidence.
 
 **The camera is the author's own**, and the numbers are its numbers: an
-older crop-sensor DSLR, 14 megapixels, with an 18–400 mm zoom and
+crop-sensor DSLR, 14 megapixels, with an 18–400 mm zoom (also a 75–240 mm
+zoom, a 50 mm autofocus prime and a 70 mm macro; the author's mirrorless
+body carries a 150–500 mm zoom) and
 a 70 mm macro. The lessons were learned on that body's thresholds —
 where its ISO gets noisy, where its pixels diffract, that it has a
 mirror and no lock-up for it — and they may not carry to yours. A
