@@ -1693,14 +1693,27 @@ const RETRY = {
          "held, and so, being a tutorial animal, did the animal."]
 };
 
+/* Abandoning a stop. A frame for the folder cannot be driven on from:
+   the stop is tried again until it yields a keeper, or abandoned, and an
+   abandoned stop counts as `strokes` on the card (or the presses made
+   there, if more). Dermot's direction, 2026-09-19. */
+const ABANDON = {
+  strokes: 10,
+  label: "Abandon the stop. It counts as 10 strokes.",
+  text: ["You drove on without the frame. The lesson stays on the road " +
+         "behind you, and the card marks the stop at ten."]
+};
+
 /* The scorecard. The game scores like golf: every press of the shutter
    at a stop is a stroke, a keeper first time is the hole in one, and par
-   for a drive is a keeper first time at every stop. */
+   for a drive is a keeper first time at every stop. A stop abandoned
+   without a keeper counts as ABANDON.strokes. */
 const SCORE = {
   first: "keeper first time",
   keeperIn: "keeper in {n}",
   folderAfter: "folder after {n}",
   barredAfter: "not published after {n}",
+  abandoned: "abandoned after {n}, counted as {strokes}",
   card: "{strokes} for {stops} — {standing}",
   level: "level par, a keeper first time at every stop",
   over: "{n} over par",
@@ -2063,7 +2076,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, SCORE,
+  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, SCORE,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -2284,6 +2297,13 @@ function boot() {
       t.appendChild(label);
       addParas(t, RETRY.text, "prose");
       return label;
+    } else if (entry.kind === "abandon") {
+      const label = document.createElement("p");
+      label.className = "chosen";
+      label.textContent = ABANDON.label;
+      t.appendChild(label);
+      addParas(t, ABANDON.text, "prose");
+      return label;
     }
     return null;
   }
@@ -2313,12 +2333,23 @@ function boot() {
   }
   /* The frame pressed at the current stop since its last retry, or null
      while the shutter has not been pressed. */
-  /* Strokes: every press of the shutter at a stop, retries included. */
-  function strokesAt(stop) {
+  /* Strokes: every press of the shutter at a stop, retries included; a
+     stop abandoned without a keeper counts as ABANDON.strokes, or its
+     presses if there were more. */
+  function pressesAt(stop) {
     return state.history.filter((h) => h.kind === "frame" && h.stop === stop).length;
   }
-  function scoreLine(r, strokes) {
+  function abandonedAt(stop) {
+    return state.history.some((h) => h.kind === "abandon" && h.stop === stop);
+  }
+  function strokesAt(stop) {
+    const n = pressesAt(stop);
+    return abandonedAt(stop) ? Math.max(n, ABANDON.strokes) : n;
+  }
+  function scoreLine(r, stop) {
+    const strokes = strokesAt(stop);
     if (r.keeper) return strokes === 1 ? SCORE.first : fill(SCORE.keeperIn, { n: strokes });
+    if (abandonedAt(stop)) return fill(SCORE.abandoned, { n: pressesAt(stop), strokes });
     return fill(r.unpublishable ? SCORE.barredAfter : SCORE.folderAfter, { n: strokes });
   }
   /* The card for the drive so far: strokes over stops played, against a
@@ -2439,7 +2470,7 @@ function boot() {
       const li = document.createElement("li");
       const causes = r.findings.filter((f) => (r.unpublishable ? f.bars : f.sinks))
         .map((f) => LESSONS[f.key] ? LESSONS[f.key].title.toLowerCase() : f.key);
-      li.textContent = e.title + " — " + scoreLine(r, strokesAt(h.stop)) +
+      li.textContent = e.title + " — " + scoreLine(r, h.stop) +
         (causes.length ? " (" + causes.join(", ") + ")" : "");
       // the category for any frame the site could show; tags only for a keeper
       if (!r.unpublishable) {
@@ -2546,21 +2577,26 @@ function boot() {
       btn.textContent = "Press the shutter.";
       btn.addEventListener("click", press);
       choices.appendChild(btn);
-    } else {
+    } else if (develop(e, frameAtStop().choices).keeper) {
+      // a keeper is a keeper: drive on
       const btn = document.createElement("button");
       btn.type = "button";
       btn.textContent = state.stop + 1 < stops.length ? (e.onward || "Drive on.") : "Call it a day.";
       btn.addEventListener("click", driveOn);
       choices.appendChild(btn);
-      // a keeper is a keeper; only a frame for the folder invites another go
-      const taken = frameAtStop();
-      if (!develop(e, taken.choices).keeper) {
-        const again = document.createElement("button");
-        again.type = "button";
-        again.textContent = RETRY.label;
-        again.addEventListener("click", retry);
-        choices.appendChild(again);
-      }
+    } else {
+      // a frame for the folder cannot be driven on from: try the stop
+      // again until it yields a keeper, or abandon it at ABANDON's price
+      const again = document.createElement("button");
+      again.type = "button";
+      again.textContent = RETRY.label;
+      again.addEventListener("click", retry);
+      choices.appendChild(again);
+      const give = document.createElement("button");
+      give.type = "button";
+      give.textContent = ABANDON.label;
+      give.addEventListener("click", abandon);
+      choices.appendChild(give);
     }
     box.appendChild(choices);
 
@@ -2633,6 +2669,16 @@ function boot() {
     renderCamera();
     renderActions();
     scrollToNew(el);
+  }
+
+  /* Abandoning: the stop is left without a keeper, on the record and on
+     the card, and the drive moves on. */
+  function abandon() {
+    const entry = { kind: "abandon", stop: state.stop };
+    state.history.push(entry);
+    renderHistoryEntry(entry);
+    driveOn();
+    renderSheet();   // the card marks the stop at its price at once
   }
 
   function driveOn() {

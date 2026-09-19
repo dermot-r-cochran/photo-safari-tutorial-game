@@ -191,21 +191,29 @@ aperture-priority option pins ISO 100 so A runs the shutter out to a
 second and the caps move, and the f/22 option is focused through the
 finder, so the mirror's thump lands beside the diffraction.
 
-**A stop can be tried again before driving on** (same direction). After
-a verdict that is not a keeper the page offers *Try again* beside *Drive
-on* (Dermot, same day: no need to offer it when the frame is a keeper): a
-`retry` history entry winds the stop back to its first decision, the earlier
-frame stays in the transcript as part of the record, and the contact
-sheet and the endcard count only the last frame pressed at each stop
-(`latestFrames`).
+**A stop is tried again until it yields a keeper, or abandoned at a
+price** (Dermot's direction, 2026-09-19: *do not allow a drive on until
+lesson is learnt or else count it as 10 shots if that stop is
+abandoned*, replacing the 2026-09-13 *Try again* beside *Drive on*).
+After a verdict that is not a keeper the page offers *Try the stop
+again* and *Abandon the stop*, and nothing else; *Drive on* appears only
+from a keeper. A `retry` history entry winds the stop back to its first
+decision, the earlier frame stays in the transcript as part of the
+record, and the contact sheet and the endcard count only the last frame
+pressed at each stop (`latestFrames`). An `abandon` entry moves the
+drive on without a keeper: the stop's line reads *abandoned after 2,
+counted as 10*, and `strokesAt` scores it at `ABANDON.strokes` (ten, in
+the data section beside `RETRY`) or the presses made there if more. The
+check holds the price to more than one stroke and the label to naming
+it.
 
 **The contact sheet is a golf scorecard** (Dermot, 2026-09-13: *the game
 scoring is a bit like golf; a keeper on the first shot is a bit like a
 hole-in-one*). Every press of the shutter at a stop is a stroke, retries
 included; the sheet's top line and the endcard give strokes over stops
 played against a par of one a stop, and the count of keepers first time;
-each stop's line reads *keeper first time*, *keeper in 3* or *folder
-after 2*. The words live in `SCORE` in the data section; the arithmetic
+each stop's line reads *keeper first time*, *keeper in 3*, *folder
+after 2* (a stop still open) or *abandoned after 2, counted as 10*. The words live in `SCORE` in the data section; the arithmetic
 in `strokesAt`, `scoreLine` and `scorecard`. Par is deliberately one a
 stop everywhere — the stops differ in difficulty, and the table of keeper
 combinations in PR #6 shows how, but a par per stop would be a claim

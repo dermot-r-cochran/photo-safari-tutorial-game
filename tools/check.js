@@ -104,9 +104,13 @@ const imgDir = path.join(root, "images");
 if (fs.existsSync(imgDir)) for (const f of fs.readdirSync(imgDir)) {
   if (!shown.has("images/" + f)) fail("images/" + f + " is shown at no stop");
 }
-for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "card", "level", "over", "firsts"]) {
+for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "abandoned", "card", "level", "over", "firsts"]) {
   if (!S.SCORE || !S.SCORE[k]) fail("SCORE has no " + k);
 }
+// abandoning a stop has a price, a label that names it, and words
+if (!S.ABANDON || !(S.ABANDON.strokes > 1)) fail("ABANDON.strokes must be more than one stroke, or abandoning is free");
+if (!S.ABANDON || !S.ABANDON.label || !S.ABANDON.text || !S.ABANDON.text.length) fail("ABANDON has no label or text");
+if (S.ABANDON && !String(S.ABANDON.label).includes(String(S.ABANDON.strokes))) fail("ABANDON.label does not name its price of " + S.ABANDON.strokes);
 for (const [key, r] of Object.entries(S.RULEBOOKS)) {
   if (!r.name || !r.text || !r.text.length) fail("rulebook " + key + " has no name or text");
   if (!/^https:\/\//.test(r.url || "")) fail("rulebook " + key + " has no https url to the rules themselves");
