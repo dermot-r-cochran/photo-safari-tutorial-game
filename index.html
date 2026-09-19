@@ -98,6 +98,11 @@
   #sheet li { font-size: 0.95em; }
   #sheet .tags { color: var(--dim); }
   #sheet .card-line { list-style: none; margin-left: -1.1rem; font-weight: bold; color: var(--grass); }
+  #days h3 { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin: 0.8rem 0 0.3rem; }
+  #days details { font-size: 0.95em; margin: 0.2rem 0; }
+  #days summary { cursor: pointer; }
+  #days summary b { color: var(--grass); }
+  #days ul { margin: 0.2rem 0 0.4rem; }
   .author-frame { margin: 1rem 0 0.4rem; }
   .author-frame img {
     display: block; max-width: 100%; height: auto; border-radius: 6px;
@@ -146,6 +151,7 @@
   <div class="card">
     <h2>Contact sheet</h2>
     <ul id="sheet"></ul>
+    <div id="days"></div>
   </div>
   <div class="card">
     <h2>Rulebooks</h2>
@@ -1705,11 +1711,15 @@ const ABANDON = {
 };
 
 /* Starting the drive again is the next day on it, not a restart: the
-   transcript and the sheet are yesterday's and are cleared (Dermot,
-   2026-09-19). {noun} is the route's own word, drive or walk. */
+   day's card — its scorecard line and each stop's line — is kept under
+   the date in the past days, and the transcript is cleared (Dermot,
+   2026-09-19, option 1 of three: a card per day, kept; the transcript
+   not). {noun} is the route's own word, drive or walk. */
 const NEXT_DAY = {
   label: "Next day on this {noun}",
-  confirm: "Start the next day on this {noun}? Today's transcript and contact sheet will be cleared."
+  confirm: "Start the next day on this {noun}? Today's card goes to the past days, and the transcript is cleared.",
+  past: "Past days",
+  keep: 30   // days kept per route, newest first
 };
 
 /* The scorecard. The game scores like golf: every press of the shutter
@@ -2127,6 +2137,36 @@ function boot() {
     } catch (e) { /* unsaved is still played */ }
   }
 
+  /* The past days: one record a day, per route, newest first — the
+     day's scorecard line and each stop's line, never the transcript. */
+  const daysKey = () => saveKey(route()) + ".days";
+  function loadDays() {
+    try { const d = JSON.parse(localStorage.getItem(daysKey())); return Array.isArray(d) ? d : []; }
+    catch (e) { return []; }
+  }
+  function saveDays(days) {
+    try { localStorage.setItem(daysKey(), JSON.stringify(days.slice(0, NEXT_DAY.keep))); } catch (e) { /* unkept is still played */ }
+  }
+  function localDate() {
+    const d = new Date(), z = (n) => (n < 10 ? "0" : "") + n;
+    return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+  }
+  function dayRecord() {
+    const c = scorecard();
+    return {
+      date: localDate(), card: c.text, strokes: c.strokes, stops: c.stops, over: c.over, firsts: c.firsts,
+      lines: latestFrames().map((h) => {
+        const e = enc(h.stop), r = develop(e, h.choices);
+        return { title: e.title, line: scoreLine(r, h.stop), category: r.unpublishable ? null : r.category, tags: r.tags };
+      })
+    };
+  }
+  /* Close the day: its card goes to the past days if a shutter was pressed. */
+  function archiveDay() {
+    if (!latestFrames().length) return;
+    saveDays([dayRecord()].concat(loadDays()));
+  }
+
   function addParas(container, paras, cls) {
     const div = document.createElement("div");
     div.className = cls;
@@ -2497,6 +2537,40 @@ function boot() {
       li.textContent = "nothing yet";
       ul.appendChild(li);
     }
+    renderDays();
+  }
+  function renderDays() {
+    const box = $("days");
+    box.innerHTML = "";
+    const days = loadDays();
+    if (!days.length) return;
+    const h = document.createElement("h3");
+    h.textContent = NEXT_DAY.past;
+    box.appendChild(h);
+    for (const d of days) {
+      const det = document.createElement("details");
+      const sum = document.createElement("summary");
+      const b = document.createElement("b");
+      b.textContent = d.date;
+      sum.appendChild(b);
+      sum.appendChild(document.createTextNode(" · " + d.card));
+      det.appendChild(sum);
+      const ul = document.createElement("ul");
+      for (const l of d.lines || []) {
+        const li = document.createElement("li");
+        li.textContent = l.title + " — " + l.line;
+        if (l.category) {
+          const span = document.createElement("span");
+          span.className = "tags";
+          span.textContent = " · " + l.category + (l.tags && l.tags.length ? " · " : "");
+          if (l.tags && l.tags.length) span.appendChild(tagNodes(l.tags));
+          li.appendChild(span);
+        }
+        ul.appendChild(li);
+      }
+      det.appendChild(ul);
+      box.appendChild(det);
+    }
   }
 
   function renderRulebooks() {
@@ -2737,6 +2811,7 @@ function boot() {
 
   $("restart").addEventListener("click", () => {
     if (!confirm(fill(NEXT_DAY.confirm, { noun: route().noun || "drive" }))) return;
+    archiveDay();
     try { localStorage.removeItem(saveKey(route())); } catch (e) {}
     state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }] };
     saveState();

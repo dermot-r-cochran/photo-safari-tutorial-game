@@ -207,12 +207,21 @@ the data section beside `RETRY`) or the presses made there if more. The
 check holds the price to more than one stroke and the label to naming
 it.
 
-**Starting a route again is the next day on it** (Dermot, 2026-09-19:
-*The Restart Drive button should be Next Day, Tomorrow or similar*). The
-About card's button reads *Next day on this drive* (or *walk*, the
-route's own noun), its confirmation says today's transcript and sheet
-will be cleared, and the words are `NEXT_DAY` in the data section beside
-`RETRY` and `ABANDON`; the check holds both to carrying `{noun}`.
+**Starting a route again is the next day on it, and the day's card is
+kept** (Dermot, 2026-09-19: *The Restart Drive button should be Next
+Day, Tomorrow or similar*, then, asked whether the day is cleared or
+archived, *Option 1 agreed*: a card per day, kept; the transcript not).
+The About card's button reads *Next day on this drive* (or *walk*, the
+route's own noun). On confirming, `archiveDay` writes the day's record —
+the date, the scorecard line and each stop's line with its category and
+tags, never the transcript — to the front of that route's past days
+(`saveKey + ".days"`, newest first, `NEXT_DAY.keep` of them), and only
+if a shutter was pressed; then the route's state is cleared. *Past days*
+renders under the contact sheet as one `<details>` a day, the date and
+the card on the summary and the stops' lines inside. The words are
+`NEXT_DAY` in the data section beside `RETRY` and `ABANDON`; the check
+holds the label and confirmation to `{noun}`, the heading to existing
+and the keep to at least one.
 
 **The contact sheet is a golf scorecard** (Dermot, 2026-09-13: *the game
 scoring is a bit like golf; a keeper on the first shot is a bit like a

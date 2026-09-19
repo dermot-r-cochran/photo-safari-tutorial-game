@@ -5,7 +5,10 @@ A tutorial game about wildlife photography, in one file. Open
 network — or play it as served from `main` at
 https://dermot-r-cochran.github.io/photo-safari-tutorial-game/ , which is
 the same file and nothing else. Progress saves to that browser's
-localStorage only, per drive.
+localStorage only, per drive, and so do the past days: when you start
+the next day on a drive, that day's scorecard and its stops' lines are
+kept under the date beneath the contact sheet, and the transcript is
+cleared.
 
 ## What it is
 

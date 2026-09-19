@@ -109,6 +109,8 @@ for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "abandoned",
 }
 // the next day on a route has a label and a confirmation, each naming the route's word
 for (const k of ["label", "confirm"]) if (!S.NEXT_DAY || !S.NEXT_DAY[k] || !S.NEXT_DAY[k].includes("{noun}")) fail("NEXT_DAY." + k + " is missing or does not carry {noun}");
+if (!S.NEXT_DAY || !S.NEXT_DAY.past) fail("NEXT_DAY.past has no heading for the past days");
+if (!S.NEXT_DAY || !(S.NEXT_DAY.keep >= 1)) fail("NEXT_DAY.keep must keep at least one day");
 // abandoning a stop has a price, a label that names it, and words
 if (!S.ABANDON || !(S.ABANDON.strokes > 1)) fail("ABANDON.strokes must be more than one stroke, or abandoning is free");
 if (!S.ABANDON || !S.ABANDON.label || !S.ABANDON.text || !S.ABANDON.text.length) fail("ABANDON has no label or text");
