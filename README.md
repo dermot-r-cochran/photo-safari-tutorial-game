@@ -60,7 +60,7 @@ Three drives:
 - **Home ground** — a beech wood, an island and a hill near home, the
   week after, on foot: the one mode the safari never needed, a ringed
   gull, a goat that nobody owns.
-- **Today's drive** — six stops picked from the whole pool by the date,
+- **Today's drive** — six stops picked from the safari day by the date,
   in the order of the day. The same day gives everyone the same drive;
   tomorrow is different.
 

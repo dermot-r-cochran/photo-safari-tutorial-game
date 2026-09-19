@@ -1710,7 +1710,7 @@ const ROUTES = [
       text: ["Three frames near home, and three rulebooks that disagree " +
              "about all of them. That is the whole tutorial: the camera " +
              "is the easy part.",
-             "Today's drive picks a handful of stops from the whole pool by " +
+             "Today's drive picks a handful of stops from the safari day by " +
              "the date. Come back tomorrow and it is a different day."],
       nextLabel: "Today's drive"
     }
@@ -1718,8 +1718,8 @@ const ROUTES = [
   {
     id: "today", noun: "drive",
     title: "Today's drive",
-    sub: "six stops chosen by the date, in the order of the day",
-    daily: true, count: 6,
+    sub: "six stops from the safari day, chosen by the date, in the order of the day",
+    daily: true, count: 6, pool: "safari",
     end: {
       title: "End of today's drive",
       text: ["Same day, same drive, for everyone who opens the page; a " +
@@ -1973,8 +1973,11 @@ function hashString(s) {
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
   return h;
 }
-function dailyStops(dateStr, count) {
-  const ids = Object.keys(ENCOUNTERS);
+function dailyStops(dateStr, count, ids) {
+  // the pool is one route's stops, so the day stays one day: a drive on
+  // the Mara does not call at a beech wood near home between two stops
+  // (Dermot, 2026-09-19: the safari and the woodland walk seemed mixed up)
+  ids = ids || Object.keys(ENCOUNTERS);
   let h = hashString("photo-safari:" + dateStr);
   const picked = [];
   const pool = ids.slice();
@@ -1990,7 +1993,9 @@ function todayString() {
     String(d.getUTCDate()).padStart(2, "0");
 }
 function routeStops(route, dateStr) {
-  return route.daily ? dailyStops(dateStr || todayString(), route.count) : route.stops;
+  if (!route.daily) return route.stops;
+  const pool = route.pool ? ROUTES.find((r) => r.id === route.pool).stops : null;
+  return dailyStops(dateStr || todayString(), route.count, pool);
 }
 
 /* For the tools: everything above, reachable without a page. */
@@ -2004,7 +2009,7 @@ if (typeof globalThis !== "undefined") {
 
 function boot() {
   const CURRENT_KEY = "photo-safari-current";
-  const saveKey = (r) => "photo-safari-" + r.id + (r.daily ? ":" + todayString() : "");
+  const saveKey = (r) => "photo-safari-" + r.id + (r.daily ? ":" + todayString() + (r.pool ? ":" + r.pool : "") : "");
 
   let currentRoute = 0;
   let stops = [];
