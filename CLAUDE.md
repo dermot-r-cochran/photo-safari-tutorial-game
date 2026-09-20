@@ -190,7 +190,10 @@ answers or more than four. Each alternative still costs something real in
 the model, so the count is a ceiling, not a target: add a question or an
 answer when it carries a lesson or a cost the stop does not already have.
 The first fourth answer is the hyena's, the dawn's manual numbers left on
-the dial beside the three it already had. **The second question may vary with
+the dial beside the three it already had; the minimum gave the dusk lion
+its second question the same day — the second lion the card already
+shows, and what depth costs at dusk (f/16 on the beanbag lands the
+shutter where the mirror's thump reaches the frame). **The second question may vary with
 the answer to the first** (Dermot, 2026-09-20): an option in the first
 decision may carry `then`, a question of its own with the same shape,
 asked next in place of the stop's second decision; options without one

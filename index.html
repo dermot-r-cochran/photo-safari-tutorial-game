@@ -1281,6 +1281,36 @@ const ENCOUNTERS = {
             settings: "walkAround", set: { support: "beanbag", minShutter: 1 / 30 }
           }
         ]
+      },
+      {
+        // the second question, added 2026-09-20 when the rule became two
+        // or three questions a stop: the second lion the card already
+        // shows, and what depth costs at dusk
+        id: "second", prompt: "There is a second lion behind him, a few metres back, at the edge of the light. What do you do about it?",
+        options: [
+          {
+            label: "Nothing. The portrait is him; let the shape behind be a shape.",
+            text: ["You kept the frame on the one face and the one mane, " +
+                   "and the lion behind stayed what the light had made " +
+                   "of it, a warm shape in the dark."],
+            frame: { framing: "tight" }
+          },
+          {
+            label: "Both of them sharp. f/16, and let the shutter pay for it.",
+            text: ["You stopped down for the second lion. At f/16 in that " +
+                   "light the shutter went where the mirror lives, and " +
+                   "the frame came back soft from the inside."],
+            frame: { framing: "loose" }, set: { aperture: 16, focal: 300 }, subject: { depth: 3 }
+          },
+          {
+            label: "Both in the frame at f/8, and take what depth there is.",
+            text: ["You pulled back to get them both in and left the " +
+                   "aperture alone. The second lion was a blur behind " +
+                   "the mane, which is, you decided later, what a second " +
+                   "lion at dusk looks like."],
+            frame: { framing: "loose" }, set: { focal: 300 }, subject: { depth: 3 }
+          }
+        ]
       }
     ],
     photo: { file: "images/lion-portrait-at-dusk.jpg", title: "Lion Portrait at Dusk",
@@ -1293,7 +1323,12 @@ const ENCOUNTERS = {
     afterword: [
       "A still subject and a support remove the reason for high ISO: the " +
       "beanbag holds the lens, the shutter runs long, and the frame stays " +
-      "clean. ISO is the setting to spend last, not first."
+      "clean. ISO is the setting to spend last, not first.",
+      "Depth is bought with the shutter, and at dusk the shutter has " +
+      "nothing left to sell: f/16 on a support lands between 1/15 s and " +
+      "1/2 s, where the mirror's thump reaches the frame, and hand-held it " +
+      "is simply too slow. A second lion a few metres back stays soft at " +
+      "f/8, and a soft second lion is a picture; a shaken first one is not."
     ]
   },
 
