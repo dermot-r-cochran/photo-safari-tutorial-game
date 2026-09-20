@@ -367,7 +367,33 @@ const ENCOUNTERS = {
             text: ["You panned off the balloon and took the herd under " +
                    "the escarpment on its own. Quieter. Nothing in it " +
                    "that anyone built."],
-            frame: { framing: "tight" }, set: { focal: 135 }
+            frame: { framing: "tight" }, set: { focal: 135 },
+            // with the balloon gone the sky and the plain are the
+            // picture, and the question is the dial, not the shutter
+            then: {
+              id: "dial", prompt: "Sky, escarpment and a line of animals. What is the picture control on?",
+              options: [
+                {
+                  label: "Vivid, as it is. Skies and distance are what it is for.",
+                  text: ["A, f/8, Auto ISO, and the dial where it lives. The " +
+                         "sky came out the colour the morning was."],
+                  settings: "walkAround"
+                },
+                {
+                  label: "Standard, to be safe with the sky.",
+                  text: ["You took the dial down a notch. Nothing clipped, " +
+                         "nothing crushed, and the morning came out a little " +
+                         "politer than it was."],
+                  settings: "walkAround", set: { picture: "standard" }
+                },
+                {
+                  label: "Vivid, at f/16 for depth front to back.",
+                  text: ["You stopped down to f/16. A landscape wants depth, " +
+                         "you reasoned, and the light could spare the stops."],
+                  settings: "walkAround", set: { aperture: 16 }
+                }
+              ]
+            }
           },
           {
             label: "The wide end. Escarpment, plain, herd, and the balloon a dot in all of it.",
@@ -410,7 +436,13 @@ const ENCOUNTERS = {
       "differently: the world awards do not ban built things, so the frame " +
       "with the balloon still qualifies there; the federation's nature " +
       "definition bans any human element, so it does not. Neither is wrong. " +
-      "Read the rulebook, not the instinct."
+      "Read the rulebook, not the instinct.",
+      "With the balloon panned off, the sky is the subject, and the " +
+      "picture control is a choice about the sky. Standard on scenery in " +
+      "kind light is safe and a little flat; the established look is " +
+      "vivid, and a portfolio that agrees with itself is worth something. " +
+      "It is the one lesson here with nothing at stake: the raw file is " +
+      "neutral either way."
     ]
   },
 
@@ -812,11 +844,11 @@ const ENCOUNTERS = {
             settings: "birds", set: { focal: 200 }
           },
           {
-            label: "f/16, for depth from the pool to the skyline.",
-            text: ["You stopped down for depth. At ninety metres the lens " +
-                   "already had all the depth there was; what it did not " +
-                   "have any more was sharpness."],
-            settings: "walkAround", set: { aperture: 16, focal: 200 }
+            label: "Whatever it is on. Manual, 1/500 s, f/8, ISO 400, from the dawn.",
+            text: ["You did not look. The three numbers guessed at sunrise " +
+                   "were still on the dial, and the meter's needle now sat " +
+                   "above the middle without your looking at that either."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 500, iso: 400, focal: 200 }
           }
         ]
       }
@@ -834,7 +866,12 @@ const ENCOUNTERS = {
       "geometry is the problem: the herd and the hyena are far apart, so " +
       "any frame that keeps both keeps the hyena small. The frame stays as " +
       "shot and the note supplies what the eye cannot find — the one " +
-      "case where a note may say where to look."
+      "case where a note may say where to look.",
+      "And a dial that was not touched stays where it was. The manual " +
+      "numbers that came up two stops dark at sunrise are a stop bright " +
+      "by mid-morning and two by noon, because manual does not follow " +
+      "the light in either direction; blown highlights are the one thing " +
+      "the sensor cannot give back."
     ]
   },
 
@@ -2069,7 +2106,10 @@ function develop(enc, choices) {
     else if (frame.harsh || ex.iso >= CAMERA.noise.chroma) add("vividHarsh");
   } else if (settings.picture === "neutral") {
     add("neutral");
-  } else if (frame.kind === "landscape" && !subject.white) {
+  } else if (frame.kind === "landscape" && !subject.white && !frame.harsh && ex.iso < CAMERA.noise.chroma) {
+    // standard on scenery in kind light at a clean ISO is the flat
+    // choice; in harsh light or at high ISO it is the right one, and
+    // the style guide's vivid dial says so (its third reason to switch)
     add("flat");
   }
   if (frame.harsh) add("harsh");

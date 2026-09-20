@@ -122,6 +122,9 @@ here as tutorial content:
   confusion; thin when it is under six tenths of the subject's depth.
 - Vivid clips white plumage first and blows an already-saturated channel;
   in hard light or at high ISO it crushes shadows and amplifies noise.
+  Standard on a landscape is *flat* only in kind light at a clean ISO —
+  in harsh light or at ISO 1600 it is the right call, the style guide's
+  third reason to switch, so the finding is gated off there (2026-09-20).
 - Category: what the subject is, not what it lies on — a wild lion on a
   track is Wildlife; a balloon, a rail or distant watchers make a frame
   Documentary; a plant is Macro at 1:1 and Nature below it.
@@ -195,7 +198,13 @@ The first branch is Naivasha (Dermot, 2026-09-20: *Naivasha branch
 accepted*): after *Ask him not to*, the second question is the wait's
 own — a bird that sits is a different problem from one coming down on
 a fish — while the throw paths keep the stop's shared camera question.
-The check also holds the walk to its shape on a made-up stop. Each alternative costs something real in the model —
+The second is the balloon: with the balloon panned off, the sky is the
+picture and the second question is the dial, which is where *Flatter
+than the house look* is reached. The check also holds the walk to its
+shape on a made-up stop. Every lesson is reachable since 2026-09-20 —
+*Overexposed* by the hyena's dawn manual numbers left on the dial, a stop
+bright at EV 14 — and the check's never-raised warning should stay at
+zero; a lesson allowed to sit unreachable is a decision to retire it. Each alternative costs something real in the model —
 ISO spent on a speed the subject did not need, diffraction bought for
 depth the distance already had, a hand's width of focus at three metres —
 so the verdict has something to say about it. Where a stop had three
