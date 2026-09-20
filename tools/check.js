@@ -31,26 +31,52 @@ if (!S) { console.error("the script did not export SAFARI"); process.exit(1); }
 let fails = 0, frames = 0, keepers = 0;
 const fail = (msg) => { fails++; console.error("  FAIL: " + msg); };
 
+// every path through a stop's questions: an option may carry `then`, a
+// second question of its own, so the paths are walked, not multiplied
 function combos(enc) {
-  let out = [[]];
-  for (const d of enc.decisions) {
-    const next = [];
-    for (const c of out) for (let i = 0; i < d.options.length; i++) next.push(c.concat(i));
-    out = next;
-  }
+  const out = [];
+  (function walk(choices) {
+    const asked = S.decisionsFor(enc, choices);
+    if (asked.length === choices.length) { out.push(choices); return; }
+    const d = asked[choices.length];
+    for (let i = 0; i < d.options.length; i++) walk(choices.concat(i));
+  })([]);
   return out;
+}
+// every question a stop can ask, on any path
+function questions(enc) {
+  const out = [];
+  const add = (d) => { out.push(d); for (const o of d.options || []) if (o.then) add(o.then); };
+  for (const d of enc.decisions || []) add(d);
+  return out;
+}
+
+// the branching walk itself, held to its shape on a made-up stop before
+// any real stop relies on it
+{
+  const q = (id, n, thens) => ({ id, prompt: id + "?", options: Array.from({ length: n }, (_, i) => Object.assign({ label: id + i }, thens && thens[i] ? { then: thens[i] } : {})) });
+  const fake = { decisions: [q("a", 3, [null, q("b1", 2)]), q("b", 3)] };
+  const paths = combos(fake).map((c) => c.join(""));
+  const want = ["00", "01", "02", "10", "11", "20", "21", "22"];
+  if (paths.join() !== want.join()) fail("decisionsFor walks the wrong paths: " + paths.join(" "));
+  if (S.decisionsFor(fake, []).length !== 1) fail("decisionsFor asks more than the first question before it is answered");
+  if (S.decisionsFor(fake, [1]).map((d) => d.id).join() !== "a,b1") fail("decisionsFor does not follow an option's `then`");
+  if (S.decisionsFor(fake, [0]).map((d) => d.id).join() !== "a,b") fail("decisionsFor does not fall back to the stop's next decision");
+  if (questions(fake).map((d) => d.id).join() !== "a,b1,b") fail("questions() misses a branch");
 }
 
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
-  // a stop asks at most two questions, and every question has three answers
-  if ((enc.decisions || []).length > 2) fail(id + " asks " + enc.decisions.length + " questions — a stop asks at most two");
-  for (const d of enc.decisions || []) {
-    if (!d.options || d.options.length !== 3) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has three");
+  // a stop asks at most two questions on any path, and every question
+  // has two or three answers (Dermot, 2026-09-20: two or three is fine)
+  for (const d of questions(enc)) {
+    if (!d.options || d.options.length < 2 || d.options.length > 3) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has two or three");
+    if (d.options && d.options.length === 1) fail(id + " decision " + d.id + " has a single option, which is no decision");
   }
   let anyKeeper = false;
   for (const choices of combos(enc)) {
+    if (choices.length > 2) fail(id + " asks " + choices.length + " questions on the path " + JSON.stringify(choices) + " — a stop asks at most two");
     let r;
     try { r = S.develop(enc, choices); }
     catch (e) { fail(id + " " + JSON.stringify(choices) + " threw: " + e.message); continue; }

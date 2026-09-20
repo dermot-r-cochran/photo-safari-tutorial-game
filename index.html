@@ -1875,6 +1875,25 @@ function lensMaxAperture(lens, focal) {
   return Math.round((L.apWide + (L.apLong - L.apWide) * Math.max(0, Math.min(1, p))) * 10) / 10;
 }
 
+/* The questions a stop asks on one path through it. A stop's decisions
+   are asked in order, but an option may carry `then` — a question of its
+   own, asked next in place of the stop's next decision — so the second
+   question may vary with the answer to the first (Dermot's direction,
+   2026-09-20). Given the choices made so far, this returns the decisions
+   asked up to and including the one now open, or all of them once the
+   path is answered to its end. */
+function decisionsFor(enc, choices) {
+  const out = [];
+  let next = enc.decisions[0] || null;
+  for (let i = 0; next; i++) {
+    out.push(next);
+    const o = choices[i] === undefined ? null : next.options[choices[i]];
+    if (!o) break;
+    next = o.then || enc.decisions[i + 1] || null;
+  }
+  return out;
+}
+
 /* Merge a stop's chosen options into one settings object and one
    description of the scene. Options may name a preset, set fields, and
    override the subject, light or frame. */
@@ -1884,7 +1903,7 @@ function assemble(enc, choices) {
   const light = Object.assign({}, enc.light);
   const frame = Object.assign({ tells: [] }, enc.frame);
   const extraLessons = [];
-  const picked = enc.decisions.map((d, i) => d.options[choices[i]]).filter(Boolean);
+  const picked = decisionsFor(enc, choices).map((d, i) => d.options[choices[i]]).filter(Boolean);
   // a preset is the base whatever order the decisions came in; fields an
   // option sets itself go on top of it
   for (const o of picked) if (o.settings) settings = Object.assign({}, PRESETS[o.settings]);
@@ -2118,7 +2137,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, SCORE,
+  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, SCORE, decisionsFor,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -2321,7 +2340,11 @@ function boot() {
       return h;
     } else if (entry.kind === "chosen") {
       const e = enc(entry.stop);
-      const d = e && e.decisions[entry.decision];
+      // the entry carries the choices before it, so a question that
+      // varied with an earlier answer replays as it was asked; an entry
+      // saved before `then` existed falls back to the stop's own list
+      const ds = e && (entry.choices ? decisionsFor(e, entry.choices) : e.decisions);
+      const d = ds && ds[entry.decision];
       const o = d && d.options[entry.choice];
       if (!o) return null;
       const label = document.createElement("p");
@@ -2662,9 +2685,10 @@ function boot() {
     }
     $("endcard").hidden = true;
     const e = enc(state.stop);
+    const asked = decisionsFor(e, state.choices);
     const choices = document.createElement("div");
-    if (state.decision < e.decisions.length) {
-      const d = e.decisions[state.decision];
+    if (state.decision < asked.length) {
+      const d = asked[state.decision];
       const prompt = document.createElement("p");
       prompt.className = "prompt";
       prompt.textContent = d.prompt;
@@ -2706,7 +2730,7 @@ function boot() {
     }
     box.appendChild(choices);
 
-    if (e.examine && e.examine.length && state.decision <= e.decisions.length) {
+    if (e.examine && e.examine.length && state.decision <= asked.length) {
       const row = document.createElement("div");
       row.className = "examine-row";
       const lead = document.createElement("span");
@@ -2744,7 +2768,7 @@ function boot() {
   }
 
   function choose(i) {
-    const entry = { kind: "chosen", stop: state.stop, decision: state.decision, choice: i };
+    const entry = { kind: "chosen", stop: state.stop, decision: state.decision, choice: i, choices: state.choices.slice() };
     state.history.push(entry);
     const el = renderHistoryEntry(entry);
     state.choices[state.decision] = i;

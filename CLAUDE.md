@@ -176,12 +176,23 @@ drive*, between the safari day and home ground, and out of today's pool.
 A new stop where the animal was fed, called or fenced goes there, not on
 the safari. Every stop is on exactly one route of its own; the check
 fails a stop on none or on two.
-**A stop asks at most two questions, and every question has three
-answers** (Dermot's direction, 2026-09-19: *max two questions with three
-options each for each stop*, tightening his 2026-09-13 *always have at
-least two or three choices for the camera settings at each step*). The
-check fails a stop with a third decision and a decision with any number
-of options but three. Each alternative costs something real in the model —
+**A stop asks at most two questions, and every question has two or
+three answers** (Dermot's direction, 2026-09-19: *max two questions with
+three options each for each stop*, tightening his 2026-09-13 *always have
+at least two or three choices for the camera settings at each step*;
+loosened 2026-09-20: *two or three options is fine for each question*).
+The check fails a path with a third question and a question with fewer
+than two answers or more than three. **The second question may vary with
+the answer to the first** (Dermot, 2026-09-20): an option in the first
+decision may carry `then`, a question of its own with the same shape,
+asked next in place of the stop's second decision; options without one
+fall through to it, and a stop whose second decision is only ever reached
+by `then` need not list one. `decisionsFor(enc, choices)` is the one
+place the path is worked out — the renderer, `assemble` and the check's
+`combos` all go through it, and a `chosen` history entry carries the
+choices before it so a transcript replays the question as it was asked.
+No stop branches yet; the check holds the walk to its shape on a made-up
+stop. Each alternative costs something real in the model —
 ISO spent on a speed the subject did not need, diffraction bought for
 depth the distance already had, a hand's width of focus at three metres —
 so the verdict has something to say about it. Where a stop had three

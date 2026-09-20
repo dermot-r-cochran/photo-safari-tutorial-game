@@ -23,7 +23,7 @@ can enter.
 
 The frame is a verdict in words, the way a contact sheet is a set of
 decisions, and every verdict names the lesson behind it. Every step is a
-real choice — three settings or framings, each with a cost, and no stop asks more than two questions — and
+real choice — two or three settings or framings, each with a cost, and no stop asks more than two questions; the second may depend on how you answered the first — and
 when a frame is one for the folder — kept, not shown — you try the stop
 again until it gives you a keeper, because you cannot drive on from a
 frame for the folder; you can abandon the stop instead, and an abandoned
@@ -125,14 +125,17 @@ seven data structures at the top of its script — `CAMERA`, `PRESETS`,
 `ENCOUNTERS`, `EXAMINE`, `RULEBOOKS`, `LESSONS`, `ROUTES` — and the
 engine below them never needs editing to add a stop. A stop is a scene
 (the light as an exposure value, the subject's motion, distance and
-depth, what else is in the frame), at most two decisions with three
-options each, a note and an afterword. An option may name a settings preset,
-set individual fields, and override the subject, light or frame. The
+depth, what else is in the frame), at most two decisions with two or
+three options each, a note and an afterword. An option may name a settings
+preset, set individual fields, and override the subject, light or frame,
+and an option in the first decision may carry `then`, a second question
+of its own asked in place of the stop's, so the second question can vary
+with the answer to the first. The
 engine assembles the choices, resolves the exposure the camera would
 actually make, and raises findings — each one a key into `LESSONS`.
 
 `tools/check.js` runs the model without a browser: every stop under
-every combination of its options, every finding a real lesson, every tag
+every path through its questions, every finding a real lesson, every tag
 a real rulebook, every drive resolving, today's drive deterministic. It
 is what CI runs, and it installs nothing.
 
