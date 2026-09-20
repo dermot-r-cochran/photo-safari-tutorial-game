@@ -191,8 +191,11 @@ by `then` need not list one. `decisionsFor(enc, choices)` is the one
 place the path is worked out — the renderer, `assemble` and the check's
 `combos` all go through it, and a `chosen` history entry carries the
 choices before it so a transcript replays the question as it was asked.
-No stop branches yet; the check holds the walk to its shape on a made-up
-stop. Each alternative costs something real in the model —
+The first branch is Naivasha (Dermot, 2026-09-20: *Naivasha branch
+accepted*): after *Ask him not to*, the second question is the wait's
+own — a bird that sits is a different problem from one coming down on
+a fish — while the throw paths keep the stop's shared camera question.
+The check also holds the walk to its shape on a made-up stop. Each alternative costs something real in the model —
 ISO spent on a speed the subject did not need, diffraction bought for
 depth the distance already had, a hand's width of focus at three metres —
 so the verdict has something to say about it. Where a stop had three

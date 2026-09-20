@@ -953,11 +953,42 @@ const ENCOUNTERS = {
           {
             label: "Ask him not to. Wait for the birds to fish for themselves.",
             text: ["You asked him to keep the fish. He shrugged and put " +
-                   "the lid on, and you sat under the tree for twenty " +
-                   "minutes until the far eagle dropped off its branch " +
-                   "on its own business and crossed the drowned forest " +
-                   "in front of you."],
-            frame: { baited: false }
+                   "the lid on, and the boat drifted under the tree with " +
+                   "the pair still on their branch, white heads turned, " +
+                   "doing nothing at all."],
+            frame: { baited: false },
+            // the second question on this path is its own: a bird that
+            // sits is a different problem from a bird that is coming
+            // down on a fish (Dermot, 2026-09-20: Naivasha branch accepted)
+            then: {
+              id: "wait", prompt: "It is sitting, and may for an hour. What do you set up for?",
+              options: [
+                {
+                  label: "The bird where it sits. A, f/8, standard, a portrait on the branch.",
+                  text: ["You took the portrait on the branch, the white " +
+                         "head against the drowned wood, and were still " +
+                         "taking it when the far eagle dropped off its " +
+                         "branch and crossed the forest in front of you. " +
+                         "That one you did not get."],
+                  settings: "walkAround", set: { picture: "standard" }, subject: { motion: "stirs" }
+                },
+                {
+                  label: "The crossing, when it comes. The shooting-birds setting on standard, and wait.",
+                  text: ["You set 1/2000 s for a bird that was not moving " +
+                         "and sat there for twenty minutes, until the far " +
+                         "eagle dropped off its branch on its own business " +
+                         "and crossed the drowned forest in front of you."],
+                  settings: "birds", set: { picture: "standard" }
+                },
+                {
+                  label: "The bird where it sits, on the walking-around setting as it is, and swing to the crossing if one comes.",
+                  text: ["It was sitting on a branch until it was not. You " +
+                         "swung with it at 1/250 s on vivid, and the frame " +
+                         "has a white smear where the head was."],
+                  settings: "walkAround"
+                }
+              ]
+            }
           },
           {
             label: "Let him throw it, and keep the boat in the frame: the hand, the bucket, the fish going out.",
@@ -970,7 +1001,7 @@ const ENCOUNTERS = {
         ]
       },
       {
-        id: "settings", prompt: "And the camera?",
+        id: "settings", prompt: "The fish is in the air. And the camera?",
         options: [
           { label: "The shooting-birds setting.", text: ["S, 1/2000 s, Auto ISO."], settings: "birds" },
           {
@@ -980,9 +1011,9 @@ const ENCOUNTERS = {
             settings: "birds", set: { picture: "standard" }
           },
           {
-            label: "The walking-around setting. It is sitting on a branch.",
-            text: ["A, f/8, and the 1/250 s floor. It was sitting on a " +
-                   "branch until it was not."],
+            label: "The walking-around setting. There is no time to change it.",
+            text: ["A, f/8, and the 1/250 s floor, because the fish was " +
+                   "already in the air and the eagle already off its branch."],
             settings: "walkAround"
           }
         ]
@@ -1004,7 +1035,11 @@ const ENCOUNTERS = {
       "own nature rounds included; the open competition still takes it — " +
       "and what it must do is carry a note that says how it was got. And a white head in " +
       "sunlight is where vivid clips first — the calmer picture control " +
-      "keeps the feather detail a judge looks for."
+      "keeps the feather detail a judge looks for.",
+      "Waiting has its own question. A bird that sits is the picture " +
+      "you are sure of, and the crossing is the one you came for; set " +
+      "the camera for the one you mean to take, and know which it is, " +
+      "because the sit does not warn you when it ends."
     ]
   },
 
