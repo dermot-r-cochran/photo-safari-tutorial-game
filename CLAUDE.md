@@ -179,13 +179,19 @@ drive*, between the safari day and home ground, and out of today's pool.
 A new stop where the animal was fed, called or fenced goes there, not on
 the safari. Every stop is on exactly one route of its own; the check
 fails a stop on none or on two.
-**A stop asks at most two questions, and every question has two or
-three answers** (Dermot's direction, 2026-09-19: *max two questions with
-three options each for each stop*, tightening his 2026-09-13 *always have
-at least two or three choices for the camera settings at each step*;
-loosened 2026-09-20: *two or three options is fine for each question*).
-The check fails a path with a third question and a question with fewer
-than two answers or more than three. **The second question may vary with
+**A stop asks two questions, and every question has two or three
+answers; a third question, or a fourth answer, is allowed where it is
+useful** (Dermot's direction, 2026-09-19: *max two questions with three
+options each for each stop*, tightening his 2026-09-13 *always have at
+least two or three choices for the camera settings at each step*;
+loosened 2026-09-20: *two or three options is fine for each question*,
+then *a third question is allowed if useful, or a 4th option*). Two and
+three remain the shape to write to; the third question and the fourth
+answer are for a lesson that has nowhere else to go, and the stop's
+comment says which lesson. The check fails a path with a fourth question
+and a question with fewer than two answers or more than four. The first
+fourth answer is the hyena's: the dawn's manual numbers left on the dial,
+beside the three it already had. **The second question may vary with
 the answer to the first** (Dermot, 2026-09-20): an option in the first
 decision may carry `then`, a question of its own with the same shape,
 asked next in place of the stop's second decision; options without one
@@ -203,8 +209,9 @@ picture and the second question is the dial, which is where *Flatter
 than the house look* is reached. The check also holds the walk to its
 shape on a made-up stop. Every lesson is reachable since 2026-09-20 —
 *Overexposed* by the hyena's dawn manual numbers left on the dial, a stop
-bright at EV 14 — and the check's never-raised warning should stay at
-zero; a lesson allowed to sit unreachable is a decision to retire it. Each alternative costs something real in the model —
+bright at EV 14, its fourth camera answer — and the check's never-raised
+warning should stay at zero; a lesson allowed to sit unreachable is a
+decision to retire it. Each alternative costs something real in the model —
 ISO spent on a speed the subject did not need, diffraction bought for
 depth the distance already had, a hand's width of focus at three metres —
 so the verdict has something to say about it. Where a stop had three
