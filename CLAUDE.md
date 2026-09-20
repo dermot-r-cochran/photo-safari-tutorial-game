@@ -179,19 +179,18 @@ drive*, between the safari day and home ground, and out of today's pool.
 A new stop where the animal was fed, called or fenced goes there, not on
 the safari. Every stop is on exactly one route of its own; the check
 fails a stop on none or on two.
-**A stop asks two questions, and every question has two or three
-answers; a third question, or a fourth answer, is allowed where it is
-useful** (Dermot's direction, 2026-09-19: *max two questions with three
-options each for each stop*, tightening his 2026-09-13 *always have at
-least two or three choices for the camera settings at each step*;
-loosened 2026-09-20: *two or three options is fine for each question*,
-then *a third question is allowed if useful, or a 4th option*). Two and
-three remain the shape to write to; the third question and the fourth
-answer are for a lesson that has nowhere else to go, and the stop's
-comment says which lesson. The check fails a path with a fourth question
-and a question with fewer than two answers or more than four. The first
-fourth answer is the hyena's: the dawn's manual numbers left on the dial,
-beside the three it already had. **The second question may vary with
+**A stop asks two or three questions, each with two to four answers**
+(Dermot's ruling, 2026-09-20, verbatim: *Two or three questions, each
+with two to four options* — settling the day's sequence, which began
+from his 2026-09-19 *max two questions with three options each for each
+stop* and his 2026-09-13 *always have at least two or three choices for
+the camera settings at each step*). The check fails a path with fewer
+than two questions or more than three, and a question with fewer than two
+answers or more than four. Each alternative still costs something real in
+the model, so the count is a ceiling, not a target: add a question or an
+answer when it carries a lesson or a cost the stop does not already have.
+The first fourth answer is the hyena's, the dawn's manual numbers left on
+the dial beside the three it already had. **The second question may vary with
 the answer to the first** (Dermot, 2026-09-20): an option in the first
 decision may carry `then`, a question of its own with the same shape,
 asked next in place of the stop's second decision; options without one

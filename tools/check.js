@@ -68,16 +68,16 @@ function questions(enc) {
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
-  // a stop asks at most three questions on any path, and every question
-  // has two to four answers (Dermot, 2026-09-20: two or three is fine;
-  // a third question, or a fourth option, is allowed if useful)
+  // a stop asks two or three questions on any path, and every question
+  // has two to four answers (Dermot, 2026-09-20: "Two or three questions,
+  // each with two to four options")
   for (const d of questions(enc)) {
     if (!d.options || d.options.length < 2 || d.options.length > 4) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has two to four");
     if (d.options && d.options.length === 1) fail(id + " decision " + d.id + " has a single option, which is no decision");
   }
   let anyKeeper = false;
   for (const choices of combos(enc)) {
-    if (choices.length > 3) fail(id + " asks " + choices.length + " questions on the path " + JSON.stringify(choices) + " — a stop asks at most three");
+    if (choices.length < 2 || choices.length > 3) fail(id + " asks " + choices.length + " question(s) on the path " + JSON.stringify(choices) + " — a stop asks two or three");
     let r;
     try { r = S.develop(enc, choices); }
     catch (e) { fail(id + " " + JSON.stringify(choices) + " threw: " + e.message); continue; }
