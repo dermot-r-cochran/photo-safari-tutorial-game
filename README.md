@@ -43,13 +43,14 @@ photographers. Nothing in it is expert opinion. Every lesson was
 learned by getting it wrong first, and the photographs are the evidence.
 
 **The cameras are the author's own**, and the numbers are their numbers:
-a crop-sensor DSLR, 14 megapixels, that carries an 18–400 mm zoom, a
-75–240 mm zoom, a 50 mm autofocus prime or a 70 mm macro, and a
-crop-sensor mirrorless with a 150–500 mm zoom. **Before each drive or
+a crop-sensor DSLR, 14 megapixels, that carries an 18–400 mm autofocus
+zoom, a 50 mm autofocus prime or a 70 mm macro, and a crop-sensor
+mirrorless with a 150–500 mm auto-tracking zoom. **Before each drive or
 walk you choose the main camera and the companion**, one lens on each
 body, and there is no changing lenses in the field; at each stop you
-choose which camera is in your hands, and the lens on it gives what it
-can of the focal length you reach for. A 50 mm at a topi sixty metres
+choose which camera is in your hands — a choice beside the questions,
+counted against none of them — and the lens on it gives what it can of
+the focal length you reach for. A 50 mm at a topi sixty metres
 off is a dot; a 150–500 will not go wide for the whole dawn; a zoom
 focuses no closer than about 1:4, so the woodland floor at 1:1 wants the
 macro on one of the bodies. The lessons were learned on the DSLR's

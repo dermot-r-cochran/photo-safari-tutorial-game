@@ -199,9 +199,9 @@
    worse, and 3200 is a last resort. */
 const CAMERA = {
   caveat: "The cameras in this game are the author's own: a crop-sensor " +
-    "DSLR that carries an 18–400 mm zoom, a 75–240 mm zoom, a 50 mm " +
-    "autofocus prime or a 70 mm macro, and a crop-sensor mirrorless with " +
-    "a 150–500 mm zoom — cleaner at high ISO by an amount no field note " +
+    "DSLR that carries an 18–400 mm autofocus zoom, a 50 mm autofocus " +
+    "prime or a 70 mm macro, and a crop-sensor mirrorless with a " +
+    "150–500 mm auto-tracking zoom — cleaner at high ISO by an amount no field note " +
     "has measured yet, so it is scored on the DSLR's thresholds until one " +
     "does; no mirror to thump; and it may call the vivid setting a " +
     "picture style or a film simulation. Two bodies, one lens on each, " +
@@ -215,12 +215,11 @@ const CAMERA = {
   closeFocus: 0.25,     // what a lens that is not a macro focuses down to: about 1:4
   noise: { clean: 400, fine: 800, chroma: 1600, rough: 3200 },
   /* `stabilised: false` where the field notes say so (the 50 mm prime has
-     none; the 75–240 has none — the note keeps it on the shelf because
-     the 18–400 "covers its whole range with stabilisation"); unset where
-     no note has said, which scores as the zoom does until one does. */
+     none); `true` for the 18–400, which the notes say covers its whole
+     range with stabilisation; unset where no note has said, which scores
+     as the zoom does until one does. */
   lenses: {
     zoom:  { name: "18–400 mm zoom", min: 18, max: 400, apWide: 3.5, apLong: 6.3, stabilised: true },
-    mid:   { name: "75–240 mm zoom", min: 75, max: 240, apWide: 4, apLong: 5.6, stabilised: false },
     fifty: { name: "50 mm prime", min: 50, max: 50, apWide: 1.8, apLong: 1.8, stabilised: false },
     macro: { name: "70 mm macro", min: 70, max: 70, apWide: 2.8, apLong: 2.8, macro: true },
     long:  { name: "150–500 mm zoom", min: 150, max: 500, apWide: 5, apLong: 6.7 }
@@ -238,18 +237,22 @@ const BODIES = {
   mirrorless: { name: "a crop-sensor mirrorless", short: "the mirrorless", mirror: false, noise: CAMERA.noise }
 };
 
-/* A kit is a body with a lens on it. The main camera and the companion
-   are chosen from these before each drive, walk or hide, on different
-   bodies, since a body carries one lens; at each stop the player chooses
-   which is in hand. A stop's `kit` is the one it was learned on (the
-   zoom unless it says otherwise), and its route's default pair carries
-   it. */
+/* A kit is a body with a lens on it — the four combinations Dermot
+   named (2026-09-20): the DSLR with the 18–400 autofocus zoom, the
+   mirrorless with the 150–500 auto-tracking zoom, the DSLR with the
+   70 mm macro, the DSLR with the 50 mm autofocus prime. (The 75–240
+   stays on the shelf, as the field notes have it.) The main camera and
+   the companion are chosen from these before each drive, walk or hide,
+   on different bodies, since a body carries one lens; at each stop the
+   player chooses which is in hand, and that choice counts against no
+   question or decision. A stop's `kit` is the one it was learned on
+   (the zoom unless it says otherwise), and its route's default pair
+   carries it. `name` is the label the page shows. */
 const KITS = {
-  zoom:  { body: "dslr", lens: "zoom" },
-  mid:   { body: "dslr", lens: "mid" },
-  fifty: { body: "dslr", lens: "fifty" },
-  macro: { body: "dslr", lens: "macro" },
-  long:  { body: "mirrorless", lens: "long" }
+  zoom:  { body: "dslr", lens: "zoom", name: "the DSLR with the 18–400 mm autofocus zoom" },
+  long:  { body: "mirrorless", lens: "long", name: "the mirrorless with the 150–500 mm auto-tracking zoom" },
+  macro: { body: "dslr", lens: "macro", name: "the DSLR with the 70 mm macro" },
+  fifty: { body: "dslr", lens: "fifty", name: "the DSLR with the 50 mm autofocus prime" }
 };
 const KIT_WORDS = {
   prompt: "Before you set out: which camera is the main, and which the companion? One lens on each body, and no changing them in the field.",
@@ -2153,7 +2156,7 @@ function kitFor(id, enc) {
 }
 function kitLabel(id) {
   const k = KITS[id];
-  return CAMERA.lenses[k.lens].name + " on " + BODIES[k.body].short;
+  return k.name || (CAMERA.lenses[k.lens].name + " on " + BODIES[k.body].short);
 }
 function routeKit(r) {
   if (r.kit) return r.kit;

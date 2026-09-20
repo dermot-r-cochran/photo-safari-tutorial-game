@@ -147,8 +147,14 @@ here as tutorial content:
   combination at each stop, but no swapping or changing lenses in the
   field; the main camera and companion camera are chosen before each
   drive, walk or hide starts* — the field notes' own two-body split, "no
-  lens changes in the wet and no dust on either sensor"). `BODIES` holds
-  the DSLR and the mirrorless; `KITS` the body-and-lens combinations;
+  lens changes in the wet and no dust on either sensor"; the same day,
+  verbatim: *This does not count against the number of questions or
+  decisions at each stop*, and the four combinations — *DSLR crop sensor
+  plus 18-400mm autofocus, Mirrorless crop sensor plus 150-500mm auto
+  tracking, DSLR crop sensor plus 70mm macro, DSLR crop sensor plus 50mm
+  prime autofocus*). `BODIES` holds the DSLR and the mirrorless; `KITS`
+  those four combinations, each with the label the page shows (the
+  75–240 stays on the shelf, as the notes have it);
   each route carries a default pair on different bodies, and the player
   picks their own on the *Before you set out* card, then which camera is
   in hand at each stop — a choice beside the questions, never one of
