@@ -192,9 +192,14 @@ mean generally where the lesson would benefit or the extra choices look
 reasonable*) — add one wherever it teaches something or is a choice a
 photographer at that stop would plausibly have had, as long as each
 alternative still costs something real in the model. The first fourth
-answer is the hyena's, the dawn's manual numbers left on
-the dial beside the three it already had; the minimum gave the dusk lion
-its second question the same day — the second lion the card already
+answer is the hyena's, the dawn's manual numbers left on the dial beside
+the three it already had; on his *Approved* the same day the 19 September
+cut's material came back where it fitted — the lion's ISO as a third
+question and its off-track framing as a fourth answer, the topi's wide
+end as a fourth answer, Kilimanjaro's camera as a third question with the
+noon manual miss as its fourth answer, and the woodland's Auto-ISO tripod
+run as a fourth answer; the minimum gave the dusk lion its second
+question the same day — the second lion the card already
 shows, and what depth costs at dusk (f/16 on the beanbag lands the
 shutter where the mirror's thump reaches the frame). **The second question may vary with
 the answer to the first** (Dermot, 2026-09-20): an option in the first

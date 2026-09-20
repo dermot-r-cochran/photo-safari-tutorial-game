@@ -316,6 +316,17 @@ const ENCOUNTERS = {
                    "looked like, and the meter's needle sat below the " +
                    "middle without your looking at it."],
             settings: "walkAround", set: { mode: "M", shutter: 1 / 500, iso: 400 }
+          },
+          {
+            // the wide end, back from the 19 September cut as a fourth
+            // answer (Dermot, 2026-09-20): the whole dawn, and the topi
+            // somewhere in it
+            label: "The walking-around setting at the wide end. The whole dawn, and the topi somewhere in it.",
+            text: ["18 mm. The sky did what the sky was doing, from red to " +
+                   "gold. The topi was a mark on a mound a long way off, " +
+                   "and you knew it was a topi because you had been " +
+                   "looking at it."],
+            settings: "walkAround", set: { focal: 18 }, frame: { framing: "loose" }, subject: { tiny: true }
           }
         ]
       }
@@ -488,6 +499,16 @@ const ENCOUNTERS = {
                    "a lion being looked at."],
             frame: { framing: "loose", people: "distant", tells: [{ label: "the vehicle track", excludable: true, minor: true }, { label: "the other vehicle and its watchers", excludable: true }] },
             set: { focal: 135 }
+          },
+          {
+            // back from the 19 September cut as a fourth answer (Dermot,
+            // 2026-09-20): the stay-on-the-track lesson's second home
+            label: "Ask the driver to pull off the track and round, for the eye line and clean grass behind.",
+            text: ["The driver looked at you in the mirror and did not " +
+                   "move. Then he did, slowly, because you had asked, and " +
+                   "the grass behind the lion was clean and the ruts you " +
+                   "left in it were not."],
+            frame: { framing: "tight" }, set: { focal: 400 }, lesson: "offTrack"
           }
         ]
       },
@@ -508,6 +529,31 @@ const ENCOUNTERS = {
                    "and the whole frame went a little soft together, which " +
                    "is not the same thing as sharp."],
             settings: "walkAround", set: { aperture: 16 }
+          }
+        ]
+      },
+      {
+        // the third question, back from the 19 September cut (Dermot,
+        // 2026-09-20): golden hour is where clean against fast is clearest
+        id: "iso", prompt: "And the ISO?",
+        options: [
+          {
+            label: "Auto, to 800. Let the camera keep the shutter up.",
+            text: ["You left Auto ISO where the walking-around setting " +
+                   "puts it."]
+          },
+          {
+            label: "ISO 100, fixed. Golden light is plenty; keep it clean.",
+            text: ["You pinned it at 100 for the cleanest file the " +
+                   "sensor could give, and the shutter went where the " +
+                   "light sent it."],
+            set: { iso: 100 }
+          },
+          {
+            label: "ISO 1600, fixed. Whatever happens, the shutter stays fast.",
+            text: ["You pinned it high, to be safe. The shutter was very " +
+                   "fast indeed, for a lion that was not moving."],
+            set: { iso: 1600 }
           }
         ]
       }
@@ -952,6 +998,36 @@ const ENCOUNTERS = {
             frame: { framing: "loose", kind: "landscape" }, set: { focal: 18 }, subject: { tiny: true }
           }
         ]
+      },
+      {
+        // the third question, back from the 19 September cut (Dermot,
+        // 2026-09-20), with a fourth answer: noon is where the dawn's
+        // manual numbers land two stops bright
+        id: "settings", prompt: "And the camera?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
+          {
+            label: "f/16. It is a landscape, and landscapes want f/16.",
+            text: ["You gave it the landscape aperture. The mountain was " +
+                   "forty kilometres away and the elephants a hundred and " +
+                   "twenty metres; f/8 had both. f/16 had both, softer."],
+            settings: "walkAround", set: { aperture: 16 }
+          },
+          {
+            label: "ISO 100, fixed. There is plenty of light for once.",
+            text: ["You pinned the ISO at 100 for the cleanest file. The " +
+                   "camera, told to hold f/8 as well, had only the shutter " +
+                   "left to give."],
+            settings: "walkAround", set: { iso: 100 }
+          },
+          {
+            label: "Whatever it is on. Manual, 1/500 s, f/8, ISO 400, from the dawn.",
+            text: ["You did not look. The three numbers guessed at " +
+                   "sunrise were still on the dial, and at noon they were " +
+                   "as wrong the other way as they had been at six."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 500, iso: 400 }
+          }
+        ]
       }
     ],
     photo: { file: "images/elephants-beneath-kilimanjaro.jpg", title: "Elephants Beneath Kilimanjaro",
@@ -1375,6 +1451,17 @@ const ENCOUNTERS = {
                    "The lens gave you depth and took the sharpness to pay " +
                    "for it, and the mirror's thump took a little more."],
             settings: "macro", set: { aperture: 22, liveView: false }
+          },
+          {
+            // back from the 19 September cut as a fourth answer (Dermot,
+            // 2026-09-20): Auto ISO reaches its cap and A lengthens the
+            // shutter into the mirror's range
+            label: "The walking-around setting on the tripod, Auto ISO. Let the camera choose the shutter.",
+            text: ["A, f/8, Auto ISO to 800. The camera reached 800, " +
+                   "could not make the floor, and did what A does: it " +
+                   "lengthened the shutter until the exposure came right, " +
+                   "to an eighth of a second, with the mirror still down."],
+            settings: "walkAround", set: { lens: "macro", focal: 70, support: "tripod", liveView: false }
           }
         ]
       },
