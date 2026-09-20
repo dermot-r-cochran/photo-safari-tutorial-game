@@ -31,36 +31,88 @@ if (!S) { console.error("the script did not export SAFARI"); process.exit(1); }
 let fails = 0, frames = 0, keepers = 0;
 const fail = (msg) => { fails++; console.error("  FAIL: " + msg); };
 
+// every path through a stop's questions: an option may carry `then`, a
+// second question of its own, so the paths are walked, not multiplied
 function combos(enc) {
-  let out = [[]];
-  for (const d of enc.decisions) {
-    const next = [];
-    for (const c of out) for (let i = 0; i < d.options.length; i++) next.push(c.concat(i));
-    out = next;
-  }
+  const out = [];
+  (function walk(choices) {
+    const asked = S.decisionsFor(enc, choices);
+    if (asked.length === choices.length) { out.push(choices); return; }
+    const d = asked[choices.length];
+    for (let i = 0; i < d.options.length; i++) walk(choices.concat(i));
+  })([]);
+  return out;
+}
+// every question a stop can ask, on any path
+function questions(enc) {
+  const out = [];
+  const add = (d) => { out.push(d); for (const o of d.options || []) if (o.then) add(o.then); };
+  for (const d of enc.decisions || []) add(d);
   return out;
 }
 
+// the branching walk itself, held to its shape on a made-up stop before
+// any real stop relies on it
+{
+  const q = (id, n, thens) => ({ id, prompt: id + "?", options: Array.from({ length: n }, (_, i) => Object.assign({ label: id + i }, thens && thens[i] ? { then: thens[i] } : {})) });
+  const fake = { decisions: [q("a", 3, [null, q("b1", 2)]), q("b", 3)] };
+  const paths = combos(fake).map((c) => c.join(""));
+  const want = ["00", "01", "02", "10", "11", "20", "21", "22"];
+  if (paths.join() !== want.join()) fail("decisionsFor walks the wrong paths: " + paths.join(" "));
+  if (S.decisionsFor(fake, []).length !== 1) fail("decisionsFor asks more than the first question before it is answered");
+  if (S.decisionsFor(fake, [1]).map((d) => d.id).join() !== "a,b1") fail("decisionsFor does not follow an option's `then`");
+  if (S.decisionsFor(fake, [0]).map((d) => d.id).join() !== "a,b") fail("decisionsFor does not fall back to the stop's next decision");
+  if (questions(fake).map((d) => d.id).join() !== "a,b1,b") fail("questions() misses a branch");
+}
+
+// the kit: every kit a body and a lens; every route's pair two kits on
+// different bodies (one lens on each, none changed in the field); every
+// stop's own kit one that its route carries
+for (const [id, k] of Object.entries(S.KITS)) {
+  if (!S.BODIES[k.body]) fail("kit " + id + " names body " + k.body + ", which is not in BODIES");
+  if (!S.CAMERA.lenses[k.lens]) fail("kit " + id + " names lens " + k.lens + ", which is not in CAMERA.lenses");
+}
+const routeOf = (stopId) => S.ROUTES.find((r) => !r.daily && r.stops.includes(stopId));
+for (const r of S.ROUTES) {
+  const k = S.routeKit(r);
+  for (const which of ["main", "companion"]) if (!S.KITS[k[which]]) fail("route " + r.id + " " + which + " kit " + k[which] + " is not in KITS");
+  if (S.KITS[k.main] && S.KITS[k.companion] && S.KITS[k.main].body === S.KITS[k.companion].body) fail("route " + r.id + " puts both kits on one body");
+}
+
+const widest = Math.min(...Object.values(S.CAMERA.lenses).map((l) => l.apWide));
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
+  const own = S.kitFor(undefined, enc);
+  if (enc.kit && !S.KITS[enc.kit]) fail(id + " was learned on kit " + enc.kit + ", which is not in KITS");
+  // the route as shipped must be playable: one of its two default kits
+  // yields a keeper at every stop on it
+  const r = routeOf(id);
+  const carried = r ? Object.values(S.routeKit(r)) : [];
+  let carriedKeeper = false;
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
-  // a stop asks at most two questions, and every question has three answers
-  if ((enc.decisions || []).length > 2) fail(id + " asks " + enc.decisions.length + " questions — a stop asks at most two");
-  for (const d of enc.decisions || []) {
-    if (!d.options || d.options.length !== 3) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has three");
+  // a stop asks two or three questions on any path, and every question
+  // has two to four answers (Dermot, 2026-09-20: "Two or three questions,
+  // each with two to four options", generally, wherever the lesson would
+  // benefit or the extra choices look reasonable)
+  for (const d of questions(enc)) {
+    if (!d.options || d.options.length < 2 || d.options.length > 4) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has two to four");
+    if (d.options && d.options.length === 1) fail(id + " decision " + d.id + " has a single option, which is no decision");
   }
   let anyKeeper = false;
-  for (const choices of combos(enc)) {
+  // every path on every kit develops cleanly and keeps its invariants; a
+  // keeper is required on the kit the stop was learned on
+  for (const kit of Object.keys(S.KITS)) for (const choices of combos(enc)) {
+    if (kit === own && (choices.length < 2 || choices.length > 3)) fail(id + " asks " + choices.length + " question(s) on the path " + JSON.stringify(choices) + " — a stop asks two or three");
     let r;
-    try { r = S.develop(enc, choices); }
-    catch (e) { fail(id + " " + JSON.stringify(choices) + " threw: " + e.message); continue; }
-    frames++;
+    try { r = S.develop(enc, choices, kit); }
+    catch (e) { fail(id + " on " + kit + " " + JSON.stringify(choices) + " threw: " + e.message); continue; }
+    if (kit === own) frames++;
     const x = r.exposure;
     for (const [k, v] of Object.entries({ aperture: x.aperture, shutter: x.shutter, iso: x.iso, delta: x.delta, dof: r.dof })) {
       if (typeof v !== "number" || Number.isNaN(v)) fail(id + " " + JSON.stringify(choices) + ": " + k + " is " + v);
     }
     if (x.shutter < 1 / 4000 - 1e-9 || x.shutter > 30 + 1e-9) fail(id + ": shutter out of range " + x.shutter);
-    if (x.aperture < 2.8 || x.aperture > 22) fail(id + ": aperture out of range " + x.aperture);
+    if (x.aperture < widest - 1e-9 || x.aperture > 22) fail(id + ": aperture out of range " + x.aperture);
     for (const f of r.findings) {
       if (!S.LESSONS[f.key]) fail(id + " raised finding " + f.key + ", which is not in LESSONS");
       else {
@@ -78,9 +130,11 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
     if (!r.keeper && !r.findings.some((f) => (r.unpublishable ? f.bars : f.sinks))) fail(id + " " + JSON.stringify(choices) + ": not a keeper, but no finding says why");
     if (r.keeper && r.findings.some((f) => f.sinks || f.bars)) fail(id + " " + JSON.stringify(choices) + ": a keeper with a sinking finding");
     if (r.tags.includes("IPF-Wildlife") && !r.tags.includes("IPF-Nature")) fail(id + ": IPF-Wildlife without IPF-Nature");
-    if (r.keeper) { keepers++; anyKeeper = true; }
+    if (r.keeper && kit === own) { keepers++; anyKeeper = true; }
+    if (r.keeper && carried.includes(kit)) carriedKeeper = true;
   }
-  if (!anyKeeper) fail(id + " has no combination of choices that yields a keeper");
+  if (!anyKeeper) fail(id + " has no combination of choices that yields a keeper on the " + own + " kit");
+  if (r && !carriedKeeper) fail(id + " has no keeper on either kit its route " + r.id + " carries (" + carried.join(", ") + ")");
   for (const key of enc.examine || []) if (!S.EXAMINE[key]) fail(id + " looks at " + key + ", which is not in EXAMINE");
   // `photo` is the frame the stop was learned on; `miss` is the author's
   // frame of the same scenario got wrong, shown beside it. Same shape,
@@ -125,6 +179,14 @@ for (const key of Object.keys(S.EXAMINE)) {
   if (!used) console.log("  warn: examinable " + key + " is never looked at");
 }
 
+// every stop is on exactly one route of its own: a stop on none is
+// unreachable, and a stop on two is on the wrong drive (the boat on
+// Naivasha and the Giraffe Centre are not stops on a game drive —
+// Dermot, 2026-09-20)
+for (const id of Object.keys(S.ENCOUNTERS)) {
+  const on = S.ROUTES.filter((r) => !r.daily && r.stops.includes(id)).map((r) => r.id);
+  if (on.length !== 1) fail("stop " + id + " is on " + (on.length ? on.join(" and ") : "no route") + "; every stop is on exactly one route of its own");
+}
 for (const r of S.ROUTES) {
   const stops = S.routeStops(r, "2026-09-13");
   if (!stops.length) fail("route " + r.id + " has no stops");

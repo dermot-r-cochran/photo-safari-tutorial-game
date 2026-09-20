@@ -122,6 +122,9 @@ here as tutorial content:
   confusion; thin when it is under six tenths of the subject's depth.
 - Vivid clips white plumage first and blows an already-saturated channel;
   in hard light or at high ISO it crushes shadows and amplifies noise.
+  Standard on a landscape is *flat* only in kind light at a clean ISO —
+  in harsh light or at ISO 1600 it is the right call, the style guide's
+  third reason to switch, so the finding is gated off there (2026-09-20).
 - Category: what the subject is, not what it lies on — a wild lion on a
   track is Wildlife; a balloon, a rail or distant watchers make a frame
   Documentary; a plant is Macro at 1:1 and Nature below it.
@@ -138,6 +141,37 @@ here as tutorial content:
   wildlife competitions not just nature*) — the tags always did this; the
   words now say it. Recognisable people and mating sequences are not
   published at all.
+
+- **Two bodies, one lens on each, chosen before the day** (Dermot's
+  direction, 2026-09-20: *allowed to choose the camera body and lens
+  combination at each stop, but no swapping or changing lenses in the
+  field; the main camera and companion camera are chosen before each
+  drive, walk or hide starts* — the field notes' own two-body split, "no
+  lens changes in the wet and no dust on either sensor"; the same day,
+  verbatim: *This does not count against the number of questions or
+  decisions at each stop*, and the four combinations — *DSLR crop sensor
+  plus 18-400mm autofocus, Mirrorless crop sensor plus 150-500mm auto
+  tracking, DSLR crop sensor plus 70mm macro, DSLR crop sensor plus 50mm
+  prime autofocus*). `BODIES` holds the DSLR and the mirrorless; `KITS`
+  those four combinations, each with the label the page shows (the
+  75–240 stays on the shelf, as the notes have it);
+  each route carries a default pair on different bodies, and the player
+  picks their own on the *Before you set out* card, then which camera is
+  in hand at each stop — a choice beside the questions, never one of
+  them, recorded in the transcript and on the frame. The lens on the
+  camera in hand gives what it can of the focal length an option reaches
+  for (`reach`, `wideEnd`, and `tiny` at half the size or less) and
+  focuses as close as it does (`notMacro`, at `CAMERA.closeFocus`, about
+  1:4, for any lens not marked `macro`); the body decides whether there
+  is a mirror to thump. Presets and options name a focal length, never a
+  lens. A stop's `kit` is the one it was learned on (the zoom unless it
+  says); the check develops every path on every kit, requires a keeper on
+  the stop's own kit and on one of the two its route carries, and holds
+  every route's pair to two bodies. What is *not* modelled, because no
+  note has measured it: the mirrorless's high-ISO advantage (it scores on
+  the DSLR's thresholds, and the caveat says so) and whether the macro
+  and the 150–500 are stabilised (unset scores as the zoom does; the 50
+  mm and the 75–240 are marked unstabilised from the notes).
 
 Change a threshold only when the field notes change; say which note.
 
@@ -164,16 +198,62 @@ that way.
 ## Adding a stop
 
 Add an entry to `ENCOUNTERS` (light, subject, frame, presences, examine,
-enter, decisions, note, afterword), add any new examinables to `EXAMINE`
+enter, decisions, note, afterword, and `kit` if it was learned on
+something other than the zoom), add any new examinables to `EXAMINE`
 and any new finding the engine raises to `LESSONS`, and list the stop in
 a route in `ROUTES` (today's drive picks from the safari route's stops by
-itself, so the day stays one day; home ground is its own walk).
-**A stop asks at most two questions, and every question has three
-answers** (Dermot's direction, 2026-09-19: *max two questions with three
-options each for each stop*, tightening his 2026-09-13 *always have at
-least two or three choices for the camera settings at each step*). The
-check fails a stop with a third decision and a decision with any number
-of options but three. Each alternative costs something real in the model —
+itself, so the day stays one day; home ground is its own walk). **An
+arranged encounter is not a stop on a game drive** (Dermot's direction,
+2026-09-20: *the fishing eagle tutorial stop should not sit in the middle
+of a normal game drive and neither should the giraffe centre*): the boat
+on Lake Naivasha and the Giraffe Centre are the route `arranged`, *Off the
+drive*, between the safari day and home ground, and out of today's pool.
+A new stop where the animal was fed, called or fenced goes there, not on
+the safari. Every stop is on exactly one route of its own; the check
+fails a stop on none or on two.
+**A stop asks two or three questions, each with two to four answers**
+(Dermot's ruling, 2026-09-20, verbatim: *Two or three questions, each
+with two to four options* — settling the day's sequence, which began
+from his 2026-09-19 *max two questions with three options each for each
+stop* and his 2026-09-13 *always have at least two or three choices for
+the camera settings at each step*). The check fails a path with fewer
+than two questions or more than three, and a question with fewer than two
+answers or more than four. Inside those bounds the third question and the
+fourth answer are ordinary, not exceptional (Dermot, the same day: *I did
+mean generally where the lesson would benefit or the extra choices look
+reasonable*) — add one wherever it teaches something or is a choice a
+photographer at that stop would plausibly have had, as long as each
+alternative still costs something real in the model. The first fourth
+answer is the hyena's, the dawn's manual numbers left on the dial beside
+the three it already had; on his *Approved* the same day the 19 September
+cut's material came back where it fitted — the lion's ISO as a third
+question and its off-track framing as a fourth answer, the topi's wide
+end as a fourth answer, Kilimanjaro's camera as a third question with the
+noon manual miss as its fourth answer, and the woodland's Auto-ISO tripod
+run as a fourth answer; the minimum gave the dusk lion its second
+question the same day — the second lion the card already
+shows, and what depth costs at dusk (f/16 on the beanbag lands the
+shutter where the mirror's thump reaches the frame). **The second question may vary with
+the answer to the first** (Dermot, 2026-09-20): an option in the first
+decision may carry `then`, a question of its own with the same shape,
+asked next in place of the stop's second decision; options without one
+fall through to it, and a stop whose second decision is only ever reached
+by `then` need not list one. `decisionsFor(enc, choices)` is the one
+place the path is worked out — the renderer, `assemble` and the check's
+`combos` all go through it, and a `chosen` history entry carries the
+choices before it so a transcript replays the question as it was asked.
+The first branch is Naivasha (Dermot, 2026-09-20: *Naivasha branch
+accepted*): after *Ask him not to*, the second question is the wait's
+own — a bird that sits is a different problem from one coming down on
+a fish — while the throw paths keep the stop's shared camera question.
+The second is the balloon: with the balloon panned off, the sky is the
+picture and the second question is the dial, which is where *Flatter
+than the house look* is reached. The check also holds the walk to its
+shape on a made-up stop. Every lesson is reachable since 2026-09-20 —
+*Overexposed* by the hyena's dawn manual numbers left on the dial, a stop
+bright at EV 14, its fourth camera answer — and the check's never-raised
+warning should stay at zero; a lesson allowed to sit unreachable is a
+decision to retire it. Each alternative costs something real in the model —
 ISO spent on a speed the subject did not need, diffraction bought for
 depth the distance already had, a hand's width of focus at three metres —
 so the verdict has something to say about it. Where a stop had three

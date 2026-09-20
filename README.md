@@ -23,7 +23,7 @@ can enter.
 
 The frame is a verdict in words, the way a contact sheet is a set of
 decisions, and every verdict names the lesson behind it. Every step is a
-real choice — three settings or framings, each with a cost, and no stop asks more than two questions — and
+real choice — two to four settings or framings, each with a cost, and every stop asks two or three questions; the second may depend on how you answered the first — and
 when a frame is one for the folder — kept, not shown — you try the stop
 again until it gives you a keeper, because you cannot drive on from a
 frame for the folder; you can abandon the stop instead, and an abandoned
@@ -42,26 +42,39 @@ This is written by a novice for other novices and for younger
 photographers. Nothing in it is expert opinion. Every lesson was
 learned by getting it wrong first, and the photographs are the evidence.
 
-**The camera is the author's own**, and the numbers are its numbers: an
-crop-sensor DSLR, 14 megapixels, with an 18–400 mm zoom (also a 75–240 mm
-zoom, a 50 mm autofocus prime and a 70 mm macro; the author's mirrorless
-body carries a 150–500 mm zoom) and
-a 70 mm macro. The lessons were learned on that body's thresholds —
-where its ISO gets noisy, where its pixels diffract, that it has a
-mirror and no lock-up for it — and they may not carry to yours. A
-newer body is cleaner at high ISO, may have no mirror at all, and may
-call the vivid setting a picture style or a film simulation. The
-decisions generalise; the thresholds are the ones to check against your
-own camera's manual and your own frames.
+**The cameras are the author's own**, and the numbers are their numbers:
+a crop-sensor DSLR, 14 megapixels, that carries an 18–400 mm autofocus
+zoom, a 50 mm autofocus prime or a 70 mm macro, and a crop-sensor
+mirrorless with a 150–500 mm auto-tracking zoom. **Before each drive or
+walk you choose the main camera and the companion**, one lens on each
+body, and there is no changing lenses in the field; at each stop you
+choose which camera is in your hands — a choice beside the questions,
+counted against none of them — and the lens on it gives what it can of
+the focal length you reach for. A 50 mm at a topi sixty metres
+off is a dot; a 150–500 will not go wide for the whole dawn; a zoom
+focuses no closer than about 1:4, so the woodland floor at 1:1 wants the
+macro on one of the bodies. The lessons were learned on the DSLR's
+thresholds — where its ISO gets noisy, where its pixels diffract, that
+it has a mirror and no lock-up for it — and they may not carry to yours.
+The mirrorless has no mirror to thump and is cleaner at high ISO by an
+amount no field note has measured yet, so it is scored on the DSLR's
+noise thresholds until one does. A newer body may call the vivid setting
+a picture style or a film simulation. The decisions generalise; the
+thresholds are the ones to check against your own camera's manual and
+your own frames.
 
-Three drives:
+Four drives:
 
-- **The safari drive** — eleven stops on the Mara and at Amboseli, first
+- **The safari drive** — ten stops on the Mara and at Amboseli, first
   light to dusk. A topi against the sunrise, a young lion on a vehicle
   track, a roller in eight colours, vultures at a kill, a hyena nobody
-  can find, elephants under Kilimanjaro at noon, a fish eagle and a
-  boatman with a bucket, a giraffe at a rail, a courting pair, a lion
-  in the last of the light.
+  can find, elephants under Kilimanjaro at noon, a courting pair, a
+  lion in the last of the light.
+- **Off the drive** — a boat on Lake Naivasha and the Giraffe Centre,
+  on the road between the parks, one afternoon: a fish eagle and a
+  boatman with a bucket, a giraffe at a rail. Two encounters arranged
+  before you got there, kept off the game drive because they are not
+  part of one.
 - **Home ground** — a beech wood, an island and a hill near home, the
   week after, on foot: the one mode the safari never needed, a ringed
   gull, a goat that nobody owns.
@@ -110,6 +123,10 @@ into the game as they were learned:
   giraffe, a mating pair, a driver asked to leave the track, a
   recognisable stranger — and the note each frame must carry, or the
   folder it must stay in.
+- **The lens is the decision.** What is on each body was settled at the
+  bag, and the stop gets what that lens can give: the reach it has, the
+  width it has, how close it focuses. The companion is there for the
+  stop the main camera cannot make.
 - **The note.** Never describe what is visible; add what is not. Except
   when the subject genuinely fails to read, and then the note may say
   where to look.
@@ -117,19 +134,24 @@ into the game as they were learned:
 ## How it is built
 
 The whole game is `index.html`. Everything the player can meet lives in
-seven data structures at the top of its script — `CAMERA`, `PRESETS`,
-`ENCOUNTERS`, `EXAMINE`, `RULEBOOKS`, `LESSONS`, `ROUTES` — and the
-engine below them never needs editing to add a stop. A stop is a scene
+the data structures at the top of its script — `CAMERA`, `BODIES`,
+`KITS`, `PRESETS`, `ENCOUNTERS`, `EXAMINE`, `RULEBOOKS`, `LESSONS`,
+`ROUTES` — and the engine below them never needs editing to add a stop. A stop is a scene
 (the light as an exposure value, the subject's motion, distance and
-depth, what else is in the frame), at most two decisions with three
-options each, a note and an afterword. An option may name a settings preset,
-set individual fields, and override the subject, light or frame. The
+depth, what else is in the frame), two or three decisions with two to
+four options each, a note and an afterword. An option may name a settings
+preset, set individual fields, and override the subject, light or frame,
+and an option in the first decision may carry `then`, a second question
+of its own asked in place of the stop's, so the second question can vary
+with the answer to the first. The
 engine assembles the choices, resolves the exposure the camera would
 actually make, and raises findings — each one a key into `LESSONS`.
 
 `tools/check.js` runs the model without a browser: every stop under
-every combination of its options, every finding a real lesson, every tag
-a real rulebook, every drive resolving, today's drive deterministic. It
+every path through its questions on every kit, every finding a real
+lesson, every tag a real rulebook, every route's default pair on two
+bodies and able to make a keeper at each of its stops, every drive
+resolving, today's drive deterministic. It
 is what CI runs, and it installs nothing.
 
 The engine descends from the author's one-file quest engine,
