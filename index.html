@@ -1714,7 +1714,7 @@ const ABANDON = {
    day's card — its scorecard line and each stop's line — is kept under
    the date in the past days, and the transcript is cleared (Dermot,
    2026-09-19, option 1 of three: a card per day, kept; the transcript
-   not). {noun} is the route's own word, drive or walk. */
+   not). {noun} is the route's own word: drive, outing or walk. */
 const NEXT_DAY = {
   label: "Next day on this {noun}",
   confirm: "Start the next day on this {noun}? Today's card goes to the past days, and the transcript is cleared.",
@@ -1779,12 +1779,36 @@ const ROUTES = [
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
     stops: ["topi", "balloon", "lion", "sixtieth", "roller", "vultures", "hyena",
-            "kilimanjaro", "naivasha", "giraffe", "pair", "dusk"],
+            "kilimanjaro", "pair", "dusk"],
     end: {
       title: "End of the day",
       text: ["The light went, the way it does there, in about four minutes. " +
              "The contact sheet is yours; so are the tags on it, and the " +
              "notes each frame will need before anyone else sees it.",
+             "Off the drive is next: a boat on Lake Naivasha and a rail at " +
+             "the Giraffe Centre, where the encounter was arranged before " +
+             "you arrived."],
+      nextLabel: "Off the drive"
+    }
+  },
+  {
+    /* The two arranged encounters — a fish thrown for an eagle, a pellet
+       on a palm for a giraffe — are not stops on a game drive and do not
+       sit in the middle of one (Dermot's direction, 2026-09-20). They
+       have an outing of their own, between the parks, and today's drive
+       draws from the safari day alone. */
+    id: "arranged", noun: "outing",
+    title: "Off the drive",
+    sub: "a boat on Lake Naivasha and the Giraffe Centre, on the road between the parks, one afternoon",
+    stops: ["naivasha", "giraffe"],
+    end: {
+      title: "End of the afternoon",
+      text: ["Two encounters that were arranged before you got there: a " +
+             "fish in a bucket, a pellet on a palm. Neither belongs on a " +
+             "game drive, which is why they have an afternoon of their " +
+             "own, and the rulebooks treat them the same way — the " +
+             "picture is yours to keep and to show, with a note that says " +
+             "how it was got, and it enters the open competition only.",
              "Home ground is next: the same camera, a beech wood, and " +
              "the one mode you have not used yet."],
       nextLabel: "Home ground"

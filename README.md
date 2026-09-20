@@ -54,14 +54,18 @@ call the vivid setting a picture style or a film simulation. The
 decisions generalise; the thresholds are the ones to check against your
 own camera's manual and your own frames.
 
-Three drives:
+Four drives:
 
-- **The safari drive** — eleven stops on the Mara and at Amboseli, first
+- **The safari drive** — ten stops on the Mara and at Amboseli, first
   light to dusk. A topi against the sunrise, a young lion on a vehicle
   track, a roller in eight colours, vultures at a kill, a hyena nobody
-  can find, elephants under Kilimanjaro at noon, a fish eagle and a
-  boatman with a bucket, a giraffe at a rail, a courting pair, a lion
-  in the last of the light.
+  can find, elephants under Kilimanjaro at noon, a courting pair, a
+  lion in the last of the light.
+- **Off the drive** — a boat on Lake Naivasha and the Giraffe Centre,
+  on the road between the parks, one afternoon: a fish eagle and a
+  boatman with a bucket, a giraffe at a rail. Two encounters arranged
+  before you got there, kept off the game drive because they are not
+  part of one.
 - **Home ground** — a beech wood, an island and a hill near home, the
   week after, on foot: the one mode the safari never needed, a ringed
   gull, a goat that nobody owns.

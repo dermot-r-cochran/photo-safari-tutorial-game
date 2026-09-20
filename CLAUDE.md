@@ -167,7 +167,15 @@ Add an entry to `ENCOUNTERS` (light, subject, frame, presences, examine,
 enter, decisions, note, afterword), add any new examinables to `EXAMINE`
 and any new finding the engine raises to `LESSONS`, and list the stop in
 a route in `ROUTES` (today's drive picks from the safari route's stops by
-itself, so the day stays one day; home ground is its own walk).
+itself, so the day stays one day; home ground is its own walk). **An
+arranged encounter is not a stop on a game drive** (Dermot's direction,
+2026-09-20: *the fishing eagle tutorial stop should not sit in the middle
+of a normal game drive and neither should the giraffe centre*): the boat
+on Lake Naivasha and the Giraffe Centre are the route `arranged`, *Off the
+drive*, between the safari day and home ground, and out of today's pool.
+A new stop where the animal was fed, called or fenced goes there, not on
+the safari. Every stop is on exactly one route of its own; the check
+fails a stop on none or on two.
 **A stop asks at most two questions, and every question has three
 answers** (Dermot's direction, 2026-09-19: *max two questions with three
 options each for each stop*, tightening his 2026-09-13 *always have at

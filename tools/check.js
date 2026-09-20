@@ -125,6 +125,14 @@ for (const key of Object.keys(S.EXAMINE)) {
   if (!used) console.log("  warn: examinable " + key + " is never looked at");
 }
 
+// every stop is on exactly one route of its own: a stop on none is
+// unreachable, and a stop on two is on the wrong drive (the boat on
+// Naivasha and the Giraffe Centre are not stops on a game drive —
+// Dermot, 2026-09-20)
+for (const id of Object.keys(S.ENCOUNTERS)) {
+  const on = S.ROUTES.filter((r) => !r.daily && r.stops.includes(id)).map((r) => r.id);
+  if (on.length !== 1) fail("stop " + id + " is on " + (on.length ? on.join(" and ") : "no route") + "; every stop is on exactly one route of its own");
+}
 for (const r of S.ROUTES) {
   const stops = S.routeStops(r, "2026-09-13");
   if (!stops.length) fail("route " + r.id + " has no stops");
