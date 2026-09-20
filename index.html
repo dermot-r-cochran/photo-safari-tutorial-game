@@ -91,6 +91,9 @@
   .list-btn.current { border-color: var(--earth); font-weight: bold; }
   .examine-row { margin-top: 0.8rem; color: var(--dim); }
   .examine-row button { padding: 0.25rem 0.6rem; font-size: 0.92em; }
+  .examine-row button.current { border-color: var(--earth); font-weight: bold; }
+  .kit-row { display: block; margin: 0.4rem 0; }
+  .kit-row select { font: inherit; margin-left: 0.4rem; padding: 0.3rem; }
   .shutter { background: var(--grass); color: #fff; border-color: var(--grass); }
   .shutter:hover { border-color: var(--ink); }
   #camera { font-size: 0.95em; color: var(--dim); }
@@ -195,52 +198,89 @@
    fine, 1600 shows chroma noise that a vivid picture control makes
    worse, and 3200 is a last resort. */
 const CAMERA = {
-  body: "a 14-megapixel crop-sensor DSLR",
-  caveat: "The camera in this game is the author's own: a crop-sensor " +
-    "DSLR with an 18–400 mm zoom, a 75–240 mm zoom, a 50 mm autofocus " +
-    "prime and a 70 mm macro. The numbers are its numbers. The author's " +
-    "other body is a crop-sensor mirrorless with a 150–500 mm zoom: " +
-    "cleaner at high ISO, no mirror to lock up, and it may call the " +
-    "vivid setting a picture style or a film simulation. The decisions " +
+  caveat: "The cameras in this game are the author's own: a crop-sensor " +
+    "DSLR that carries an 18–400 mm zoom, a 75–240 mm zoom, a 50 mm " +
+    "autofocus prime or a 70 mm macro, and a crop-sensor mirrorless with " +
+    "a 150–500 mm zoom — cleaner at high ISO by an amount no field note " +
+    "has measured yet, so it is scored on the DSLR's thresholds until one " +
+    "does; no mirror to thump; and it may call the vivid setting a " +
+    "picture style or a film simulation. Two bodies, one lens on each, " +
+    "chosen before the day and not changed in the field: at a stop you " +
+    "choose which camera is in your hands, and the lens on it decides " +
+    "what you get. The numbers are these cameras' numbers. The decisions " +
     "carry over; the thresholds may not.",
-  kit: [
-    "18–400 mm zoom (the walking-around lens; most stops here)",
-    "75–240 mm zoom (a lighter reach for the day the long one stays home)",
-    "50 mm autofocus prime (the field and the weather, with the animal in it)",
-    "70 mm macro (1:1; the woodland floor and the garden)",
-    "150–500 mm zoom, on the mirrorless body (the Zambia lens)"
-  ],
   cropFactor: 1.5,
   coc: 0.02,            // circle of confusion, mm, for depth of field
-  stabiliserStops: 2,   // what the zoom's stabiliser buys, hand-held
+  stabiliserStops: 2,   // what a stabilised lens buys, hand-held
+  closeFocus: 0.25,     // what a lens that is not a macro focuses down to: about 1:4
   noise: { clean: 400, fine: 800, chroma: 1600, rough: 3200 },
+  /* `stabilised: false` where the field notes say so (the 50 mm prime has
+     none; the 75–240 has none — the note keeps it on the shelf because
+     the 18–400 "covers its whole range with stabilisation"); unset where
+     no note has said, which scores as the zoom does until one does. */
   lenses: {
-    zoom:  { name: "18–400 mm zoom", min: 18, max: 400, apWide: 3.5, apLong: 6.3 },
-    mid:   { name: "75–240 mm zoom", min: 75, max: 240, apWide: 4, apLong: 5.6 },
-    fifty: { name: "50 mm prime", min: 50, max: 50, apWide: 1.8, apLong: 1.8 },
-    macro: { name: "70 mm macro", min: 70, max: 70, apWide: 2.8, apLong: 2.8 },
+    zoom:  { name: "18–400 mm zoom", min: 18, max: 400, apWide: 3.5, apLong: 6.3, stabilised: true },
+    mid:   { name: "75–240 mm zoom", min: 75, max: 240, apWide: 4, apLong: 5.6, stabilised: false },
+    fifty: { name: "50 mm prime", min: 50, max: 50, apWide: 1.8, apLong: 1.8, stabilised: false },
+    macro: { name: "70 mm macro", min: 70, max: 70, apWide: 2.8, apLong: 2.8, macro: true },
     long:  { name: "150–500 mm zoom", min: 150, max: 500, apWide: 5, apLong: 6.7 }
   }
 };
 
+/* The bodies. One lens goes on each before the day, and stays on it:
+   no changing lenses in the field (Dermot's direction, 2026-09-20 —
+   the field notes' own rule, "no lens changes in the wet and no dust on
+   either sensor"). What differs between them here is the mirror; the
+   mirrorless is cleaner at high ISO by an amount no note has measured,
+   so both score on the same noise thresholds until one does. */
+const BODIES = {
+  dslr:       { name: "a 14-megapixel crop-sensor DSLR", short: "the DSLR", mirror: true, noise: CAMERA.noise },
+  mirrorless: { name: "a crop-sensor mirrorless", short: "the mirrorless", mirror: false, noise: CAMERA.noise }
+};
+
+/* A kit is a body with a lens on it. The main camera and the companion
+   are chosen from these before each drive, walk or hide, on different
+   bodies, since a body carries one lens; at each stop the player chooses
+   which is in hand. A stop's `kit` is the one it was learned on (the
+   zoom unless it says otherwise), and its route's default pair carries
+   it. */
+const KITS = {
+  zoom:  { body: "dslr", lens: "zoom" },
+  mid:   { body: "dslr", lens: "mid" },
+  fifty: { body: "dslr", lens: "fifty" },
+  macro: { body: "dslr", lens: "macro" },
+  long:  { body: "mirrorless", lens: "long" }
+};
+const KIT_WORDS = {
+  prompt: "Before you set out: which camera is the main, and which the companion? One lens on each body, and no changing them in the field.",
+  main: "Main camera",
+  companion: "Companion",
+  go: "Set out.",
+  chosen: "Before you set out — main: {main}; companion: {companion}.",
+  inHand: "In hand: ",
+  pickedUp: "You picked up the {which}: {kit}."
+};
+
 /* Settings the field notes settled on, by name, so a stop's options can
    say "the walking-around setting" and mean one thing. A field an option
-   sets itself overrides the preset. Shutter speeds are in seconds. */
+   sets itself overrides the preset. Shutter speeds are in seconds. The
+   focal length is what the photographer reaches for; the lens on the
+   camera in hand gives what it can of it. */
 const PRESETS = {
   walkAround: {
     label: "A, f/8, Auto ISO to 800 with a 1/250 s floor — the walking-around setting",
     mode: "A", aperture: 8, iso: "auto", isoMax: 800, minShutter: 1 / 250,
-    picture: "vivid", lens: "zoom", focal: 400, support: "hand", liveView: false
+    picture: "vivid", focal: 400, support: "hand", liveView: false
   },
   birds: {
     label: "S, 1/2000 s, Auto ISO to 1600 — the shooting-birds setting",
     mode: "S", shutter: 1 / 2000, iso: "auto", isoMax: 1600,
-    picture: "vivid", lens: "zoom", focal: 400, support: "hand", liveView: false
+    picture: "vivid", focal: 400, support: "hand", liveView: false
   },
   macro: {
     label: "M, f/8, 1/8 s, Auto ISO to 1600, on the tripod from live view — the macro routine",
     mode: "M", aperture: 8, shutter: 1 / 8, iso: "auto", isoMax: 1600,
-    picture: "standard", lens: "macro", focal: 70, support: "tripod", liveView: true
+    picture: "standard", focal: 70, support: "tripod", liveView: true
   }
 };
 
@@ -1411,6 +1451,7 @@ const ENCOUNTERS = {
   woodland: {
     stop: "10:15", place: "a beech wood near home, the week after",
     onward: "Walk on.",
+    kit: "macro",
     title: "The woodland floor",
     light: { ev: 6, label: "bright overcast through beech leaves, the floor nearly still" },
     subject: { name: "a troop of small bonnets on a mossy stump", motion: "stirs", distance: 0.35, depth: 0.01 },
@@ -1441,7 +1482,7 @@ const ENCOUNTERS = {
                    "lengthened the shutter until the exposure came right, " +
                    "a second and more of it. The tripod did not move. The " +
                    "caps did."],
-            settings: "walkAround", set: { lens: "macro", focal: 70, support: "tripod", liveView: false, iso: 100 }
+            settings: "walkAround", set: { focal: 70, support: "tripod", liveView: false, iso: 100 }
           },
           {
             label: "The macro routine at f/22, for depth, and focused through the finder: the live-view screen is a fiddle at f/22.",
@@ -1461,7 +1502,7 @@ const ENCOUNTERS = {
                    "could not make the floor, and did what A does: it " +
                    "lengthened the shutter until the exposure came right, " +
                    "to an eighth of a second, with the mirror still down."],
-            settings: "walkAround", set: { lens: "macro", focal: 70, support: "tripod", liveView: false }
+            settings: "walkAround", set: { focal: 70, support: "tripod", liveView: false }
           }
         ]
       },
@@ -1890,6 +1931,9 @@ const LESSONS = {
   silhouette: { title: "A silhouette", text: "The bright side exposed, the dark side a shape: a topi-shaped hole in the dawn, and the honest frame for a backlit subject." },
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
   manualDark: { title: "Manual held the shutter", text: "The exposure came up short and the frame is a little dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. The raw file has the rest." },
+  reach: { title: "The lens ran out", text: "You reached for {wanted} mm and the lens in hand stops at {got}. The subject is smaller in the frame by that much, and a crop cannot put the pixels back. The lens was decided before the day, at the bag, not at the stop." },
+  wideEnd: { title: "The lens would not go wide", text: "You reached for {wanted} mm and the lens in hand starts at {got}. The frame is the middle of the picture you meant, and the sky and the ground you wanted round it are outside the edges." },
+  notMacro: { title: "Not a macro lens", text: "You went in for {wanted} and the lens in hand focuses no closer than about {got}. The cap did not fill the frame, and the category follows the magnification you got, not the one you meant. The macro lens was in the bag, or on the other body." },
   closeUp: { title: "Close-up, not macro", text: "At about 1:{ratio} this is close-up work; true macro is 1:1 and even conventional close-up starts near 1:4. It files as Nature, not Macro — magnification is the test, and it is worth measuring rather than eyeballing." },
   macro: { title: "Macro", text: "One cap filling the frame at 1:1 is macro: the frame is very close and the subject genuinely enlarged. Depth of field is about a millimetre at f/8, so the focal plane goes on the cap edge and the rest falls away on purpose." },
   waited: { title: "You waited", text: "The cloud came, the light went from EV 15 to EV 13 and from hard to kind, and the subject was still there. Waiting is a setting." }
@@ -1918,7 +1962,7 @@ const ABANDON = {
    day's card — its scorecard line and each stop's line — is kept under
    the date in the past days, and the transcript is cleared (Dermot,
    2026-09-19, option 1 of three: a card per day, kept; the transcript
-   not). {noun} is the route's own word: drive, outing or walk. */
+   not). {noun} is the route's own word: drive, outing, walk or hide. */
 const NEXT_DAY = {
   label: "Next day on this {noun}",
   confirm: "Start the next day on this {noun}? Today's card goes to the past days, and the transcript is cleared.",
@@ -1980,6 +2024,7 @@ const COACH = {
 const ROUTES = [
   {
     id: "safari", noun: "drive",
+    kit: { main: "zoom", companion: "long" },
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
     stops: ["topi", "balloon", "lion", "sixtieth", "roller", "vultures", "hyena",
@@ -2002,6 +2047,7 @@ const ROUTES = [
        have an outing of their own, between the parks, and today's drive
        draws from the safari day alone. */
     id: "arranged", noun: "outing",
+    kit: { main: "zoom", companion: "long" },
     title: "Off the drive",
     sub: "a boat on Lake Naivasha and the Giraffe Centre, on the road between the parks, one afternoon",
     stops: ["naivasha", "giraffe"],
@@ -2020,6 +2066,7 @@ const ROUTES = [
   },
   {
     id: "home", noun: "walk",
+    kit: { main: "macro", companion: "long" },
     title: "Home ground",
     sub: "a wood, an island and a hill near home, the week after, on foot",
     stops: ["woodland", "gull", "goat"],
@@ -2098,10 +2145,28 @@ function decisionsFor(enc, choices) {
   return out;
 }
 
+/* The kit a stop is played with: the id given, else the one the stop was
+   learned on, else the zoom. A route's pair is its own, or its pool's
+   for today's drive. */
+function kitFor(id, enc) {
+  return KITS[id] ? id : (enc && KITS[enc.kit] ? enc.kit : "zoom");
+}
+function kitLabel(id) {
+  const k = KITS[id];
+  return CAMERA.lenses[k.lens].name + " on " + BODIES[k.body].short;
+}
+function routeKit(r) {
+  if (r.kit) return r.kit;
+  const pool = r.pool && ROUTES.find((x) => x.id === r.pool);
+  return (pool && pool.kit) || { main: "zoom", companion: "long" };
+}
+
 /* Merge a stop's chosen options into one settings object and one
    description of the scene. Options may name a preset, set fields, and
-   override the subject, light or frame. */
-function assemble(enc, choices) {
+   override the subject, light or frame. Then the camera in hand has its
+   say: the lens on it gives what it can of the focal length reached for,
+   and focuses as close as it does. */
+function assemble(enc, choices, kitId) {
   let settings = Object.assign({}, PRESETS.walkAround);
   const subject = Object.assign({}, enc.subject);
   const light = Object.assign({}, enc.light);
@@ -2118,6 +2183,17 @@ function assemble(enc, choices) {
     if (o.frame) Object.assign(frame, o.frame);
     if (o.lesson) extraLessons.push(o.lesson);
   });
+  const kit = KITS[kitFor(kitId, enc)];
+  const lens = CAMERA.lenses[kit.lens];
+  settings.kit = kitFor(kitId, enc);
+  settings.body = kit.body;
+  settings.lens = kit.lens;
+  settings.wanted = settings.focal;
+  settings.focal = Math.min(lens.max, Math.max(lens.min, settings.focal));
+  if (frame.magnification && !lens.macro && frame.magnification > CAMERA.closeFocus) {
+    frame.wantedMag = frame.magnification;
+    frame.magnification = CAMERA.closeFocus;
+  }
   return { settings, subject, light, frame, extraLessons };
 }
 
@@ -2170,20 +2246,21 @@ function depthOfField(N, focal, distance) {
   return 2 * N * CAMERA.coc * d * d / (f * f) / 1000;
 }
 
-function motionNeed(motion, focal, support) {
+function motionNeed(motion, focal, support, stabilised) {
   if (motion === "flying") return 1 / 2000;
   if (motion === "running") return 1 / 1000;
   if (motion === "walking") return 1 / 250;
   if (support !== "hand") return motion === "stirs" ? 1 / 2 : Infinity;
-  return Math.pow(2, CAMERA.stabiliserStops) / (focal * CAMERA.cropFactor);
+  return Math.pow(2, stabilised === false ? 0 : CAMERA.stabiliserStops) / (focal * CAMERA.cropFactor);
 }
 
 /* Develop the frame: every finding the choices produced, the category
    it files under, the competitions it can enter, and whether it is a
    keeper. This is the whole judgement, and it never touches the page. */
-function develop(enc, choices) {
-  const { settings, subject, light, frame, extraLessons } = assemble(enc, choices);
+function develop(enc, choices, kitId) {
+  const { settings, subject, light, frame, extraLessons } = assemble(enc, choices, kitId);
   const ex = expose(settings, light, frame);
+  const body = BODIES[settings.body], lens = CAMERA.lenses[settings.lens];
   const findings = [];
   let fatal = false, unpublishable = false;
   /* A finding may sink the frame (one for the folder) or bar it from the
@@ -2202,8 +2279,18 @@ function develop(enc, choices) {
   if (ex.delta < -1.5) add(settings.mode === "M" ? "manualDark" : "under", { stops: Math.abs(ex.delta).toFixed(1) }, ex.delta < -2.5 ? "sinks" : null);
   else if (ex.delta > 1) add("over", { stops: ex.delta.toFixed(1) }, "sinks");
 
+  // the lens in hand: what it gave of what was reached for
+  const ratio = (m) => "1:" + Math.round(1 / m);
+  if (settings.wanted > settings.focal) {
+    add("reach", { wanted: settings.wanted, got: settings.focal });
+    if (settings.wanted >= settings.focal * 2) subject.tiny = true;   // half the size or less: the subject does not read
+  } else if (settings.wanted < settings.focal) {
+    add("wideEnd", { wanted: settings.wanted, got: settings.focal });
+  }
+  if (frame.wantedMag) add("notMacro", { wanted: ratio(frame.wantedMag), got: ratio(frame.magnification) });
+
   // sharpness
-  const need = motionNeed(subject.motion, settings.focal, settings.support);
+  const need = motionNeed(subject.motion, settings.focal, settings.support, lens.stabilised);
   if (ex.shutter > need * 1.05) {
     if (subject.motion === "flying" || subject.motion === "running" || subject.motion === "walking") {
       add("motionBlur", { need: fmtShutter(need), got: fmtShutter(ex.shutter), motion: subject.motion }, "sinks");
@@ -2213,7 +2300,7 @@ function develop(enc, choices) {
       add("shake", { need: fmtShutter(need), got: fmtShutter(ex.shutter), focal: settings.focal }, "sinks");
     }
   }
-  if (settings.support !== "hand" && !settings.liveView && ex.shutter >= 1 / 15 && ex.shutter <= 1 / 2) {
+  if (body.mirror && settings.support !== "hand" && !settings.liveView && ex.shutter >= 1 / 15 && ex.shutter <= 1 / 2) {
     add("mirrorSlap", null, "sinks");
   }
   const mag = frame.magnification || 0;
@@ -2225,20 +2312,20 @@ function develop(enc, choices) {
   if (dof < subject.depth * 0.6 && !(mag >= 1)) {
     add("thinDepth", { aperture: ex.aperture, dof: dof < 0.1 ? Math.round(dof * 1000) + " mm" : dof.toFixed(2) + " m", depth: subject.depth < 0.1 ? Math.round(subject.depth * 1000) + " mm" : subject.depth + " m" });
   }
-  if (settings.support !== "hand" && ex.iso <= CAMERA.noise.fine && ex.shutter > 1 / 60 && !fatal) add("supported");
+  if (settings.support !== "hand" && ex.iso <= body.noise.fine && ex.shutter > 1 / 60 && !fatal) add("supported");
 
-  // noise
-  if (ex.iso >= CAMERA.noise.rough) add("noise3200");
-  else if (ex.iso >= CAMERA.noise.chroma) add("noise1600");
+  // noise, on the body in hand
+  if (ex.iso >= body.noise.rough) add("noise3200");
+  else if (ex.iso >= body.noise.chroma) add("noise1600");
 
   // picture control
   if (settings.picture === "vivid") {
     if (subject.white) add("vividWhite", null, "sinks");
     else if (subject.saturated) add("vividSaturated", null, "sinks");
-    else if (frame.harsh || ex.iso >= CAMERA.noise.chroma) add("vividHarsh");
+    else if (frame.harsh || ex.iso >= body.noise.chroma) add("vividHarsh");
   } else if (settings.picture === "neutral") {
     add("neutral");
-  } else if (frame.kind === "landscape" && !subject.white && !frame.harsh && ex.iso < CAMERA.noise.chroma) {
+  } else if (frame.kind === "landscape" && !subject.white && !frame.harsh && ex.iso < body.noise.chroma) {
     // standard on scenery in kind light at a clean ISO is the flat
     // choice; in harsh light or at high ISO it is the right one, and
     // the style guide's vivid dial says so (its third reason to switch)
@@ -2344,7 +2431,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, SCORE, decisionsFor,
+  globalThis.SAFARI = { CAMERA, BODIES, KITS, KIT_WORDS, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, SCORE, decisionsFor, kitFor, kitLabel, routeKit,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -2372,9 +2459,16 @@ function boot() {
       if (idx >= 0) currentRoute = idx;
     } catch (e) { /* fresh start */ }
   }
+  /* The kit on this route: the pair the player chose before setting
+     out, else the route's default (which is what a save from before
+     kits existed plays on). `which` is "main" or "companion". */
+  const kitPair = () => state.kit || routeKit(route());
+  const kitIdOf = (which) => kitPair()[which === "companion" ? "companion" : "main"];
+  const inHand = () => state.inHand || "main";
+
   function loadState() {
     stops = routeStops(route());
-    state = { stop: 0, decision: 0, choices: [], history: [] };
+    state = { stop: 0, decision: 0, choices: [], history: [], kit: null, inHand: "main" };
     try {
       const s = JSON.parse(localStorage.getItem(saveKey(route())));
       if (s && typeof s.stop === "number" && Array.isArray(s.history)) state = s;
@@ -2406,7 +2500,7 @@ function boot() {
     return {
       date: localDate(), card: c.text, strokes: c.strokes, stops: c.stops, over: c.over, firsts: c.firsts,
       lines: latestFrames().map((h) => {
-        const e = enc(h.stop), r = develop(e, h.choices);
+        const e = enc(h.stop), r = develop(e, h.choices, kitIdOf(h.kit));
         return { title: e.title, line: scoreLine(r, h.stop), category: r.unpublishable ? null : r.category, tags: r.tags };
       })
     };
@@ -2445,7 +2539,7 @@ function boot() {
 
   function renderFrame(t, entry) {
     const e = enc(entry.stop);
-    const r = develop(e, entry.choices);
+    const r = develop(e, entry.choices, kitIdOf(entry.kit));
     const box = document.createElement("div");
     box.className = "frame " + (r.keeper ? "keeper" : "dropped");
     const h = document.createElement("h3");
@@ -2560,6 +2654,21 @@ function boot() {
       t.appendChild(label);
       addParas(t, o.text, "prose");
       return label;
+    } else if (entry.kind === "kit") {
+      if (!KITS[entry.main] || !KITS[entry.companion]) return null;
+      const label = document.createElement("p");
+      label.className = "chosen";
+      label.textContent = fill(KIT_WORDS.chosen, { main: kitLabel(entry.main), companion: kitLabel(entry.companion) });
+      t.appendChild(label);
+      return label;
+    } else if (entry.kind === "inhand") {
+      const id = kitIdOf(entry.which);
+      if (!KITS[id]) return null;
+      const label = document.createElement("p");
+      label.className = "chosen";
+      label.textContent = fill(KIT_WORDS.pickedUp, { which: entry.which === "companion" ? "companion" : "main camera", kit: kitLabel(id) });
+      t.appendChild(label);
+      return label;
     } else if (entry.kind === "examined") {
       const x = EXAMINE[entry.key];
       const e = enc(entry.stop);
@@ -2659,7 +2768,7 @@ function boot() {
   function scorecard() {
     const played = latestFrames();
     const strokes = played.reduce((n, h) => n + strokesAt(h.stop), 0);
-    const firsts = played.filter((h) => strokesAt(h.stop) === 1 && develop(enc(h.stop), h.choices).keeper).length;
+    const firsts = played.filter((h) => strokesAt(h.stop) === 1 && develop(enc(h.stop), h.choices, kitIdOf(h.kit)).keeper).length;
     const over = strokes - played.length;
     const standing = over === 0 ? SCORE.level : fill(SCORE.over, { n: over });
     return {
@@ -2726,10 +2835,11 @@ function boot() {
     box.innerHTML = "";
     const e = enc(Math.min(state.stop, stops.length - 1));
     if (!e) return;
-    const { settings, subject, light } = assemble(e, state.choices);
+    const { settings, subject, light } = assemble(e, state.choices, kitIdOf(inHand()));
     const lines = [
-      ["Body", CAMERA.body],
-      ["Lens", CAMERA.lenses[settings.lens].name + " at " + settings.focal + " mm"],
+      ["In hand", (inHand() === "companion" ? "the companion" : "the main camera") + " — " + BODIES[settings.body].name],
+      ["Lens", CAMERA.lenses[settings.lens].name + " at " + settings.focal + " mm" +
+              (settings.wanted !== settings.focal ? " (you reached for " + settings.wanted + ")" : "")],
       ["Mode", settings.mode + (settings.mode === "A" ? " — aperture priority" : settings.mode === "S" ? " — shutter priority" : " — manual")],
       ["Set", (settings.mode !== "S" ? "f/" + settings.aperture : "") +
               (settings.mode !== "A" ? (settings.mode === "M" ? ", " : "") + fmtShutter(settings.shutter) : "")],
@@ -2768,7 +2878,7 @@ function boot() {
     }
     for (const h of played) {
       const e = enc(h.stop);
-      const r = develop(e, h.choices);
+      const r = develop(e, h.choices, kitIdOf(h.kit));
       const li = document.createElement("li");
       const causes = r.findings.filter((f) => (r.unpublishable ? f.bars : f.sinks))
         .map((f) => LESSONS[f.key] ? LESSONS[f.key].title.toLowerCase() : f.key);
@@ -2855,7 +2965,7 @@ function boot() {
     const h = document.createElement("h2");
     h.textContent = r.end.title;
     card.appendChild(h);
-    const frames = latestFrames().map((x) => develop(enc(x.stop), x.choices));
+    const frames = latestFrames().map((x) => develop(enc(x.stop), x.choices, kitIdOf(x.kit)));
     const kept = frames.filter((f) => f.keeper).length;
     const tally = {};
     for (const f of frames) for (const t of f.tags) tally[t] = (tally[t] || 0) + 1;
@@ -2892,8 +3002,19 @@ function boot() {
     }
     $("endcard").hidden = true;
     const e = enc(state.stop);
+    if (!state.kit) {
+      if (state.history.some((h) => h.kind === "frame" || h.kind === "chosen")) {
+        // a save from before kits existed: it plays on the route's pair
+        state.kit = Object.assign({}, routeKit(route()));
+        saveState();
+      } else {
+        box.appendChild(renderKitCard());
+        return;
+      }
+    }
     const asked = decisionsFor(e, state.choices);
     const choices = document.createElement("div");
+    if (!frameAtStop()) choices.appendChild(renderInHandRow());
     if (state.decision < asked.length) {
       const d = asked[state.decision];
       const prompt = document.createElement("p");
@@ -2914,7 +3035,7 @@ function boot() {
       btn.textContent = "Press the shutter.";
       btn.addEventListener("click", press);
       choices.appendChild(btn);
-    } else if (develop(e, frameAtStop().choices).keeper) {
+    } else if (develop(e, frameAtStop().choices, kitIdOf(frameAtStop().kit)).keeper) {
       // a keeper is a keeper: drive on
       const btn = document.createElement("button");
       btn.type = "button";
@@ -2954,6 +3075,94 @@ function boot() {
     }
   }
 
+  /* Before setting out: the main camera and the companion, one lens on
+     each body. The companion's list holds only the other body's kits. */
+  function renderKitCard() {
+    const card = document.createElement("div");
+    const prompt = document.createElement("p");
+    prompt.className = "prompt";
+    prompt.textContent = KIT_WORDS.prompt;
+    card.appendChild(prompt);
+    const dflt = routeKit(route());
+    const sel = (which) => {
+      const label = document.createElement("label");
+      label.className = "kit-row";
+      label.appendChild(document.createTextNode(KIT_WORDS[which] + ": "));
+      const s = document.createElement("select");
+      s.id = "kit-" + which;
+      label.appendChild(s);
+      return { label, s };
+    };
+    const main = sel("main"), comp = sel("companion");
+    const fillSelect = (s, ids, chosen) => {
+      s.innerHTML = "";
+      for (const id of ids) {
+        const o = document.createElement("option");
+        o.value = id;
+        o.textContent = kitLabel(id);
+        if (id === chosen) o.selected = true;
+        s.appendChild(o);
+      }
+    };
+    const others = (id) => Object.keys(KITS).filter((k) => KITS[k].body !== KITS[id].body);
+    fillSelect(main.s, Object.keys(KITS), dflt.main);
+    fillSelect(comp.s, others(dflt.main), dflt.companion);
+    main.s.addEventListener("change", () => {
+      const ids = others(main.s.value);
+      fillSelect(comp.s, ids, ids.includes(comp.s.value) ? comp.s.value : ids[0]);
+    });
+    card.appendChild(main.label);
+    card.appendChild(comp.label);
+    const go = document.createElement("button");
+    go.type = "button";
+    go.textContent = KIT_WORDS.go;
+    go.addEventListener("click", () => setOut(main.s.value, comp.s.value));
+    card.appendChild(go);
+    return card;
+  }
+  function setOut(mainId, compId) {
+    if (!KITS[mainId] || !KITS[compId] || KITS[mainId].body === KITS[compId].body) return;
+    state.kit = { main: mainId, companion: compId };
+    state.inHand = "main";
+    const entry = { kind: "kit", main: mainId, companion: compId };
+    state.history.push(entry);
+    const el = renderHistoryEntry(entry);
+    saveState();
+    renderCamera();
+    renderActions();
+    scrollToNew(el);
+  }
+
+  /* Which camera is in hand at this stop: a choice beside the questions,
+     not one of them, made before the shutter and kept until changed. */
+  function renderInHandRow() {
+    const row = document.createElement("div");
+    row.className = "examine-row";
+    const lead = document.createElement("span");
+    lead.textContent = KIT_WORDS.inHand;
+    row.appendChild(lead);
+    for (const which of ["main", "companion"]) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = inHand() === which ? "current" : "";
+      btn.textContent = (which === "companion" ? KIT_WORDS.companion : KIT_WORDS.main) + " — " + kitLabel(kitIdOf(which));
+      btn.addEventListener("click", () => pickUp(which));
+      row.appendChild(btn);
+    }
+    return row;
+  }
+  function pickUp(which) {
+    if (which === inHand()) return;
+    state.inHand = which;
+    const entry = { kind: "inhand", stop: state.stop, which };
+    state.history.push(entry);
+    const el = renderHistoryEntry(entry);
+    saveState();
+    renderCamera();
+    renderActions();
+    scrollToNew(el);
+  }
+
   /* Bring what was just added to the top of the view, so the reader lands
      on the new text with the next choices below it. */
   function scrollToNew(el) {
@@ -2987,7 +3196,7 @@ function boot() {
   }
 
   function press() {
-    const entry = { kind: "frame", stop: state.stop, choices: state.choices.slice() };
+    const entry = { kind: "frame", stop: state.stop, choices: state.choices.slice(), kit: inHand() };
     state.history.push(entry);
     const el = renderHistoryEntry(entry);
     saveState();
@@ -3068,7 +3277,7 @@ function boot() {
     if (!confirm(fill(NEXT_DAY.confirm, { noun: route().noun || "drive" }))) return;
     archiveDay();
     try { localStorage.removeItem(saveKey(route())); } catch (e) {}
-    state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }] };
+    state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }], kit: null, inHand: "main" };
     saveState();
     renderAll();
   });

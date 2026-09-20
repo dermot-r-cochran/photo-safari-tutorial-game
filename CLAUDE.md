@@ -142,6 +142,31 @@ here as tutorial content:
   words now say it. Recognisable people and mating sequences are not
   published at all.
 
+- **Two bodies, one lens on each, chosen before the day** (Dermot's
+  direction, 2026-09-20: *allowed to choose the camera body and lens
+  combination at each stop, but no swapping or changing lenses in the
+  field; the main camera and companion camera are chosen before each
+  drive, walk or hide starts* — the field notes' own two-body split, "no
+  lens changes in the wet and no dust on either sensor"). `BODIES` holds
+  the DSLR and the mirrorless; `KITS` the body-and-lens combinations;
+  each route carries a default pair on different bodies, and the player
+  picks their own on the *Before you set out* card, then which camera is
+  in hand at each stop — a choice beside the questions, never one of
+  them, recorded in the transcript and on the frame. The lens on the
+  camera in hand gives what it can of the focal length an option reaches
+  for (`reach`, `wideEnd`, and `tiny` at half the size or less) and
+  focuses as close as it does (`notMacro`, at `CAMERA.closeFocus`, about
+  1:4, for any lens not marked `macro`); the body decides whether there
+  is a mirror to thump. Presets and options name a focal length, never a
+  lens. A stop's `kit` is the one it was learned on (the zoom unless it
+  says); the check develops every path on every kit, requires a keeper on
+  the stop's own kit and on one of the two its route carries, and holds
+  every route's pair to two bodies. What is *not* modelled, because no
+  note has measured it: the mirrorless's high-ISO advantage (it scores on
+  the DSLR's thresholds, and the caveat says so) and whether the macro
+  and the 150–500 are stabilised (unset scores as the zoom does; the 50
+  mm and the 75–240 are marked unstabilised from the notes).
+
 Change a threshold only when the field notes change; say which note.
 
 **The numbers are one camera's** (Dermot, 2026-09-13: *my tutorial
@@ -167,7 +192,8 @@ that way.
 ## Adding a stop
 
 Add an entry to `ENCOUNTERS` (light, subject, frame, presences, examine,
-enter, decisions, note, afterword), add any new examinables to `EXAMINE`
+enter, decisions, note, afterword, and `kit` if it was learned on
+something other than the zoom), add any new examinables to `EXAMINE`
 and any new finding the engine raises to `LESSONS`, and list the stop in
 a route in `ROUTES` (today's drive picks from the safari route's stops by
 itself, so the day stays one day; home ground is its own walk). **An

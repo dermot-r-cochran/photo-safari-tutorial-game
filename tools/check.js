@@ -65,8 +65,30 @@ function questions(enc) {
   if (questions(fake).map((d) => d.id).join() !== "a,b1,b") fail("questions() misses a branch");
 }
 
+// the kit: every kit a body and a lens; every route's pair two kits on
+// different bodies (one lens on each, none changed in the field); every
+// stop's own kit one that its route carries
+for (const [id, k] of Object.entries(S.KITS)) {
+  if (!S.BODIES[k.body]) fail("kit " + id + " names body " + k.body + ", which is not in BODIES");
+  if (!S.CAMERA.lenses[k.lens]) fail("kit " + id + " names lens " + k.lens + ", which is not in CAMERA.lenses");
+}
+const routeOf = (stopId) => S.ROUTES.find((r) => !r.daily && r.stops.includes(stopId));
+for (const r of S.ROUTES) {
+  const k = S.routeKit(r);
+  for (const which of ["main", "companion"]) if (!S.KITS[k[which]]) fail("route " + r.id + " " + which + " kit " + k[which] + " is not in KITS");
+  if (S.KITS[k.main] && S.KITS[k.companion] && S.KITS[k.main].body === S.KITS[k.companion].body) fail("route " + r.id + " puts both kits on one body");
+}
+
+const widest = Math.min(...Object.values(S.CAMERA.lenses).map((l) => l.apWide));
 const lessonsUsed = new Set();
 for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
+  const own = S.kitFor(undefined, enc);
+  if (enc.kit && !S.KITS[enc.kit]) fail(id + " was learned on kit " + enc.kit + ", which is not in KITS");
+  // the route as shipped must be playable: one of its two default kits
+  // yields a keeper at every stop on it
+  const r = routeOf(id);
+  const carried = r ? Object.values(S.routeKit(r)) : [];
+  let carriedKeeper = false;
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
   // a stop asks two or three questions on any path, and every question
   // has two to four answers (Dermot, 2026-09-20: "Two or three questions,
@@ -77,18 +99,20 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
     if (d.options && d.options.length === 1) fail(id + " decision " + d.id + " has a single option, which is no decision");
   }
   let anyKeeper = false;
-  for (const choices of combos(enc)) {
-    if (choices.length < 2 || choices.length > 3) fail(id + " asks " + choices.length + " question(s) on the path " + JSON.stringify(choices) + " — a stop asks two or three");
+  // every path on every kit develops cleanly and keeps its invariants; a
+  // keeper is required on the kit the stop was learned on
+  for (const kit of Object.keys(S.KITS)) for (const choices of combos(enc)) {
+    if (kit === own && (choices.length < 2 || choices.length > 3)) fail(id + " asks " + choices.length + " question(s) on the path " + JSON.stringify(choices) + " — a stop asks two or three");
     let r;
-    try { r = S.develop(enc, choices); }
-    catch (e) { fail(id + " " + JSON.stringify(choices) + " threw: " + e.message); continue; }
-    frames++;
+    try { r = S.develop(enc, choices, kit); }
+    catch (e) { fail(id + " on " + kit + " " + JSON.stringify(choices) + " threw: " + e.message); continue; }
+    if (kit === own) frames++;
     const x = r.exposure;
     for (const [k, v] of Object.entries({ aperture: x.aperture, shutter: x.shutter, iso: x.iso, delta: x.delta, dof: r.dof })) {
       if (typeof v !== "number" || Number.isNaN(v)) fail(id + " " + JSON.stringify(choices) + ": " + k + " is " + v);
     }
     if (x.shutter < 1 / 4000 - 1e-9 || x.shutter > 30 + 1e-9) fail(id + ": shutter out of range " + x.shutter);
-    if (x.aperture < 2.8 || x.aperture > 22) fail(id + ": aperture out of range " + x.aperture);
+    if (x.aperture < widest - 1e-9 || x.aperture > 22) fail(id + ": aperture out of range " + x.aperture);
     for (const f of r.findings) {
       if (!S.LESSONS[f.key]) fail(id + " raised finding " + f.key + ", which is not in LESSONS");
       else {
@@ -106,9 +130,11 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
     if (!r.keeper && !r.findings.some((f) => (r.unpublishable ? f.bars : f.sinks))) fail(id + " " + JSON.stringify(choices) + ": not a keeper, but no finding says why");
     if (r.keeper && r.findings.some((f) => f.sinks || f.bars)) fail(id + " " + JSON.stringify(choices) + ": a keeper with a sinking finding");
     if (r.tags.includes("IPF-Wildlife") && !r.tags.includes("IPF-Nature")) fail(id + ": IPF-Wildlife without IPF-Nature");
-    if (r.keeper) { keepers++; anyKeeper = true; }
+    if (r.keeper && kit === own) { keepers++; anyKeeper = true; }
+    if (r.keeper && carried.includes(kit)) carriedKeeper = true;
   }
-  if (!anyKeeper) fail(id + " has no combination of choices that yields a keeper");
+  if (!anyKeeper) fail(id + " has no combination of choices that yields a keeper on the " + own + " kit");
+  if (r && !carriedKeeper) fail(id + " has no keeper on either kit its route " + r.id + " carries (" + carried.join(", ") + ")");
   for (const key of enc.examine || []) if (!S.EXAMINE[key]) fail(id + " looks at " + key + ", which is not in EXAMINE");
   // `photo` is the frame the stop was learned on; `miss` is the author's
   // frame of the same scenario got wrong, shown beside it. Same shape,
