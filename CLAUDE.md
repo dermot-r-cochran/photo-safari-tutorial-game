@@ -186,10 +186,13 @@ from his 2026-09-19 *max two questions with three options each for each
 stop* and his 2026-09-13 *always have at least two or three choices for
 the camera settings at each step*). The check fails a path with fewer
 than two questions or more than three, and a question with fewer than two
-answers or more than four. Each alternative still costs something real in
-the model, so the count is a ceiling, not a target: add a question or an
-answer when it carries a lesson or a cost the stop does not already have.
-The first fourth answer is the hyena's, the dawn's manual numbers left on
+answers or more than four. Inside those bounds the third question and the
+fourth answer are ordinary, not exceptional (Dermot, the same day: *I did
+mean generally where the lesson would benefit or the extra choices look
+reasonable*) — add one wherever it teaches something or is a choice a
+photographer at that stop would plausibly have had, as long as each
+alternative still costs something real in the model. The first fourth
+answer is the hyena's, the dawn's manual numbers left on
 the dial beside the three it already had; the minimum gave the dusk lion
 its second question the same day — the second lion the card already
 shows, and what depth costs at dusk (f/16 on the beanbag lands the

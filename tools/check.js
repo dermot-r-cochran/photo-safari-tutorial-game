@@ -70,7 +70,8 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
   // a stop asks two or three questions on any path, and every question
   // has two to four answers (Dermot, 2026-09-20: "Two or three questions,
-  // each with two to four options")
+  // each with two to four options", generally, wherever the lesson would
+  // benefit or the extra choices look reasonable)
   for (const d of questions(enc)) {
     if (!d.options || d.options.length < 2 || d.options.length > 4) fail(id + " decision " + d.id + " offers " + (d.options || []).length + " options — every question has two to four");
     if (d.options && d.options.length === 1) fail(id + " decision " + d.id + " has a single option, which is no decision");
