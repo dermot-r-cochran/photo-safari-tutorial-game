@@ -39,7 +39,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Fifteen stops
+- **The verdict is words; a photograph comes only after it.** Nineteen stops
   carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -362,8 +362,15 @@ at more than one stop** (Dermot, 2026-09-21: *reinforcing the same lesson
 with additional scenes is fine*) — a page whose only claim was a second
 example of a lesson already in the game is a candidate, not a duplicate,
 as long as the situation was real and the note or the frame says what
-it teaches. Left for later from the same survey, each needing an engine
-axis first: the
+it teaches. Four came in on that ruling the same day (*sounds great*):
+the pelican that swam up to the same boat, on *Off the drive*; the
+flamingos under the flat cloud that held their reflections, at
+Amboseli; the ostrich the lens could not find in the haze, on the first
+Nairobi drive — with a new frame flag, `hunting`, for a shutter pressed
+before the lens had settled, which sinks the frame; and the single sloe
+at the reservoir hedge, learned on the macro, which looked like macro
+work and measured at one to seven. Left for later from the same survey,
+each needing an engine axis first: the
 mono decision (cheetah, buffalo), the creative stack of a miss (ghost
 herd), a slow shutter chosen for propellers (the wingwalkers), and the
 one Urban Wildlife page (the hyrax on the coffee machine). A hide route
