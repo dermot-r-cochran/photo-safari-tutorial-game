@@ -39,8 +39,8 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Twelve stops
-  carry a `photo` — the author's own frame from that outing, at portfolio
+- **The verdict is words; a photograph comes only after it.** Twenty-one
+  stops carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
   framing decision) and never as the result (one picture cannot stand in
@@ -128,6 +128,12 @@ here as tutorial content:
 - Category: what the subject is, not what it lies on — a wild lion on a
   track is Wildlife; a balloon, a rail or distant watchers make a frame
   Documentary; a plant is Macro at 1:1 and Nature below it.
+- A background softened afterwards (`frame.processed`) and a subject
+  moved for the frame (`frame.disturbed`) are each out of the nature
+  sections and the world awards alike, and enter the open competition
+  only — the jacana's page carries the club tag alone for exactly this,
+  and the federation's definition puts the subject's welfare before
+  the photograph (both 2026-09-21, with the four stops below).
 - Eligibility, by rulebook: the camera club's open competition takes
   anything that is the entrant's own work (its nature rounds follow the
   federation's definitions, so `DCC` is the open competition only — Dermot,
@@ -156,8 +162,15 @@ here as tutorial content:
   those four combinations, each with the label the page shows (the
   75–240 stays on the shelf, as the notes have it);
   each route carries a default pair on different bodies, and the player
-  picks their own on the *Before you set out* card, then which camera is
-  in hand at each stop — a choice beside the questions, never one of
+  picks their own on the *Before you set out* card — which opens the
+  route, with its title and line, before the first scene is written
+  (Dermot, 2026-09-21: *with the choice of location but before the
+  description of the first scene*); setting out is what opens the first
+  stop, and the card proposes yesterday's pair on that route where there
+  is one, else the route's default (Dermot, 2026-09-21, *Option 1*: next
+  day is a fresh choice of kit on the same route, with yesterday's pair
+  proposed; the day record carries the pair) — then which camera is in
+  hand at each stop — a choice beside the questions, never one of
   them, recorded in the transcript and on the frame. The lens on the
   camera in hand gives what it can of the focal length an option reaches
   for (`reach`, `wideEnd`, and `tiny` at half the size or less) and
@@ -335,6 +348,39 @@ Until this ruling only a frame barred from the site lost its tags, so a
 motion-blurred lion still read as eligible for four competitions. The
 check fails a non-keeper carrying a tag, and a keeper without DCC, since
 the open competition takes any keeper.
+
+**Four stops from the portfolio's own notes, 2026-09-21** (Dermot's
+*yes these all sound good* on a survey of the 199 pages against the
+game): the fallow deer at the park's fifty metres in mist, from the
+19 September field note — the lens decided at the car, mist as soft
+light, and the 2025 morning lost to a dial nobody checked; no photograph,
+since the note says the crop is soft at web size — the tufted duck that
+surfaces where you were not pointing, the great black-backed gull chick
+on the boulders with its parent watching, and the jacana in grass the
+same colour, whose background was softened on the computer. **A lesson may be taught
+at more than one stop** (Dermot, 2026-09-21: *reinforcing the same lesson
+with additional scenes is fine*) — a page whose only claim was a second
+example of a lesson already in the game is a candidate, not a duplicate,
+as long as the situation was real and the note or the frame says what
+it teaches. Four came in on that ruling the same day (*sounds great*):
+the pelican that swam up to the same boat, on *Off the drive*; the
+flamingos under the flat cloud that held their reflections, at
+Amboseli; the ostrich the lens could not find in the haze, on the first
+Nairobi drive — with a new frame flag, `hunting`, for a shutter pressed
+before the lens had settled, which sinks the frame; and the single sloe
+at the reservoir hedge, learned on the macro, which looked like macro
+work and measured at one to seven. **City walks go as far as
+the animals in them** (Dermot, 2026-09-21, *option 1 approved* of two: an
+urban wildlife walk, not architecture): the route `city`, *In the city*,
+holds the hyrax on the museum's coffee machine and the pigeon on the
+café tray, the first stops to file as Urban Wildlife; a `built` frame
+raises the `urban` note, and the buildings themselves stay out of the
+game — architecture would be a second tutorial inside the first. Left
+for later from the same survey, each needing an engine axis first: the
+mono decision (cheetah, buffalo), the creative stack of a miss (ghost
+herd), a slow shutter chosen for propellers (the wingwalkers), and a Tenerife
+landscape walk (six pages, no notes yet — a line per frame from Dermot
+first). A hide route waits on a hide morning with a note behind it.
 
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a

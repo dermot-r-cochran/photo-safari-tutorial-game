@@ -618,6 +618,86 @@ const ENCOUNTERS = {
     ]
   },
 
+  ostrich: {
+    stop: "07:00", place: "Nairobi National Park, the first drive, haze down",
+    title: "The ostrich the lens could not find",
+    light: { ev: 11, label: "first light through haze, the city a grey line behind" },
+    subject: { name: "a male ostrich standing in the long grass", motion: "stirs", distance: 60, depth: 1 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the ostrich", "the haze", "the long grass, all the same tone"],
+    examine: ["light", "ostrich", "haze"],
+    enter: [
+      "Seven in the morning on the first drive of the trip, the haze " +
+      "still down over the city behind him, and a male ostrich standing " +
+      "in the long grass sixty metres off: black body, pink neck, a small " +
+      "head, and all of it the same soft tone as everything else.",
+      "The lens went to the long end and hunted. Grass, ostrich, grass. " +
+      "It took three frames to find him."
+    ],
+    decisions: [
+      {
+        id: "focus", prompt: "The lens is hunting. What do you do?",
+        options: [
+          {
+            label: "Press now. He is there; the lens will catch up.",
+            text: ["You pressed while the lens was still going in and " +
+                   "out, and the frame has an ostrich-shaped softness " +
+                   "where an ostrich was."],
+            frame: { hunting: true }
+          },
+          {
+            label: "Half-press and hold, and press when the confirmation comes.",
+            text: ["You held the half-press and let the lens work. Two " +
+                   "frames went to the grass. The third, the " +
+                   "confirmation came on the neck and you pressed."],
+          },
+          {
+            label: "Switch to manual focus and turn the ring by eye, at 400 mm, in haze.",
+            text: ["You turned the ring. In that light, at that length, " +
+                   "through a finder that size, the neck looked sharp " +
+                   "at three settings, and the frame chose a fourth."],
+            frame: { hunting: true }
+          }
+        ]
+      },
+      {
+        id: "iso", prompt: "And the ISO, in the haze?",
+        options: [
+          { label: "Auto, to 800. The walking-around setting.", text: ["A, f/8, Auto ISO. The haze took it to 800."], settings: "walkAround" },
+          {
+            label: "ISO 100, fixed. The haze is soft light; keep it clean.",
+            text: ["You pinned ISO 100 for the cleanest file, and at f/8 " +
+                   "in that haze the shutter went to a thirtieth, " +
+                   "hand-held, at the long end."],
+            settings: "walkAround", set: { iso: 100 }
+          },
+          {
+            label: "ISO 3200, fixed. Whatever it takes to keep the shutter up.",
+            text: ["You pinned it high and the shutter stayed fast, and " +
+                   "the haze came back full of coloured grain."],
+            settings: "walkAround", set: { iso: 3200 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/ostrich-in-the-long-grass.jpg", title: "Ostrich in the Long Grass",
+             alt: "A male ostrich standing side-on in tall green grass, black body and pale pink neck curved up to a small head, with a dark line of trees and a pale hazy sky behind",
+             caption: "The third frame, the one where the lens found him." },
+    note: "The grey band along the skyline is Nairobi, through the early " +
+          "haze; the park's fence runs along the city's edge and the " +
+          "animals walk the other three sides.",
+    afterword: [
+      "An autofocus lens finds an edge and holds it, and haze and long " +
+      "grass are made of no edges. The answer is not to press harder: " +
+      "hold the half-press, let the lens work, and press on the " +
+      "confirmation, or wait for the head to come up against the sky, " +
+      "where there is an edge to bite on. A body that tracks the subject " +
+      "holds him once he is found; nothing finds him for it. And the " +
+      "haze is soft light, not low light — it wants the ISO where the " +
+      "walking-around setting puts it, and no lower."
+    ]
+  },
+
   sixtieth: {
     stop: "07:25", place: "Nairobi National Park, first light through haze",
     title: "The dawn run at a sixtieth",
@@ -1209,6 +1289,258 @@ const ENCOUNTERS = {
     ]
   },
 
+  flamingos: {
+    stop: "14:20", place: "Amboseli, the shallows under flat cloud",
+    title: "Flamingos on still water",
+    light: { ev: 12, label: "flat overcast, no sun on the water, the surface a sheet" },
+    subject: { name: "five greater flamingos feeding in the shallows", motion: "stirs", distance: 40, depth: 3, saturated: true },
+    frame: { kind: "wildlife", tells: [], horizon: true },
+    presences: ["the flamingos", "the water, holding them upside down", "the cloud, going nowhere"],
+    examine: ["light", "flamingos", "stillwater"],
+    enter: [
+      "Flat overcast, the enemy of every safari morning, sat on the " +
+      "shallows like a lid. Under it five flamingos fed with their heads " +
+      "in the water, and under each of them the water held a second " +
+      "flamingo, upside down and unbroken, because there was no sun to " +
+      "break the surface.",
+      "The only colour in the frame was the birds. The driver offered to " +
+      "wait for the sun."
+    ],
+    decisions: [
+      {
+        id: "moment", prompt: "Flat overcast, and the water holding the reflections. Take it, or wait for the sun?",
+        options: [
+          {
+            label: "Take it now. The cloud is the picture.",
+            text: ["You took the birds and their reflections under the " +
+                   "lid of cloud, pink on grey, the surface unbroken."],
+          },
+          {
+            label: "Wait for the sun to come through.",
+            text: ["The sun came through in twenty minutes. It put a " +
+                   "sparkle on the surface that broke every reflection, " +
+                   "and by then the birds had fed their way sixty " +
+                   "metres further out."],
+            light: { ev: 14 }, frame: { harsh: true }, subject: { distance: 100, tiny: true }
+          },
+          {
+            label: "Take it now, and meter for the birds. The water can go where it likes.",
+            text: ["You put the meter on the pink and the camera opened " +
+                   "up for it, and the water — the whole frame but the " +
+                   "birds — went to white."],
+            frame: { exposeFor: "subject" }
+          }
+        ]
+      },
+      {
+        id: "picture", prompt: "Pink birds, the one colour in the frame. And the picture control?",
+        options: [
+          {
+            label: "Vivid. It is grey out; give it some colour.",
+            text: ["Vivid pushed the one colour there was until the pink " +
+                   "went to a shape with no feather in it."],
+            settings: "walkAround"
+          },
+          {
+            label: "Standard. The colour is already there.",
+            text: ["Standard let the pink be pink, and the grey be the " +
+                   "grey it was."],
+            settings: "walkAround", set: { picture: "standard" }
+          },
+          {
+            label: "Neutral, and decide at the desk.",
+            text: ["Neutral decided nothing, which is what it is for, and " +
+                   "the raw file went home to be decided about."],
+            settings: "walkAround", set: { picture: "neutral" }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/flamingos-feeding.jpg", title: "Flamingos Feeding",
+             alt: "Five greater flamingos scattered across still pale grey water, several with their heads and necks lowered into the surface to feed, their coral-pink legs and blush-white plumage set against the flat water, each bird trailing a long soft vertical reflection beneath it",
+             caption: "Under the cloud, on standard: the reflections held because nothing broke the surface." },
+    note: "Greater flamingos feed with the head upside down, filtering the " +
+          "shallows through the bill; the pink is from what they filter. " +
+          "Flat overcast is usually the enemy, and here it is what makes " +
+          "the picture — no sun to break the surface.",
+    afterword: [
+      "Waiting for the cloud is the usual lesson, and this is the other " +
+      "half of it: sometimes the cloud is the light. A still surface " +
+      "holds a reflection only while nothing sparkles on it, so the sun " +
+      "you were waiting for is the thing that would have taken the " +
+      "picture away. And a saturated subject is where vivid blows a " +
+      "channel first — the roller taught that, and the flamingo teaches " +
+      "it again in a different colour."
+    ]
+  },
+
+  jacana: {
+    stop: "16:10", place: "Amboseli, the edge of the marsh",
+    title: "The jacana in the grass",
+    light: { ev: 13, label: "afternoon, bright, the marsh grass lit the same as the bird" },
+    subject: { name: "an African jacana walking the wet grass", motion: "walking", distance: 15, depth: 0.3 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the jacana", "the marsh grass, the same colour", "the open water, further out"],
+    examine: ["light", "jacana", "grass"],
+    enter: [
+      "A jacana walked the wet grass at the marsh edge on feet too big " +
+      "for it, chestnut on green, and the trouble was plain in the " +
+      "finder: the grass was lit exactly as the bird was, and at f/8 " +
+      "the grass was as sharp as the bird, and the bird went into it " +
+      "like a word into a paragraph.",
+      "It kept walking. The grass kept being grass."
+    ],
+    decisions: [
+      {
+        id: "grass", prompt: "The bird is the colour of the grass and the grass is as sharp as the bird. What do you do?",
+        options: [
+          {
+            label: "Open up. Wide open at 400 mm, and let the grass go soft in the camera.",
+            text: ["You opened the lens as far as it would go at the long " +
+                   "end. The grass behind went to a green wash and the " +
+                   "bird stood out of it, and nothing had to be done later."],
+            set: { aperture: 6.3, focal: 400 }
+          },
+          {
+            label: "f/8 as it is, and soften the grass afterwards on the computer.",
+            text: ["You took it at f/8 and fixed it at the desk: the grass " +
+                   "behind blurred by hand until the bird came forward. " +
+                   "It looks like the first answer. It is not the same " +
+                   "picture, and the rulebooks know the difference."],
+            frame: { processed: true }, set: { focal: 400 }
+          },
+          {
+            label: "f/16, so the whole bird is sharp, feet and all.",
+            text: ["You stopped down for the feet. The feet were sharp. So " +
+                   "was every blade of grass in Amboseli, and the bird was " +
+                   "one more green-lit thing among them."],
+            set: { aperture: 16, focal: 400 }
+          }
+        ]
+      },
+      {
+        id: "shutter", prompt: "And the shutter, for a bird walking on wet grass?",
+        options: [
+          { label: "The walking-around setting; the floor is 1/250 s.", text: ["A, Auto ISO, and the 1/250 s floor for a walking bird."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting, in case it flies.",
+            text: ["S, 1/2000 s. It did not fly. The ISO went up to pay " +
+                   "for a speed the bird did not use."],
+            settings: "birds"
+          },
+          {
+            label: "Drop the floor to 1/125 s. It is only walking, and the light is worth keeping clean.",
+            text: ["You let the floor down for a cleaner file, and the " +
+                   "camera took you at your word: ISO 100, 1/128 s, and " +
+                   "a jacana's foot is never still."],
+            settings: "walkAround", set: { minShutter: 1 / 125 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/african-jacana.jpg", title: "African Jacana",
+             alt: "An African jacana standing among short wet marsh grass, its deep chestnut body turned side-on, white face and throat below a black crown, pale blue bill, and its long thin legs disappearing into the weed below",
+             caption: "The processed frame: the grass behind softened on the computer, and tagged for the club's open competition only because of it." },
+    note: "Jacanas walk on floating vegetation on toes as long as the rest " +
+          "of the foot, spreading their weight across lily pads and weed; " +
+          "the marsh here is fed from under the ground by water off " +
+          "Kilimanjaro, which is why there is a marsh at all.",
+    afterword: [
+      "A background softened afterwards is not the same as a background " +
+      "softened in the lens, whatever the two look like side by side. " +
+      "The nature sections do not allow blurring that hides part of the " +
+      "scene, and the world awards bar anything added or taken away, so " +
+      "the processed frame enters the open competition only — and the " +
+      "honest fix was in the camera all along: a stop and a half wider, " +
+      "and the grass goes soft for free."
+    ]
+  },
+
+  pelican: {
+    stop: "15:20", place: "Lake Naivasha, from the same boat",
+    title: "The pelican that came to the boat",
+    light: { ev: 13, label: "afternoon sun off the water, bright and even" },
+    subject: { name: "a great white pelican swimming straight at the boat", motion: "stirs", distance: 8, depth: 0.2, white: true },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the pelican", "the bucket, still", "the boat's gunwale"],
+    examine: ["light", "pelican", "bucket"],
+    enter: [
+      "The eagles were still in their tree when the pelican arrived, " +
+      "swimming straight at the boat with its wings held a little open " +
+      "and its bill down, the way a bird comes to a place it has been " +
+      "fed before. It stopped at eight metres and waited.",
+      "The boatman's hand went to the bucket again. Nothing about the " +
+      "bird, the water or the light would ever tell anyone why it was " +
+      "there."
+    ],
+    decisions: [
+      {
+        id: "ethics", prompt: "It is here because the boat feeds it. What do you do with that?",
+        options: [
+          {
+            label: "Take it, and let the note say it was fed.",
+            text: ["You took the head at eight metres, pouch and pink face " +
+                   "and the dark eye, and wrote on the page that the " +
+                   "pelicans here come to the boats for fish."],
+            frame: { baited: true }
+          },
+          {
+            label: "Ask for the bucket to stay shut, and wait for it to lose interest and drift off.",
+            text: ["The lid stayed on. The pelican waited, decided, and " +
+                   "swam off to the raft further out, which had not " +
+                   "come to anyone. You took it there, small and honest."],
+            frame: { baited: false }, subject: { distance: 30 }
+          },
+          {
+            label: "Take it with the gunwale and the bucket in the frame. The picture of what this is.",
+            text: ["You went wide enough to keep the boat's edge and the " +
+                   "bucket, and the bird waiting beside them. Not a " +
+                   "nature picture. A picture of a lake with boats on it."],
+            frame: { baited: true, kind: "documentary", tells: [{ label: "the gunwale and the bucket", excludable: false }] }, set: { focal: 100 }
+          }
+        ]
+      },
+      {
+        id: "picture", prompt: "A white bird in full sun, close. And the picture control?",
+        options: [
+          {
+            label: "Vivid, as it is.",
+            text: ["The dial where it lived. The white of the wings went " +
+                   "to paper in the finder, and stayed paper."],
+            settings: "walkAround"
+          },
+          {
+            label: "Standard, for the white.",
+            text: ["You took the dial down a notch and the wing kept its " +
+                   "feathers."],
+            settings: "walkAround", set: { picture: "standard" }
+          },
+          {
+            label: "Standard, and wide open for the eye.",
+            text: ["Standard for the white and the lens open for the " +
+                   "eye. At eight metres the bill was already going soft " +
+                   "at the tip."],
+            settings: "walkAround", set: { picture: "standard", aperture: 6.3 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/great-white-pelican-on-naivasha.jpg", title: "Great White Pelican",
+             alt: "A great white pelican swimming straight towards the camera with its wings held slightly open at its sides, its long bill angled down to show the yellow pouch and red tip, pink facial skin around a dark eye, on rippled blue-grey water",
+             caption: "The bird that came to the boat, tagged for the club's open competition only, and the page says why." },
+    note: "The pelicans here are fed from the boats and swim up to them; " +
+          "the raft that keeps its distance on the Amboseli marsh is the " +
+          "same bird behaving as the species does.",
+    afterword: [
+      "The eagle stooped for an arranged fish and this bird swam up for " +
+      "one, and the rulebooks see no difference: an animal brought to " +
+      "the camera by food is baited, whether it flies or paddles, and " +
+      "the frame enters the open competition only and carries a note " +
+      "that says how it was got. A clean sky gives nothing away; a calm " +
+      "lake gives away even less."
+    ]
+  },
+
   giraffe: {
     stop: "16:30", place: "the Giraffe Centre, Nairobi",
     title: "The giraffe at the rail",
@@ -1451,6 +1783,182 @@ const ENCOUNTERS = {
     ]
   },
 
+  deer: {
+    stop: "07:30", place: "a deer park at the edge of the city, near home, in mist",
+    onward: "Walk on.",
+    title: "The herd at fifty metres",
+    light: { ev: 12, label: "mist, soft and even, the tree line a suggestion" },
+    subject: { name: "a fallow buck at the park's fifty metres, grazing", motion: "stirs", distance: 50, depth: 1.5 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the herd", "the mist", "the sign that says fifty metres"],
+    examine: ["light", "bucks", "fifty"],
+    enter: [
+      "The herd was where the herd is, fifty metres off across the wet " +
+      "grass, and the mist had taken the tree line down to a grey idea " +
+      "behind them. Fifty metres is the park's rule, and the deer keep " +
+      "it more carefully than the people do.",
+      "At fifty metres a buck is a metre and a half of animal. On this " +
+      "sensor that is a fortieth of the frame at 50 mm and a fifth of it " +
+      "at 400. The arithmetic was done before you left the car, or it " +
+      "was not."
+    ],
+    decisions: [
+      {
+        id: "lens", prompt: "Fifty metres is the field's rule, and the herd keeps it. How much of the morning?",
+        options: [
+          {
+            label: "The long end. 400 mm, and the buck a fifth of the frame.",
+            text: ["You went to the long end and the nearest buck filled " +
+                   "a fifth of the frame, antlers and all, the mist " +
+                   "behind him doing the background's work for free."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          },
+          {
+            label: "The field. 50 mm: the tree line, the mist, and deer in it.",
+            text: ["You took the place. The frame is true to the mist and " +
+                   "the wet grass and the line of trees going to nothing, " +
+                   "and the deer in it are a fortieth of the width each. " +
+                   "A crop to the two nearest bucks is soft at web size, " +
+                   "because a fortieth of the pixels is not a picture."],
+            frame: { framing: "loose" }, set: { focal: 50 }, subject: { tiny: true }
+          },
+          {
+            label: "Halfway. 200 mm, for the two nearest bucks and the mist behind.",
+            text: ["You took the two nearest bucks together at 200 mm, " +
+                   "each a tenth of the frame, the mist closing behind " +
+                   "them. They read. The antlers do not."],
+            frame: { framing: "loose" }, set: { focal: 200 }
+          }
+        ]
+      },
+      {
+        id: "dial", prompt: "And the dial, in mist?",
+        options: [
+          {
+            label: "The walking-around setting, and look at the first frame on the back of the camera.",
+            text: ["A, f/8, Auto ISO. ISO 400 and 1/250 s in the mist, " +
+                   "and the first frame on the screen looked the way the " +
+                   "morning did. Mist is soft light, not low light."],
+            settings: "walkAround"
+          },
+          {
+            label: "The rut setting: S, 1/1000 s and up, in case the bucks spar.",
+            text: ["S, 1/1000 s. The bucks grazed. The ISO went where it " +
+                   "had to for a speed nothing used."],
+            settings: "birds", set: { shutter: 1 / 1000 }
+          },
+          {
+            label: "Whatever it is on. Last time out it was 1/1250 s at f/22 in the rain, and nobody looked.",
+            text: ["M, 1/1250 s, f/22, ISO 400, from a dial nobody had " +
+                   "checked since the rain. Every frame came back five " +
+                   "stops under and more, a raw lift finds noise with a " +
+                   "deer-shaped hole in it, and the first frame on the " +
+                   "screen would have said so before the second."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 1250, aperture: 22, iso: 400 }
+          }
+        ]
+      }
+    ],
+    /* No photograph yet. The mist frames of 19 September 2026 are true
+       to the mist, and the crop to the two nearest bucks is soft at web
+       size (FIELD-NOTES.md, the fallow deer entry); the rut on 24
+       October is the morning the long end goes out for. */
+    note: "The park asks for fifty metres from the herd and the herd is " +
+          "habituated by feeding, so a buck may close the distance on its " +
+          "own; stand still, hands down, and let it pass. That is the one " +
+          "frame the 50 mm was made for, and the reason it stays in the bag.",
+    afterword: [
+      "The lens is the decision, and it was made at the car. A 50 mm " +
+      "gives the field with deer in it and cannot give the deer; the long " +
+      "end gives the deer and cannot give the field. Bring the one the " +
+      "morning is for, and if the other is on the second body, so much " +
+      "the better. And look at the first frame, every outing: a dial " +
+      "left where the last day put it will take the whole morning " +
+      "before anyone notices, and the screen on the back would have " +
+      "told you in one glance."
+    ]
+  },
+
+  duck: {
+    stop: "09:15", place: "a park pond near home, April",
+    onward: "Walk on.",
+    title: "The diver",
+    light: { ev: 11, label: "bright overcast, the water dark green under it" },
+    subject: { name: "a tufted duck, under the water, somewhere", motion: "running", distance: 20, depth: 0.4 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the ripples", "the pond", "a mallard that is not the point"],
+    examine: ["light", "diver"],
+    enter: [
+      "He went under with a small roll, the way they do, and the pond " +
+      "closed over him. A tufted duck is a diver, not a dabbler: seconds " +
+      "at a time under the water, and up somewhere you were not pointing.",
+      "What follows coming up is the flap — the water shed off the wings " +
+      "in one movement before he settles. That is the picture, and it " +
+      "lasts about as long as it takes to say so."
+    ],
+    decisions: [
+      {
+        id: "where", prompt: "He went under. Where do you point?",
+        options: [
+          {
+            label: "Where he went down, and wait there.",
+            text: ["He came up eight metres to the left, flapped, and " +
+                   "settled before you had swung. You got the settle: a " +
+                   "sharp duck on a pond, the moment already over."],
+            subject: { motion: "stirs", distance: 24, name: "a tufted duck, settled, the flap over" }
+          },
+          {
+            label: "Nowhere. Camera down, and lift it when he surfaces.",
+            text: ["He came up, and by the time the camera was at your " +
+                   "eye he was a duck on a pond again. Sharp, and nothing " +
+                   "happening in it."],
+            subject: { motion: "stirs", name: "a tufted duck, settled, the flap over" }
+          },
+          {
+            label: "Where he went down, but loose: both eyes open, and swing the moment the water breaks.",
+            text: ["The water broke a few metres off where you were " +
+                   "looking and the lens was on him as the wing went " +
+                   "out, water coming off it in a sheet."],
+            subject: { motion: "running" }
+          }
+        ]
+      },
+      {
+        id: "shutter", prompt: "And the shutter, for a wing-flap on water?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO, the 1/250 s floor."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting.",
+            text: ["S, 1/2000 s, and the ISO where the overcast sends it."],
+            settings: "birds"
+          },
+          {
+            label: "The floor raised to 1/500 s. Halfway to birds.",
+            text: ["You raised the floor and the camera could not reach " +
+                   "it: ISO at its cap and the shutter at an eighth of " +
+                   "what a wing wants."],
+            settings: "walkAround", set: { minShutter: 1 / 500 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/tufted-duck-rising.jpg", title: "Tufted Duck Rising",
+             alt: "A male tufted duck reared up out of dark green water with one wing spread wide, black head with a drooping crest, golden eye and blue-grey bill, white flank showing, concentric ripples spreading out around him",
+             caption: "The flap, at the shooting-birds setting: the wing out, the water still leaving it." },
+    note: "Tufted ducks dive for seconds at a time and feed on the bottom, " +
+          "which is most of what makes them difficult to photograph — the " +
+          "wing-flap on surfacing is the one moment they give you, and " +
+          "they give it once per dive.",
+    afterword: [
+      "A diver surfaces where you were not pointing, so the answer is not " +
+      "to point harder. Stay loose, keep both eyes open, and treat the " +
+      "flap as what the shutter is for: it is a wing moving as fast as a " +
+      "wing moves, and the walking-around floor will not hold it. A body " +
+      "that tracks the subject holds him once he is up; nothing tracks " +
+      "him under the water."
+    ]
+  },
+
   woodland: {
     stop: "10:15", place: "a beech wood near home, the week after",
     onward: "Walk on.",
@@ -1618,6 +2126,339 @@ const ENCOUNTERS = {
       "nature definition, so a ringed bird loses nothing — do not " +
       "under-claim on a ring. White plumage in hard light is where vivid " +
       "clips first, and clipped whites are what a judge looks for."
+    ]
+  },
+
+  sloe: {
+    stop: "14:00", place: "the reservoir valley above the city, near home, August",
+    onward: "Walk on.",
+    kit: "macro",
+    title: "The single sloe",
+    light: { ev: 12, label: "bright overcast, the hedge holding still between gusts" },
+    subject: { name: "a single sloe on a blackthorn twig, the bloom on it unmarked", motion: "stirs", distance: 0.5, depth: 0.015 },
+    frame: { kind: "plant", tells: [], magnification: 0.14 },
+    presences: ["the sloe", "the bloom on its skin", "the hedge, moving a little"],
+    examine: ["light", "sloe", "bloom"],
+    enter: [
+      "One sloe on a blackthorn twig at the reservoir's edge, blue-black " +
+      "under a pale wax bloom that the fruit puts down itself and that " +
+      "rubs off at a touch. Nobody had touched this one.",
+      "It looked like macro work. Whether it was macro work was a " +
+      "matter of arithmetic, and the arithmetic had not been done."
+    ],
+    decisions: [
+      {
+        id: "close", prompt: "How close, and with what?",
+        options: [
+          {
+            label: "From a little back: about 1:7. It looks like macro.",
+            text: ["You took it from half a metre. The sloe was a fifth " +
+                   "of the frame and the picture looked like macro work, " +
+                   "and measured, later, at one to seven."],
+            frame: { magnification: 0.14 }
+          },
+          {
+            label: "The macro at 1:2: the sloe, the bloom, and the leaf below it.",
+            text: ["Half life size: the sloe and its leaf, the bloom " +
+                   "reading as a sheen, the hedge behind gone to green."],
+            frame: { magnification: 0.5 }
+          },
+          {
+            label: "The macro at 1:1: the bloom on the skin, and nothing else.",
+            text: ["Life size. The wax on the skin became a landscape of " +
+                   "its own, and the sloe stopped being a sloe."],
+            frame: { magnification: 1.0 }
+          }
+        ]
+      },
+      {
+        id: "hold", prompt: "There is a breeze in the hedge. Hand-held, or the tripod?",
+        options: [
+          {
+            label: "Hand-held, the walking-around setting, between gusts.",
+            text: ["A, f/8, hand-held, and you waited for the hedge to " +
+                   "stop. It stopped for about a second at a time."],
+            settings: "walkAround", set: { focal: 70 }
+          },
+          {
+            label: "The macro routine on the tripod, from live view, the shutter set for the daylight, and wait for the still second.",
+            text: ["M, f/8, and 1/60 s for a hedge in daylight rather " +
+                   "than the woodland's eighth, on the tripod with the " +
+                   "mirror already up, and the shutter pressed in the " +
+                   "second the hedge gave you."],
+            settings: "macro", set: { shutter: 1 / 60 }
+          },
+          {
+            label: "The macro routine at f/22, for depth. A sloe is a sphere.",
+            text: ["You stopped down for the whole sphere. The lens gave " +
+                   "you the depth and took the sharpness to pay for it."],
+            settings: "macro", set: { aperture: 22 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/a-single-sloe.jpg", title: "A Single Sloe",
+             alt: "A single blue-black sloe hanging from a blackthorn twig, its waxy pale bloom intact and unmarked, with one green leaf below it and the rest of the hedge dissolved into soft green behind",
+             caption: "Filed as Nature, not Macro: it looked like macro work and measured at about one to seven." },
+    note: "Blackthorn flowers before it leafs, white froth on bare black " +
+          "wood in March, and this is what becomes of it. The bloom is a " +
+          "wax the fruit puts down itself, which is why sloes almost never " +
+          "look like this in the hand.",
+    afterword: [
+      "Magnification is the test for the category, and it is worth " +
+      "measuring rather than eyeballing: the sensor's width, divided by " +
+      "the subject's size in life times the frame's width in pixels over " +
+      "the subject's width in pixels. The close-ups of this outing all " +
+      "looked like macro work and measured between one to seven and one " +
+      "to eleven, so all of them are Nature. True macro is one to one, " +
+      "and only the macro lens gets there. The woodland taught the " +
+      "tripod and the breeze; the sloe teaches the arithmetic."
+    ]
+  },
+
+  chick: {
+    stop: "12:30", place: "a rocky island in the bay, near home",
+    onward: "Walk on.",
+    title: "The chick on the boulders",
+    light: { ev: 14, label: "June sea light, bright, the granite throwing it back" },
+    subject: { name: "a great black-backed gull chick among the boulders, the parent on the rock above", motion: "stirs", distance: 8, depth: 0.2 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the chick", "the parent", "the path"],
+    examine: ["light", "chick", "parent"],
+    enter: [
+      "A chick the colour of the granite, speckled down and a stare, at " +
+      "the foot of a boulder a few metres off the path. On the boulder " +
+      "above it, the parent: the largest gull in the world, and it had " +
+      "already seen you.",
+      "The chick left its nest within a day or two of hatching and will " +
+      "spend seven weeks among these rocks. The parent stays within a " +
+      "few metres the whole time, and the reason is the neighbours."
+    ],
+    decisions: [
+      {
+        id: "distance", prompt: "The chick is a few metres off the path and the parent is watching you. How close?",
+        options: [
+          {
+            label: "No closer. The long end from the path, chick and parent together.",
+            text: ["You stayed on the path and took them both at the long " +
+                   "end: the parent on its rock, the chick at its feet, " +
+                   "the sea behind. The parent watched you do it and did " +
+                   "not move."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          },
+          {
+            label: "Three steps over the boulders, for a portrait that fills the frame.",
+            text: ["Three steps, and the parent came off its rock at you " +
+                   "with its wings open and the chick went under the " +
+                   "boulder. The frame is a wing, and the chick is where " +
+                   "the neighbours can see it."],
+            frame: { disturbed: true }, subject: { name: "a great black-backed gull coming off its rock at you", motion: "flying", distance: 4, depth: 0.5 }, set: { focal: 300 }
+          },
+          {
+            label: "The whole thing from the path at 135 mm: the boulders, the sea, the parent, the chick a speck at its feet.",
+            text: ["You took the place from the path — granite, sea, the " +
+                   "parent a shape on its rock, and the chick a speckled " +
+                   "speck you would have to point at."],
+            frame: { framing: "loose" }, set: { focal: 135 }, subject: { tiny: true }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "And the camera?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting. The parent may fly.",
+            text: ["S, 1/2000 s, for a parent that might come off its rock."],
+            settings: "birds"
+          },
+          {
+            label: "Wide open at the long end, for the down and nothing behind it.",
+            text: ["You opened up for the chick's down against a soft " +
+                   "sea. At eight metres the depth of field was the " +
+                   "chick and not much else."],
+            settings: "walkAround", set: { aperture: 6.3 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/great-black-backed-gull-with-chick.jpg", title: "Great Black-backed Gull with Chick",
+             alt: "An adult great black-backed gull standing on a granite boulder with a single downy grey-speckled chick at its feet, green ground cover and a strip of dark blue sea behind",
+             caption: "From the path: the parent on its boulder and the chick at its feet. Half an hour later three chicks were together on a ledge over the water." },
+    note: "The largest gull in the world eats the young of every gull on the " +
+          "island, its own neighbours' included, so a chick this age is " +
+          "safest exactly where it is, with a parent a few metres off. It " +
+          "will take four years to reach the slate-black mantle and the " +
+          "bulk that swallows a puffin whole.",
+    afterword: [
+      "The welfare of the subject comes before the photograph — the " +
+      "federation's definition says so in as many words, and the world " +
+      "awards bar anything that alters the animal's behaviour. A chick " +
+      "put off its boulder is a chick the neighbours can see, and the " +
+      "parent that came off its rock at you was not posing. The frame " +
+      "from the path was the frame; the long end is what the path is for."
+    ]
+  },
+
+  hyrax: {
+    stop: "11:30", place: "a museum yard in Nairobi, the old coffee machinery",
+    onward: "Walk on.",
+    title: "The hyrax on the coffee machine",
+    light: { ev: 10, label: "shade under a corrugated roof, the yard bright beyond it" },
+    subject: { name: "a rock hyrax sitting on the rusted drum of the old coffee machinery", motion: "stirs", distance: 4, depth: 0.3 },
+    frame: { kind: "wildlife", built: true, tells: [{ label: "the coffee machinery", excludable: false }] },
+    presences: ["the hyrax", "the drum it chose", "the shed, open at the sides"],
+    examine: ["light", "hyrax", "machinery"],
+    enter: [
+      "In the machinery shed behind the museum a rock hyrax sat on the " +
+      "rusted red drum of the old coffee works and looked straight at " +
+      "you, the way a thing does that has been looked at before and " +
+      "found it harmless. Nobody had put it there. It had chosen the " +
+      "machine, and the machine was warm.",
+      "It was a wild animal in a building, and the building was the point."
+    ],
+    decisions: [
+      {
+        id: "framing", prompt: "It chose the machine. What goes in the frame?",
+        options: [
+          {
+            label: "The hyrax and the drum it sits on. The machine is the picture.",
+            text: ["You took the animal on its machinery, rust and iron " +
+                   "and a wild face on top of them, the roof's corrugation " +
+                   "above. A picture of a place an animal had moved into."],
+            frame: { framing: "loose" }, set: { focal: 135 }
+          },
+          {
+            label: "The head against the dark, tight, and no machine in it.",
+            text: ["You went to the long end and took the face alone " +
+                   "against the shadow, and the frame looked like a wild " +
+                   "hyrax on a wild rock, which it was not."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          },
+          {
+            label: "Wide: the whole shed, the pipe, the bush beyond, and the hyrax a lump on the machinery.",
+            text: ["You went to 18 mm for the shed and its open sides, " +
+                   "and the hyrax was a brown shape on a red one that " +
+                   "you would have to point at."],
+            frame: { framing: "loose" }, set: { focal: 18 }, subject: { tiny: true }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "And the camera, under the roof?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO to 800 in the shade."], settings: "walkAround" },
+          {
+            label: "Wide open, for the shade and the eye.",
+            text: ["You opened the lens for the light there was, and the " +
+                   "eye was sharp and the rust behind it went soft."],
+            settings: "walkAround", set: { aperture: 5 }
+          },
+          {
+            label: "ISO 3200, fixed. It is dark in here.",
+            text: ["You pinned the ISO high for the shade, and the shade " +
+                   "came back full of coloured grain that the vivid " +
+                   "setting was glad to make more of."],
+            settings: "walkAround", set: { iso: 3200 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/rock-hyrax-on-the-coffee-machine.jpg", title: "Rock Hyrax on the Coffee Machine",
+             alt: "A rock hyrax sitting on the rusted red drum of the old coffee machinery at the Karen Blixen Museum, looking straight at the camera beneath a corrugated iron roof",
+             caption: "Filed as Urban Wildlife: a free-living animal that chose a machine. The world awards have a section for it; the federation's nature definition does not." },
+    note: "Rock hyraxes are the elephant's nearest living relatives, which " +
+          "nobody would guess; a colony lives in the museum's grounds and " +
+          "uses the old coffee works as it would use a kopje.",
+    afterword: [
+      "A free-living animal in a built place is Urban Wildlife: not " +
+      "captive, not a pet, and the building is what makes the picture. " +
+      "The world awards have a section for exactly this; the federation's " +
+      "nature definition bans any human element, so the machine that " +
+      "makes the picture is also what keeps it out of those sections — " +
+      "and hiding the machine in a tight crop does not change what the " +
+      "animal is sitting on."
+    ]
+  },
+
+  pigeon: {
+    stop: "13:00", place: "a café table in a Swedish city, lunchtime",
+    onward: "Walk on.",
+    title: "Table for one",
+    light: { ev: 13, label: "May sun on cobbles, the table half in shade" },
+    subject: { name: "a feral pigeon standing on a serving tray on a café table", motion: "stirs", distance: 1.5, depth: 0.15 },
+    frame: { kind: "wildlife", built: true, feral: true, tells: [{ label: "the tray and the table", excludable: false }], people: "distant" },
+    presences: ["the pigeon", "the tray, and what was on it", "the café, and its customers"],
+    examine: ["light", "pigeon", "tray"],
+    enter: [
+      "A pigeon stood on a black serving tray on a café table with its " +
+      "tail over the edge, iridescent at the neck, eating what somebody " +
+      "had left and looking at what somebody else still had. Nobody " +
+      "moved it. It had the manners of a regular.",
+      "A metre and a half away, with the walking-around lens at its " +
+      "short end, it was the easiest wild animal of the year."
+    ],
+    decisions: [
+      {
+        id: "framing", prompt: "A pigeon on somebody's tray. What is the picture?",
+        options: [
+          {
+            label: "Straight down from standing: the bird, the tray, the table, the cobbles.",
+            text: ["You took it from where you stood, the tray a black " +
+                   "disc on the wood, the cobbles beyond, the bird in " +
+                   "profile with its head up. A picture about a table."],
+            frame: { framing: "loose" }, set: { focal: 50 }
+          },
+          {
+            label: "Down to its level, and the street behind gone soft.",
+            text: ["You crouched to the tray's height and opened up, and " +
+                   "the neck went green and violet against a street that " +
+                   "was only colour. At that distance the depth of field " +
+                   "was the head and not the tail."],
+            frame: { framing: "tight" }, set: { focal: 100, aperture: 6.3 }
+          },
+          {
+            label: "The tray and the couple whose lunch it was, faces and all.",
+            text: ["You took the whole comedy, the bird and the two " +
+                   "people it was robbing, and the two people are " +
+                   "strangers with faces, and the frame went nowhere."],
+            frame: { framing: "loose", people: "recognisable" }, set: { focal: 50 }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "It is a pigeon; it will not wait. And the camera?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO, and the floor it never needed."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting. It is, after all, a bird.",
+            text: ["S, 1/2000 s, for a bird standing on a tray. The ISO " +
+                   "went up to pay for a speed nothing used."],
+            settings: "birds"
+          },
+          {
+            label: "The floor down to 1/125 s. It is standing still at arm's length.",
+            text: ["A, f/8, and the floor let down: at 50 mm and a metre " +
+                   "and a half a still bird needs no speed at all, and " +
+                   "the file stayed clean."],
+            settings: "walkAround", set: { minShutter: 1 / 125 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/pigeon-on-the-cafe-tray.jpg", title: "Pigeon on the Café Tray",
+             alt: "A feral pigeon standing on a black rubber serving tray on a wooden café table, tail overhanging the tray's edge, its neck feathers iridescent green and violet, with cushioned pallet benches behind",
+             caption: "Urban Wildlife, and feral: the world awards take it, the federation's sections do not, and the club's open competition takes anything." },
+    note: "City pigeons are feral rock doves, descended from birds kept for " +
+          "food and messages and gone back to living on cliffs of their own " +
+          "choosing; a café table is a ledge with lunch on it.",
+    afterword: [
+      "Feral is the word that decides it: a free-living animal descended " +
+      "from a kept one is out of the federation's nature sections, in the " +
+      "world awards' urban section, and welcome in the club's open " +
+      "competition. The picture is honest about where it was taken and " +
+      "should stay so. And the customers are strangers with faces, so " +
+      "they are the one thing in the frame that bars it from the site."
     ]
   },
 
@@ -1826,6 +2667,107 @@ const EXAMINE = {
     text: () => "A microbead neck cushion on the kneeling mat, the lens " +
       "barrel in its curve: lower than any tripod, and it does not roll."
   },
+  hyrax: {
+    label: "the hyrax",
+    text: () => "A rock hyrax, a wild animal, on a machine it chose. Not " +
+      "captive, not fed, not a pet: it lives in the grounds and the " +
+      "coffee works are its kopje."
+  },
+  machinery: {
+    label: "the machinery",
+    text: () => "Rust, iron, a corrugated roof. The hand of man, and the " +
+      "reason the picture is what it is. It cannot be cropped away " +
+      "honestly, and it need not be."
+  },
+  pigeon: {
+    label: "the pigeon",
+    text: () => "A feral rock dove on a serving tray, a metre and a half " +
+      "off, standing still. Feral counts as urban wildlife and not as " +
+      "nature; the neck is the picture."
+  },
+  tray: {
+    label: "the tray",
+    text: () => "Somebody's lunch, and the table it was on, and somewhere " +
+      "behind it the somebody. The tray is a tell you keep; the faces " +
+      "are the thing you cannot."
+  },
+  pelican: {
+    label: "the pelican",
+    text: () => "Eight metres off, bill down, wings a little open, waiting. It " +
+      "is white, and it is in full sun, and it came for a reason."
+  },
+  flamingos: {
+    label: "the flamingos",
+    text: () => "Five of them, heads under, pink on grey. Each one stands " +
+      "on its own reflection, and the reflection is whole because the " +
+      "water is."
+  },
+  stillwater: {
+    label: "the water",
+    text: () => "A sheet, under the cloud. The first sparkle of sun on it " +
+      "breaks every reflection at once. The cloud is doing you a favour."
+  },
+  ostrich: {
+    label: "the ostrich",
+    text: () => "Black body, pink neck, small head, sixty metres off in " +
+      "grass the same tone as the haze. There is no edge on him for a " +
+      "lens to hold until the head comes up."
+  },
+  haze: {
+    label: "the haze",
+    text: () => "Soft light, not low light — but soft light has no edges, " +
+      "and an autofocus lens lives on edges."
+  },
+  sloe: {
+    label: "the sloe",
+    text: () => "A centimetre and a half of fruit at half a metre. On this " +
+      "sensor the zoom makes it a fifth of the frame at its closest, " +
+      "which is about one to seven, which is not macro."
+  },
+  bloom: {
+    label: "the bloom",
+    text: () => "The pale wax on the skin. It is the picture at one to one, " +
+      "and the first thing lost to a touch."
+  },
+  bucks: {
+    label: "the herd",
+    text: () => "Fallow bucks, grazing, at the fifty metres the park asks for. " +
+      "A metre and a half of animal: a fifth of the frame at 400 mm, a " +
+      "fortieth at 50 mm. The arithmetic is the whole morning."
+  },
+  fifty: {
+    label: "the fifty metres",
+    text: () => "The field's own rule, and the herd keeps it. It is not a " +
+      "distance you can close; it is a distance you bring the right lens for."
+  },
+  jacana: {
+    label: "the jacana",
+    text: () => "Chestnut body, white face, a pale blue bill, and feet like " +
+      "snowshoes. Walking, always: a jacana on weed is never still."
+  },
+  grass: {
+    label: "the grass",
+    text: () => "The marsh grass behind the bird, lit exactly as the bird is " +
+      "and the same green. At f/8 it is as sharp as the bird. That is the " +
+      "problem, and the aperture is the fix."
+  },
+  diver: {
+    label: "the ripples",
+    text: () => "Rings spreading from where he went under. He will not come " +
+      "up there. He will come up somewhere near it, and flap once."
+  },
+  chick: {
+    label: "the chick",
+    text: () => "Speckled down the colour of the granite, a few metres off " +
+      "the path, at the foot of the parent's boulder. It is exactly where " +
+      "it is safest."
+  },
+  parent: {
+    label: "the parent",
+    text: () => "A great black-backed gull on its rock, and it has seen you. " +
+      "It stays within a few metres of the chick for seven weeks, and it " +
+      "will come off the rock if you come over the boulders."
+  },
   gull: {
     label: "the gull",
     text: () => "As white as a bird gets, under a white sky. The highlights " +
@@ -1934,6 +2876,10 @@ const LESSONS = {
   silhouette: { title: "A silhouette", text: "The bright side exposed, the dark side a shape: a topi-shaped hole in the dawn, and the honest frame for a backlit subject." },
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
   manualDark: { title: "Manual held the shutter", text: "The exposure came up short and the frame is a little dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. The raw file has the rest." },
+  urban: { title: "Urban wildlife", text: "A free-living animal in a built place: not captive, not a pet, and the building is part of the picture. It files as Urban Wildlife. The world awards have a section for exactly this; the federation's nature definition bans any human element, so it is out of those sections however tight the crop." },
+  hunted: { title: "The lens had not found it", text: "The shutter went before the lens had settled, and the subject is a soft shape where a subject was. Haze and long grass have no edges for autofocus to hold; hold the half-press and let it work, press on the confirmation, or wait for the head against the sky." },
+  processed: { title: "Softened afterwards", text: "The background was blurred on the computer to lift the subject out of it. The picture is yours to show, and the club's open competition takes it; the nature sections do not allow blurring that hides part of the scene, and the world awards bar anything added or taken away, so it enters the open competition only. The same softening in the lens — a stop or two wider — would have been allowed everywhere." },
+  disturbed: { title: "The subject was disturbed", text: "The frame was got by moving the animal: a parent off its rock, a chick off its boulder. The welfare of the subject comes before the photograph in the federation's definition, and the world awards bar anything that alters natural behaviour, so the frame enters the open competition only, and the frame from the path was the one to make." },
   reach: { title: "The lens ran out", text: "You reached for {wanted} mm and the lens in hand stops at {got}. The subject is smaller in the frame by that much, and a crop cannot put the pixels back. The lens was decided before the day, at the bag, not at the stop." },
   wideEnd: { title: "The lens would not go wide", text: "You reached for {wanted} mm and the lens in hand starts at {got}. The frame is the middle of the picture you meant, and the sky and the ground you wanted round it are outside the edges." },
   notMacro: { title: "Not a macro lens", text: "You went in for {wanted} and the lens in hand focuses no closer than about {got}. The cap did not fill the frame, and the category follows the magnification you got, not the one you meant. The macro lens was in the bag, or on the other body." },
@@ -2030,8 +2976,8 @@ const ROUTES = [
     kit: { main: "zoom", companion: "long" },
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
-    stops: ["topi", "balloon", "lion", "sixtieth", "roller", "vultures", "hyena",
-            "kilimanjaro", "pair", "dusk"],
+    stops: ["topi", "balloon", "lion", "ostrich", "sixtieth", "roller", "vultures", "hyena",
+            "kilimanjaro", "flamingos", "jacana", "pair", "dusk"],
     end: {
       title: "End of the day",
       text: ["The light went, the way it does there, in about four minutes. " +
@@ -2052,12 +2998,12 @@ const ROUTES = [
     id: "arranged", noun: "outing",
     kit: { main: "zoom", companion: "long" },
     title: "Off the drive",
-    sub: "a boat on Lake Naivasha and the Giraffe Centre, on the road between the parks, one afternoon",
-    stops: ["naivasha", "giraffe"],
+    sub: "a boat on Lake Naivasha, twice, and the Giraffe Centre, on the road between the parks, one afternoon",
+    stops: ["naivasha", "pelican", "giraffe"],
     end: {
       title: "End of the afternoon",
-      text: ["Two encounters that were arranged before you got there: a " +
-             "fish in a bucket, a pellet on a palm. Neither belongs on a " +
+      text: ["Three encounters that were arranged before you got there: a " +
+             "fish in a bucket, twice, a pellet on a palm. None belongs on a " +
              "game drive, which is why they have an afternoon of their " +
              "own, and the rulebooks treat them the same way — the " +
              "picture is yours to keep and to show, with a note that says " +
@@ -2071,13 +3017,34 @@ const ROUTES = [
     id: "home", noun: "walk",
     kit: { main: "macro", companion: "long" },
     title: "Home ground",
-    sub: "a wood, an island and a hill near home, the week after, on foot",
-    stops: ["woodland", "gull", "goat"],
+    sub: "a deer park in mist, a pond, a wood, two islands, a reservoir hedge and a hill near home, the week after, on foot",
+    stops: ["deer", "duck", "woodland", "gull", "chick", "sloe", "goat"],
     end: {
       title: "End of the week",
-      text: ["Three frames near home, and three rulebooks that disagree " +
-             "about all of them. That is the whole tutorial: the camera " +
-             "is the easy part.",
+      text: ["Seven frames near home, and three rulebooks that disagree " +
+             "about most of them. That is the whole tutorial: the camera " +
+             "is the easy part, and the lens was decided at the car.",
+             "The city is next: the animals that live where people do."],
+      nextLabel: "In the city"
+    }
+  },
+  {
+    /* Urban wildlife, and only that: a free-living animal in a built
+       place is still wildlife photography, and the game's Urban
+       Wildlife category had no stop until these (Dermot, 2026-09-21,
+       option 1 of two: city walks as far as the animals in them go;
+       architecture stays out). */
+    id: "city", noun: "walk",
+    kit: { main: "zoom", companion: "long" },
+    title: "In the city",
+    sub: "a museum yard in Nairobi and a café table in Malmö: the animals that live where people do",
+    stops: ["hyrax", "pigeon"],
+    end: {
+      title: "End of the walk",
+      text: ["Two wild animals that chose a building, and the one " +
+             "category that is for them. The world awards have a section " +
+             "for it; the federation does not; the club takes anything " +
+             "that is yours.",
              "Today's drive picks a handful of stops from the safari day by " +
              "the date. Come back tomorrow and it is a different day."],
       nextLabel: "Today's drive"
@@ -2346,8 +3313,12 @@ function develop(enc, choices, kitId) {
   if (frame.people === "recognisable") add("people", null, "bars");
   else if (frame.people === "distant" && frame.framing === "loose") add("distantPeople");
   if (frame.mating) add("mating", null, "bars");
+  if (frame.built) add("urban");
   if (frame.baited) add("baited");
   if (frame.captive) add("captive");
+  if (frame.processed) add("processed");
+  if (frame.disturbed) add("disturbed");
+  if (frame.hunting) add("hunted", null, "sinks");
   if (frame.feral) add("feral");
   if (subject.tiny) {
     if (subject.framedAlone) add("tinyAlone", null, "sinks");
@@ -2383,7 +3354,9 @@ function eligibility({ frame, humanIn, keeper }) {
   // definitions and are covered by the IPF tags (the author's ruling,
   // 2026-09-15: allowed in the open, not in nature).
   const tags = ["DCC"];
-  const nature = frame.kind !== "documentary";
+  // a background blurred afterwards, or a subject moved for the frame,
+  // is out of the nature sections and the world awards alike
+  const nature = frame.kind !== "documentary" && !frame.processed && !frame.disturbed;
   if (nature && !frame.captive && !frame.baited) tags.push("WNPA");
   const federation = nature && humanIn.length === 0 && !frame.baited && !frame.captive && !frame.feral;
   if (federation) {
@@ -2502,6 +3475,7 @@ function boot() {
     const c = scorecard();
     return {
       date: localDate(), card: c.text, strokes: c.strokes, stops: c.stops, over: c.over, firsts: c.firsts,
+      kit: state.kit ? Object.assign({}, state.kit) : null,   // what was set out with, proposed again tomorrow
       lines: latestFrames().map((h) => {
         const e = enc(h.stop), r = develop(e, h.choices, kitIdOf(h.kit));
         return { title: e.title, line: scoreLine(r, h.stop), category: r.unpublishable ? null : r.category, tags: r.tags };
@@ -3011,6 +3985,7 @@ function boot() {
         state.kit = Object.assign({}, routeKit(route()));
         saveState();
       } else {
+        // the route and the kit, before the first scene
         box.appendChild(renderKitCard());
         return;
       }
@@ -3079,14 +4054,29 @@ function boot() {
   }
 
   /* Before setting out: the main camera and the companion, one lens on
-     each body. The companion's list holds only the other body's kits. */
+     each body. The companion's list holds only the other body's kits.
+     The card proposes yesterday's pair on this route where there is one
+     (Dermot, 2026-09-21, option 1: a fresh choice, with yesterday's pair
+     proposed), else the route's default. */
+  function proposedKit() {
+    const last = loadDays()[0];
+    const k = last && last.kit;
+    if (k && KITS[k.main] && KITS[k.companion] && KITS[k.main].body !== KITS[k.companion].body) return k;
+    return routeKit(route());
+  }
   function renderKitCard() {
     const card = document.createElement("div");
+    const r = route();
+    const title = document.createElement("div");
+    title.className = "stop-title";
+    title.textContent = r.title + (r.daily ? " (" + todayString() + ")" : "");
+    card.appendChild(title);
+    if (r.sub) addParas(card, [cap(r.sub) + "."], "prose");
     const prompt = document.createElement("p");
     prompt.className = "prompt";
     prompt.textContent = KIT_WORDS.prompt;
     card.appendChild(prompt);
-    const dflt = routeKit(route());
+    const dflt = proposedKit();
     const sel = (which) => {
       const label = document.createElement("label");
       label.className = "kit-row";
@@ -3130,7 +4120,14 @@ function boot() {
     const entry = { kind: "kit", main: mainId, companion: compId };
     state.history.push(entry);
     const el = renderHistoryEntry(entry);
+    // setting out opens the first stop
+    if (!state.history.some((h) => h.kind === "stop")) {
+      const first = { kind: "stop", stop: state.stop };
+      state.history.push(first);
+      renderHistoryEntry(first);
+    }
     saveState();
+    renderStops();
     renderCamera();
     renderActions();
     scrollToNew(el);
@@ -3247,10 +4244,13 @@ function boot() {
     scrollToNew(el || $("endcard"));
   }
 
+  /* Opening a route writes nothing to the transcript: the kit is chosen
+     first, with the route in view and before the first scene (Dermot,
+     2026-09-21), and setting out is what opens the first stop. A save
+     that holds only the old bare first stop is wound back to that. */
   function ensureOpened() {
-    if (state.history.length === 0) {
-      state.history.push({ kind: "stop", stop: 0 });
-      saveState();
+    if (!state.kit && !state.history.some((h) => h.kind === "frame" || h.kind === "chosen" || h.kind === "kit")) {
+      if (state.history.length) { state.history = []; saveState(); }
     }
   }
 
@@ -3280,7 +4280,7 @@ function boot() {
     if (!confirm(fill(NEXT_DAY.confirm, { noun: route().noun || "drive" }))) return;
     archiveDay();
     try { localStorage.removeItem(saveKey(route())); } catch (e) {}
-    state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }], kit: null, inHand: "main" };
+    state = { stop: 0, decision: 0, choices: [], history: [], kit: null, inHand: "main" };
     saveState();
     renderAll();
   });
