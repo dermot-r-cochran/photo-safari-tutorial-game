@@ -2502,6 +2502,7 @@ function boot() {
     const c = scorecard();
     return {
       date: localDate(), card: c.text, strokes: c.strokes, stops: c.stops, over: c.over, firsts: c.firsts,
+      kit: state.kit ? Object.assign({}, state.kit) : null,   // what was set out with, proposed again tomorrow
       lines: latestFrames().map((h) => {
         const e = enc(h.stop), r = develop(e, h.choices, kitIdOf(h.kit));
         return { title: e.title, line: scoreLine(r, h.stop), category: r.unpublishable ? null : r.category, tags: r.tags };
@@ -3080,7 +3081,16 @@ function boot() {
   }
 
   /* Before setting out: the main camera and the companion, one lens on
-     each body. The companion's list holds only the other body's kits. */
+     each body. The companion's list holds only the other body's kits.
+     The card proposes yesterday's pair on this route where there is one
+     (Dermot, 2026-09-21, option 1: a fresh choice, with yesterday's pair
+     proposed), else the route's default. */
+  function proposedKit() {
+    const last = loadDays()[0];
+    const k = last && last.kit;
+    if (k && KITS[k.main] && KITS[k.companion] && KITS[k.main].body !== KITS[k.companion].body) return k;
+    return routeKit(route());
+  }
   function renderKitCard() {
     const card = document.createElement("div");
     const r = route();
@@ -3093,7 +3103,7 @@ function boot() {
     prompt.className = "prompt";
     prompt.textContent = KIT_WORDS.prompt;
     card.appendChild(prompt);
-    const dflt = routeKit(route());
+    const dflt = proposedKit();
     const sel = (which) => {
       const label = document.createElement("label");
       label.className = "kit-row";

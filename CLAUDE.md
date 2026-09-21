@@ -160,7 +160,11 @@ here as tutorial content:
   route, with its title and line, before the first scene is written
   (Dermot, 2026-09-21: *with the choice of location but before the
   description of the first scene*); setting out is what opens the first
-  stop — then which camera is in hand at each stop — a choice beside the questions, never one of
+  stop, and the card proposes yesterday's pair on that route where there
+  is one, else the route's default (Dermot, 2026-09-21, *Option 1*: next
+  day is a fresh choice of kit on the same route, with yesterday's pair
+  proposed; the day record carries the pair) — then which camera is in
+  hand at each stop — a choice beside the questions, never one of
   them, recorded in the transcript and on the frame. The lens on the
   camera in hand gives what it can of the focal length an option reaches
   for (`reach`, `wideEnd`, and `tiny` at half the size or less) and
