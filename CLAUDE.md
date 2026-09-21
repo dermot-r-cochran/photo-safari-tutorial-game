@@ -390,8 +390,11 @@ that rescue waits on a frame the portfolio says was one; none of the
 mono pages says so yet. Left
 for later from the same survey, each needing an engine axis first: the creative stack of a miss (ghost
 herd), a slow shutter chosen for propellers (the wingwalkers), and a Tenerife
-landscape walk (six pages, no notes yet — a line per frame from Dermot
-first). A hide route waits on a hide morning with a note behind it.
+landscape walk — six pages, no notes, and on 2026-09-21 Dermot could
+recall nothing of the decisions behind them (*nothing that I can
+remember*), so it stays out rather than be invented; it was one or two
+days on the 18–400 alone, which is what the one-body route exists for,
+and a return visit with a note per frame would put it in. A hide route waits on a hide morning with a note behind it.
 
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a
