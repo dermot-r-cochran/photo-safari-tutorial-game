@@ -357,8 +357,13 @@ light, and the 2025 morning lost to a dial nobody checked; no photograph,
 since the note says the crop is soft at web size — the tufted duck that
 surfaces where you were not pointing, the great black-backed gull chick
 on the boulders with its parent watching, and the jacana in grass the
-same colour, whose background was softened on the computer. Left for
-later from the same survey, each needing an engine axis first: the
+same colour, whose background was softened on the computer. **A lesson may be taught
+at more than one stop** (Dermot, 2026-09-21: *reinforcing the same lesson
+with additional scenes is fine*) — a page whose only claim was a second
+example of a lesson already in the game is a candidate, not a duplicate,
+as long as the situation was real and the note or the frame says what
+it teaches. Left for later from the same survey, each needing an engine
+axis first: the
 mono decision (cheetah, buffalo), the creative stack of a miss (ghost
 herd), a slow shutter chosen for propellers (the wingwalkers), and the
 one Urban Wildlife page (the hyrax on the coffee machine). A hide route
