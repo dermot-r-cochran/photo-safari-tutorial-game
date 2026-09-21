@@ -247,7 +247,11 @@ const BODIES = {
    player chooses which is in hand, and that choice counts against no
    question or decision. A stop's `kit` is the one it was learned on
    (the zoom unless it says otherwise), and its route's default pair
-   carries it. `name` is the label the page shows. */
+   carries it. A route may carry one body only — `companion: null`,
+   the day the second body stayed home (Dermot, 2026-09-21, option 1:
+   Tenerife was done with the 18–400 alone) — and then there is no
+   companion to choose and no in-hand row at its stops. `name` is the
+   label the page shows. */
 const KITS = {
   zoom:  { body: "dslr", lens: "zoom", name: "the DSLR with the 18–400 mm autofocus zoom" },
   long:  { body: "mirrorless", lens: "long", name: "the mirrorless with the 150–500 mm auto-tracking zoom" },
@@ -260,6 +264,8 @@ const KIT_WORDS = {
   companion: "Companion",
   go: "Set out.",
   chosen: "Before you set out — main: {main}; companion: {companion}.",
+  chosenOne: "Before you set out — one body: {main}.",
+  oneBody: "One body on this walk. The second stayed at home, and there is nothing to pick up at a stop but what is in your hands.",
   inHand: "In hand: ",
   pickedUp: "You picked up the {which}: {kit}."
 };
@@ -3439,7 +3445,8 @@ function boot() {
      out, else the route's default (which is what a save from before
      kits existed plays on). `which` is "main" or "companion". */
   const kitPair = () => state.kit || routeKit(route());
-  const kitIdOf = (which) => kitPair()[which === "companion" ? "companion" : "main"];
+  const kitIdOf = (which) => (which === "companion" && kitPair().companion) ? kitPair().companion : kitPair().main;
+  const oneBody = () => !routeKit(route()).companion;
   const inHand = () => state.inHand || "main";
 
   function loadState() {
@@ -3632,10 +3639,12 @@ function boot() {
       addParas(t, o.text, "prose");
       return label;
     } else if (entry.kind === "kit") {
-      if (!KITS[entry.main] || !KITS[entry.companion]) return null;
+      if (!KITS[entry.main] || (entry.companion !== null && !KITS[entry.companion])) return null;
       const label = document.createElement("p");
       label.className = "chosen";
-      label.textContent = fill(KIT_WORDS.chosen, { main: kitLabel(entry.main), companion: kitLabel(entry.companion) });
+      label.textContent = entry.companion === null
+        ? fill(KIT_WORDS.chosenOne, { main: kitLabel(entry.main) })
+        : fill(KIT_WORDS.chosen, { main: kitLabel(entry.main), companion: kitLabel(entry.companion) });
       t.appendChild(label);
       return label;
     } else if (entry.kind === "inhand") {
@@ -3992,7 +4001,7 @@ function boot() {
     }
     const asked = decisionsFor(e, state.choices);
     const choices = document.createElement("div");
-    if (!frameAtStop()) choices.appendChild(renderInHandRow());
+    if (!frameAtStop() && !oneBody()) choices.appendChild(renderInHandRow());
     if (state.decision < asked.length) {
       const d = asked[state.decision];
       const prompt = document.createElement("p");
@@ -4061,8 +4070,12 @@ function boot() {
   function proposedKit() {
     const last = loadDays()[0];
     const k = last && last.kit;
-    if (k && KITS[k.main] && KITS[k.companion] && KITS[k.main].body !== KITS[k.companion].body) return k;
-    return routeKit(route());
+    const dflt = routeKit(route());
+    if (k && KITS[k.main]) {
+      if (!dflt.companion && k.companion === null) return k;
+      if (dflt.companion && KITS[k.companion] && KITS[k.main].body !== KITS[k.companion].body) return k;
+    }
+    return dflt;
   }
   function renderKitCard() {
     const card = document.createElement("div");
@@ -4097,6 +4110,21 @@ function boot() {
         s.appendChild(o);
       }
     };
+    if (oneBody()) {
+      // one body on this route: the main camera only
+      fillSelect(main.s, Object.keys(KITS), dflt.main);
+      card.appendChild(main.label);
+      const one = document.createElement("p");
+      one.className = "prose";
+      one.textContent = KIT_WORDS.oneBody;
+      card.appendChild(one);
+      const go1 = document.createElement("button");
+      go1.type = "button";
+      go1.textContent = KIT_WORDS.go;
+      go1.addEventListener("click", () => setOut(main.s.value, null));
+      card.appendChild(go1);
+      return card;
+    }
     const others = (id) => Object.keys(KITS).filter((k) => KITS[k].body !== KITS[id].body);
     fillSelect(main.s, Object.keys(KITS), dflt.main);
     fillSelect(comp.s, others(dflt.main), dflt.companion);
@@ -4114,7 +4142,8 @@ function boot() {
     return card;
   }
   function setOut(mainId, compId) {
-    if (!KITS[mainId] || !KITS[compId] || KITS[mainId].body === KITS[compId].body) return;
+    if (!KITS[mainId]) return;
+    if (compId !== null && (!KITS[compId] || KITS[mainId].body === KITS[compId].body)) return;
     state.kit = { main: mainId, companion: compId };
     state.inHand = "main";
     const entry = { kind: "kit", main: mainId, companion: compId };

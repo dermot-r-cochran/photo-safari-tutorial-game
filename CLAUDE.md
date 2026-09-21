@@ -161,7 +161,11 @@ here as tutorial content:
   prime autofocus*). `BODIES` holds the DSLR and the mirrorless; `KITS`
   those four combinations, each with the label the page shows (the
   75–240 stays on the shelf, as the notes have it);
-  each route carries a default pair on different bodies, and the player
+  each route carries a default pair on different bodies — or one body
+  only, `companion: null`, the day the second stayed at home (Dermot,
+  2026-09-21, option 1 accepted: Tenerife was done with the 18–400
+  alone), when the card asks for the main camera only and the stops
+  show no in-hand row — and the player
   picks their own on the *Before you set out* card — which opens the
   route, with its title and line, before the first scene is written
   (Dermot, 2026-09-21: *with the choice of location but before the
