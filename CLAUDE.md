@@ -161,7 +161,11 @@ here as tutorial content:
   prime autofocus*). `BODIES` holds the DSLR and the mirrorless; `KITS`
   those four combinations, each with the label the page shows (the
   75–240 stays on the shelf, as the notes have it);
-  each route carries a default pair on different bodies, and the player
+  each route carries a default pair on different bodies — or one body
+  only, `companion: null`, the day the second stayed at home (Dermot,
+  2026-09-21, option 1 accepted: Tenerife was done with the 18–400
+  alone), when the card asks for the main camera only and the stops
+  show no in-hand row — and the player
   picks their own on the *Before you set out* card — which opens the
   route, with its title and line, before the first scene is written
   (Dermot, 2026-09-21: *with the choice of location but before the
@@ -375,12 +379,22 @@ urban wildlife walk, not architecture): the route `city`, *In the city*,
 holds the hyrax on the museum's coffee machine and the pigeon on the
 café tray, the first stops to file as Urban Wildlife; a `built` frame
 raises the `urban` note, and the buildings themselves stay out of the
-game — architecture would be a second tutorial inside the first. Left
-for later from the same survey, each needing an engine axis first: the
-mono decision (cheetah, buffalo), the creative stack of a miss (ghost
+game — architecture would be a second tutorial inside the first. **Monochrome is not a field decision** (Dermot, 2026-09-21: *mono
+would be editing post trip unless it is a lesson on how to rescue an
+image with high ISO, for example*), so the game has no mono axis and
+will not get one; the one place it belongs is as a rescue, and it is
+there — the ISO 1600 and 3200 lessons and the coaching tip say that
+chroma noise is colour and a monochrome conversion at the desk takes
+the colour out of the grain, a rescue and not a plan. A stop built on
+that rescue waits on a frame the portfolio says was one; none of the
+mono pages says so yet. Left
+for later from the same survey, each needing an engine axis first: the creative stack of a miss (ghost
 herd), a slow shutter chosen for propellers (the wingwalkers), and a Tenerife
-landscape walk (six pages, no notes yet — a line per frame from Dermot
-first). A hide route waits on a hide morning with a note behind it.
+landscape walk — six pages, no notes, and on 2026-09-21 Dermot could
+recall nothing of the decisions behind them (*nothing that I can
+remember*), so it stays out rather than be invented; it was one or two
+days on the 18–400 alone, which is what the one-body route exists for,
+and a return visit with a note per frame would put it in. A hide route waits on a hide morning with a note behind it.
 
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a

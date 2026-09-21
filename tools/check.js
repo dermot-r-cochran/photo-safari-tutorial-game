@@ -75,8 +75,10 @@ for (const [id, k] of Object.entries(S.KITS)) {
 const routeOf = (stopId) => S.ROUTES.find((r) => !r.daily && r.stops.includes(stopId));
 for (const r of S.ROUTES) {
   const k = S.routeKit(r);
-  for (const which of ["main", "companion"]) if (!S.KITS[k[which]]) fail("route " + r.id + " " + which + " kit " + k[which] + " is not in KITS");
-  if (S.KITS[k.main] && S.KITS[k.companion] && S.KITS[k.main].body === S.KITS[k.companion].body) fail("route " + r.id + " puts both kits on one body");
+  if (!S.KITS[k.main]) fail("route " + r.id + " main kit " + k.main + " is not in KITS");
+  // a route may carry one body only (companion: null); with two, they are on different bodies
+  if (k.companion !== null && !S.KITS[k.companion]) fail("route " + r.id + " companion kit " + k.companion + " is not in KITS");
+  if (S.KITS[k.main] && k.companion && S.KITS[k.companion] && S.KITS[k.main].body === S.KITS[k.companion].body) fail("route " + r.id + " puts both kits on one body");
 }
 
 const widest = Math.min(...Object.values(S.CAMERA.lenses).map((l) => l.apWide));
@@ -87,7 +89,7 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   // the route as shipped must be playable: one of its two default kits
   // yields a keeper at every stop on it
   const r = routeOf(id);
-  const carried = r ? Object.values(S.routeKit(r)) : [];
+  const carried = r ? Object.values(S.routeKit(r)).filter(Boolean) : [];
   let carriedKeeper = false;
   if (!enc.decisions || !enc.decisions.length) fail(id + " has no decisions");
   // a stop asks two or three questions on any path, and every question

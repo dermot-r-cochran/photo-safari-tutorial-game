@@ -247,7 +247,11 @@ const BODIES = {
    player chooses which is in hand, and that choice counts against no
    question or decision. A stop's `kit` is the one it was learned on
    (the zoom unless it says otherwise), and its route's default pair
-   carries it. `name` is the label the page shows. */
+   carries it. A route may carry one body only — `companion: null`,
+   the day the second body stayed home (Dermot, 2026-09-21, option 1:
+   Tenerife was done with the 18–400 alone) — and then there is no
+   companion to choose and no in-hand row at its stops. `name` is the
+   label the page shows. */
 const KITS = {
   zoom:  { body: "dslr", lens: "zoom", name: "the DSLR with the 18–400 mm autofocus zoom" },
   long:  { body: "mirrorless", lens: "long", name: "the mirrorless with the 150–500 mm auto-tracking zoom" },
@@ -260,6 +264,8 @@ const KIT_WORDS = {
   companion: "Companion",
   go: "Set out.",
   chosen: "Before you set out — main: {main}; companion: {companion}.",
+  chosenOne: "Before you set out — one body: {main}.",
+  oneBody: "One body on this walk. The second stayed at home, and there is nothing to pick up at a stop but what is in your hands.",
   inHand: "In hand: ",
   pickedUp: "You picked up the {which}: {kit}."
 };
@@ -2850,8 +2856,8 @@ const LESSONS = {
   under: { title: "Underexposed", text: "The frame came out {stops} stops dark — the lens could not open further and the ISO had reached its cap. A dark raw file is recoverable; a blurred one is not, which is why manual leaves it dark instead of lengthening the shutter." },
   over: { title: "Overexposed", text: "The frame came out {stops} stops bright — the shutter and aperture could not close down enough for the ISO set. Blown highlights are the one thing the sensor cannot give back." },
   blownSky: { title: "The sky went white", text: "Metering for a dark subject against a bright sky opens up until the sky clips. A silhouette is the honest frame here: expose for the bright side and let the dark side be a shape." },
-  noise1600: { title: "Chroma noise at 1600", text: "ISO 1600 shows coloured grain in the shadows, and a vivid picture control amplifies it. Usable at web size; a competition master wants less." },
-  noise3200: { title: "ISO 3200", text: "At 3200 the shadows are coloured grain and the fine detail is gone. It is the setting to spend last, after a support and a slower shutter have been tried." },
+  noise1600: { title: "Chroma noise at 1600", text: "ISO 1600 shows coloured grain in the shadows, and a vivid picture control amplifies it. Usable at web size; a competition master wants less. Chroma noise is colour, so a monochrome conversion at the desk takes the colour out of the grain and leaves grain that reads as film — a rescue, not a plan." },
+  noise3200: { title: "ISO 3200", text: "At 3200 the shadows are coloured grain and the fine detail is gone. It is the setting to spend last, after a support and a slower shutter have been tried. What is left can sometimes be rescued at the desk: the coloured grain is chroma, and monochrome takes the colour out of it, so a frame that will not stand in colour may stand as a black-and-white — but the fine detail does not come back." },
   thinDepth: { title: "Too little depth", text: "Depth of field at f/{aperture} came to about {dof} for a subject {depth} deep: the eye is sharp and the rest is not. Stop down a little, or shoot from further back and crop." },
   diffraction: { title: "Diffraction", text: "On 5-micron pixels f/16 and beyond soften everything, and at 1:1 the effective aperture doubles — f/11 set is f/22 in effect. Depth bought this way costs the sharpness it was bought for." },
   vividWhite: { title: "Vivid clipped the whites", text: "Vivid raises contrast, and contrast clips whites first. Gull and eagle plumage in the brightest stops is exactly what a judge looks at, and exactly what vivid throws away. Standard or neutral for white subjects." },
@@ -2954,7 +2960,7 @@ const COACH = {
     over: "The frames came out bright: the ISO was pinned too high for the light. Let Auto ISO do its job in good light.",
     blownSky: "Metering for the dark animal against a bright sky burned the sky out. A silhouette is the honest frame there.",
     manualDark: "Manual held the shutter and the frame came out dark. Manual is a promise to check the meter; in changing light, A or S keeps the promise for you.",
-    noise3200: "ISO 3200 was the setting spent first. Spend it last: a support, then a slower shutter, then the ISO.",
+    noise3200: "ISO 3200 was the setting spent first. Spend it last: a support, then a slower shutter, then the ISO. What it left can sometimes be rescued as a monochrome at the desk, which is a rescue and not a plan.",
     thinDepth: "The eye was sharp and the rest was not. A stop or two down buys the depth; the background will survive it.",
     diffraction: "Stopped down past where the pixels can follow. f/8 to f/11 is the sweet spot on this sensor; f/16 costs sharpness everywhere.",
     vividWhite: "Vivid clipped the whites. White birds want the standard picture control, or a third of a stop under.",
@@ -3439,7 +3445,8 @@ function boot() {
      out, else the route's default (which is what a save from before
      kits existed plays on). `which` is "main" or "companion". */
   const kitPair = () => state.kit || routeKit(route());
-  const kitIdOf = (which) => kitPair()[which === "companion" ? "companion" : "main"];
+  const kitIdOf = (which) => (which === "companion" && kitPair().companion) ? kitPair().companion : kitPair().main;
+  const oneBody = () => !routeKit(route()).companion;
   const inHand = () => state.inHand || "main";
 
   function loadState() {
@@ -3632,10 +3639,12 @@ function boot() {
       addParas(t, o.text, "prose");
       return label;
     } else if (entry.kind === "kit") {
-      if (!KITS[entry.main] || !KITS[entry.companion]) return null;
+      if (!KITS[entry.main] || (entry.companion !== null && !KITS[entry.companion])) return null;
       const label = document.createElement("p");
       label.className = "chosen";
-      label.textContent = fill(KIT_WORDS.chosen, { main: kitLabel(entry.main), companion: kitLabel(entry.companion) });
+      label.textContent = entry.companion === null
+        ? fill(KIT_WORDS.chosenOne, { main: kitLabel(entry.main) })
+        : fill(KIT_WORDS.chosen, { main: kitLabel(entry.main), companion: kitLabel(entry.companion) });
       t.appendChild(label);
       return label;
     } else if (entry.kind === "inhand") {
@@ -3992,7 +4001,7 @@ function boot() {
     }
     const asked = decisionsFor(e, state.choices);
     const choices = document.createElement("div");
-    if (!frameAtStop()) choices.appendChild(renderInHandRow());
+    if (!frameAtStop() && !oneBody()) choices.appendChild(renderInHandRow());
     if (state.decision < asked.length) {
       const d = asked[state.decision];
       const prompt = document.createElement("p");
@@ -4061,8 +4070,12 @@ function boot() {
   function proposedKit() {
     const last = loadDays()[0];
     const k = last && last.kit;
-    if (k && KITS[k.main] && KITS[k.companion] && KITS[k.main].body !== KITS[k.companion].body) return k;
-    return routeKit(route());
+    const dflt = routeKit(route());
+    if (k && KITS[k.main]) {
+      if (!dflt.companion && k.companion === null) return k;
+      if (dflt.companion && KITS[k.companion] && KITS[k.main].body !== KITS[k.companion].body) return k;
+    }
+    return dflt;
   }
   function renderKitCard() {
     const card = document.createElement("div");
@@ -4097,6 +4110,21 @@ function boot() {
         s.appendChild(o);
       }
     };
+    if (oneBody()) {
+      // one body on this route: the main camera only
+      fillSelect(main.s, Object.keys(KITS), dflt.main);
+      card.appendChild(main.label);
+      const one = document.createElement("p");
+      one.className = "prose";
+      one.textContent = KIT_WORDS.oneBody;
+      card.appendChild(one);
+      const go1 = document.createElement("button");
+      go1.type = "button";
+      go1.textContent = KIT_WORDS.go;
+      go1.addEventListener("click", () => setOut(main.s.value, null));
+      card.appendChild(go1);
+      return card;
+    }
     const others = (id) => Object.keys(KITS).filter((k) => KITS[k].body !== KITS[id].body);
     fillSelect(main.s, Object.keys(KITS), dflt.main);
     fillSelect(comp.s, others(dflt.main), dflt.companion);
@@ -4114,7 +4142,8 @@ function boot() {
     return card;
   }
   function setOut(mainId, compId) {
-    if (!KITS[mainId] || !KITS[compId] || KITS[mainId].body === KITS[compId].body) return;
+    if (!KITS[mainId]) return;
+    if (compId !== null && (!KITS[compId] || KITS[mainId].body === KITS[compId].body)) return;
     state.kit = { main: mainId, companion: compId };
     state.inHand = "main";
     const entry = { kind: "kit", main: mainId, companion: compId };
