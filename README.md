@@ -84,7 +84,7 @@ Five drives:
   needed, a ringed gull, a chick on the boulders with its parent
   watching, a sloe that looked like macro and measured at one to seven,
   a goat that nobody owns.
-- **In the city** — a museum yard in Nairobi and a café table in Malmö:
+- **Two cities** — a museum yard in Nairobi and a café table in Malmö:
   a hyrax that chose a coffee machine, a pigeon with the manners of a
   regular. The animals that live where people do, and the one category
   that is for them; the buildings themselves stay out.

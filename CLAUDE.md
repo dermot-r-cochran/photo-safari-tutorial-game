@@ -375,7 +375,9 @@ before the lens had settled, which sinks the frame; and the single sloe
 at the reservoir hedge, learned on the macro, which looked like macro
 work and measured at one to seven. **City walks go as far as
 the animals in them** (Dermot, 2026-09-21, *option 1 approved* of two: an
-urban wildlife walk, not architecture): the route `city`, *In the city*,
+urban wildlife walk, not architecture): the route `city`, *Two cities* (retitled the same day at Dermot's
+*option 1 accepted*: a route is a set of stops, not one walk, and no
+fictional city is invented to join two real ones),
 holds the hyrax on the museum's coffee machine and the pigeon on the
 café tray, the first stops to file as Urban Wildlife; a `built` frame
 raises the `urban` note, and the buildings themselves stay out of the
