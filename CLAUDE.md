@@ -298,11 +298,11 @@ from a keeper. A `retry` history entry winds the stop back to its first
 decision, the earlier frame stays in the transcript as part of the
 record, and the contact sheet and the endcard count only the last frame
 pressed at each stop (`latestFrames`). An `abandon` entry moves the
-drive on without a keeper: the stop's line reads *abandoned after 2,
-counted as 10*, and `strokesAt` scores it at `ABANDON.strokes` (ten, in
-the data section beside `RETRY`) or the presses made there if more. The
-check holds the price to more than one stroke and the label to naming
-it.
+drive on without a keeper: the stop's line reads *abandoned after 2*
+and the card counts it among the stops abandoned. (From 2026-09-19 to
+2026-09-21 an abandoned stop cost ten strokes on a golf card; the price
+went with the card.) The check holds `ABANDON` to a label and words and
+to having no price.
 
 **Starting a route again is the next day on it, and the day's card is
 kept** (Dermot, 2026-09-19: *The Restart Drive button should be Next
@@ -320,17 +320,23 @@ the card on the summary and the stops' lines inside. The words are
 holds the label and confirmation to `{noun}`, the heading to existing
 and the keep to at least one.
 
-**The contact sheet is a golf scorecard** (Dermot, 2026-09-13: *the game
-scoring is a bit like golf; a keeper on the first shot is a bit like a
-hole-in-one*). Every press of the shutter at a stop is a stroke, retries
-included; the sheet's top line and the endcard give strokes over stops
-played against a par of one a stop, and the count of keepers first time;
-each stop's line reads *keeper first time*, *keeper in 3*, *folder
-after 2* (a stop still open) or *abandoned after 2, counted as 10*. The words live in `SCORE` in the data section; the arithmetic
-in `strokesAt`, `scoreLine` and `scorecard`. Par is deliberately one a
-stop everywhere — the stops differ in difficulty, and the table of keeper
-combinations in PR #6 shows how, but a par per stop would be a claim
-about the player rather than the frame.
+**The contact sheet is a plain count** (Dermot, 2026-09-21, option A of
+three, on an endcard reading *14 strokes for 13 stops — 1 over par* with
+six of the thirteen stops unfinished: *not sure that golf analogy still
+holds*). The golf card of 2026-09-13 (*the game scoring is a bit like
+golf; a keeper on the first shot is a bit like a hole-in-one*) had
+scored every press as a stroke against a par of one a stop; an open stop
+cost one like a keeper, so a half-finished drive read as near par, and
+par of one press a stop rewarded a frugal shutter the tutorial argues
+against. What survives is the hole-in-one nod. The sheet's top line and
+the endcard now read *13 stops, 7 keepers, 6 first time, 2 abandoned*
+(the last two only when non-zero); each stop's line reads *keeper first
+time*, *keeper in 3*, *folder after 2* (a stop still open) or *abandoned
+after 2*. The words live in `SCORE` in the data section; the arithmetic
+in `pressesAt`, `scoreLine` and `scorecard`; the check fails if strokes
+or par come back. Past days archived before the change keep their old
+card text; the record's fields are now `stops`, `keepers`, `firsts`,
+`abandoned`.
 
 **A frame that is not a keeper says why** (Dermot's direction,
 2026-09-13). Every finding the engine raises is marked as one that

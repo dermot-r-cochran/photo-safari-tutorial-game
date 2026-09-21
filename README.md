@@ -26,11 +26,10 @@ decisions, and every verdict names the lesson behind it. Every step is a
 real choice — two to four settings or framings, each with a cost, and every stop asks two or three questions; the second may depend on how you answered the first — and
 when a frame is one for the folder — kept, not shown — you try the stop
 again until it gives you a keeper, because you cannot drive on from a
-frame for the folder; you can abandon the stop instead, and an abandoned
-stop counts as ten shots. The contact sheet keeps the last frame you
-pressed and scores the drive like golf: every press of the shutter is a
-stroke, a keeper first time is the hole in one, par is a keeper first
-time at every stop, and an abandoned stop is ten. After the
+frame for the folder; you can abandon the stop instead. The contact
+sheet keeps the last frame you pressed and keeps a plain count of the
+drive: stops played, keepers, keepers first time, stops abandoned, and
+under each stop how many presses it took. After the
 verdict, at twenty-one of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better

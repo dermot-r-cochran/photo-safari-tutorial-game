@@ -160,17 +160,18 @@ const imgDir = path.join(root, "images");
 if (fs.existsSync(imgDir)) for (const f of fs.readdirSync(imgDir)) {
   if (!shown.has("images/" + f)) fail("images/" + f + " is shown at no stop");
 }
-for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "abandoned", "card", "level", "over", "firsts"]) {
+for (const k of ["first", "keeperIn", "folderAfter", "barredAfter", "abandoned", "card", "keepers", "firsts", "abandonedCount"]) {
   if (!S.SCORE || !S.SCORE[k]) fail("SCORE has no " + k);
 }
+// the card is plain counts: no strokes, no par (Dermot, 2026-09-21)
+if (S.SCORE && /stroke|par\b/i.test(Object.values(S.SCORE).join(" "))) fail("SCORE has gone back to strokes or par");
 // the next day on a route has a label and a confirmation, each naming the route's word
 for (const k of ["label", "confirm"]) if (!S.NEXT_DAY || !S.NEXT_DAY[k] || !S.NEXT_DAY[k].includes("{noun}")) fail("NEXT_DAY." + k + " is missing or does not carry {noun}");
 if (!S.NEXT_DAY || !S.NEXT_DAY.past) fail("NEXT_DAY.past has no heading for the past days");
 if (!S.NEXT_DAY || !(S.NEXT_DAY.keep >= 1)) fail("NEXT_DAY.keep must keep at least one day");
-// abandoning a stop has a price, a label that names it, and words
-if (!S.ABANDON || !(S.ABANDON.strokes > 1)) fail("ABANDON.strokes must be more than one stroke, or abandoning is free");
+// abandoning a stop has a label and words; it has no price since 2026-09-21
 if (!S.ABANDON || !S.ABANDON.label || !S.ABANDON.text || !S.ABANDON.text.length) fail("ABANDON has no label or text");
-if (S.ABANDON && !String(S.ABANDON.label).includes(String(S.ABANDON.strokes))) fail("ABANDON.label does not name its price of " + S.ABANDON.strokes);
+if (S.ABANDON && "strokes" in S.ABANDON) fail("ABANDON has a price again; the card is plain counts");
 for (const [key, r] of Object.entries(S.RULEBOOKS)) {
   if (!r.name || !r.text || !r.text.length) fail("rulebook " + key + " has no name or text");
   if (!/^https:\/\//.test(r.url || "")) fail("rulebook " + key + " has no https url to the rules themselves");

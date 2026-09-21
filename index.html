@@ -2903,14 +2903,13 @@ const RETRY = {
 };
 
 /* Abandoning a stop. A frame for the folder cannot be driven on from:
-   the stop is tried again until it yields a keeper, or abandoned, and an
-   abandoned stop counts as `strokes` on the card (or the presses made
-   there, if more). Dermot's direction, 2026-09-19. */
+   the stop is tried again until it yields a keeper, or abandoned, and the
+   card marks the stop abandoned. Dermot's direction, 2026-09-19; the
+   ten-stroke price went with the golf accounting, 2026-09-21. */
 const ABANDON = {
-  strokes: 10,
-  label: "Abandon the stop. It counts as 10 strokes.",
+  label: "Abandon the stop.",
   text: ["You drove on without the frame. The lesson stays on the road " +
-         "behind you, and the card marks the stop at ten."]
+         "behind you, and the card marks the stop abandoned."]
 };
 
 /* Starting the drive again is the next day on it, not a restart: the
@@ -2925,20 +2924,23 @@ const NEXT_DAY = {
   keep: 30   // days kept per route, newest first
 };
 
-/* The scorecard. The game scores like golf: every press of the shutter
-   at a stop is a stroke, a keeper first time is the hole in one, and par
-   for a drive is a keeper first time at every stop. A stop abandoned
-   without a keeper counts as ABANDON.strokes. */
+/* The scorecard: plain counts. Stops played, keepers, keepers first
+   time (the hole-in-one nod that survives from the golf card of
+   2026-09-13), and stops abandoned. The strokes-and-par accounting went
+   on 2026-09-21 (Dermot, option A of three): an open stop had cost one
+   stroke like a keeper, so a half-finished drive read as near par, and
+   par of one press a stop rewarded a frugal shutter the tutorial argues
+   against. Each stop's line still says how many presses it took. */
 const SCORE = {
   first: "keeper first time",
   keeperIn: "keeper in {n}",
   folderAfter: "folder after {n}",
   barredAfter: "not published after {n}",
-  abandoned: "abandoned after {n}, counted as {strokes}",
-  card: "{strokes} for {stops} — {standing}",
-  level: "level par, a keeper first time at every stop",
-  over: "{n} over par",
-  firsts: "{n} first time"
+  abandoned: "abandoned after {n}",
+  card: "{stops}, {keepers}{firsts}{abandoned}",
+  keepers: "{n} keeper",
+  firsts: ", {n} first time",
+  abandonedCount: ", {n} abandoned"
 };
 
 /* The end of a drive: a short friendly summary and one piece of coaching,
@@ -3484,7 +3486,7 @@ function boot() {
   function dayRecord() {
     const c = scorecard();
     return {
-      date: localDate(), card: c.text, strokes: c.strokes, stops: c.stops, over: c.over, firsts: c.firsts,
+      date: localDate(), card: c.text, stops: c.stops, keepers: c.keepers, firsts: c.firsts, abandoned: c.abandoned,
       kit: state.kit ? Object.assign({}, state.kit) : null,   // what was set out with, proposed again tomorrow
       lines: latestFrames().map((h) => {
         const e = enc(h.stop), r = develop(e, h.choices, kitIdOf(h.kit));
@@ -3733,39 +3735,35 @@ function boot() {
   }
   /* The frame pressed at the current stop since its last retry, or null
      while the shutter has not been pressed. */
-  /* Strokes: every press of the shutter at a stop, retries included; a
-     stop abandoned without a keeper counts as ABANDON.strokes, or its
-     presses if there were more. */
+  /* Presses: every press of the shutter at a stop, retries included. */
   function pressesAt(stop) {
     return state.history.filter((h) => h.kind === "frame" && h.stop === stop).length;
   }
   function abandonedAt(stop) {
     return state.history.some((h) => h.kind === "abandon" && h.stop === stop);
   }
-  function strokesAt(stop) {
-    const n = pressesAt(stop);
-    return abandonedAt(stop) ? Math.max(n, ABANDON.strokes) : n;
-  }
   function scoreLine(r, stop) {
-    const strokes = strokesAt(stop);
-    if (r.keeper) return strokes === 1 ? SCORE.first : fill(SCORE.keeperIn, { n: strokes });
-    if (abandonedAt(stop)) return fill(SCORE.abandoned, { n: pressesAt(stop), strokes });
-    return fill(r.unpublishable ? SCORE.barredAfter : SCORE.folderAfter, { n: strokes });
+    const n = pressesAt(stop);
+    if (r.keeper) return n === 1 ? SCORE.first : fill(SCORE.keeperIn, { n });
+    if (abandonedAt(stop)) return fill(SCORE.abandoned, { n });
+    return fill(r.unpublishable ? SCORE.barredAfter : SCORE.folderAfter, { n });
   }
-  /* The card for the drive so far: strokes over stops played, against a
-     par of one stroke a stop, and how many keepers came first time. */
+  /* The card for the drive so far: stops played, keepers, keepers first
+     time, stops abandoned. Plain counts, no par (2026-09-21). */
   function scorecard() {
     const played = latestFrames();
-    const strokes = played.reduce((n, h) => n + strokesAt(h.stop), 0);
-    const firsts = played.filter((h) => strokesAt(h.stop) === 1 && develop(enc(h.stop), h.choices, kitIdOf(h.kit)).keeper).length;
-    const over = strokes - played.length;
-    const standing = over === 0 ? SCORE.level : fill(SCORE.over, { n: over });
+    const verdicts = played.map((h) => ({ h, r: develop(enc(h.stop), h.choices, kitIdOf(h.kit)) }));
+    const keepers = verdicts.filter((v) => v.r.keeper).length;
+    const firsts = verdicts.filter((v) => v.r.keeper && pressesAt(v.h.stop) === 1).length;
+    const abandoned = played.filter((h) => abandonedAt(h.stop)).length;
+    const plural = (n, w) => n + " " + w + (n === 1 ? "" : "s");
     return {
-      strokes, stops: played.length, firsts, over,
+      stops: played.length, keepers, firsts, abandoned,
       text: fill(SCORE.card, {
-        strokes: strokes + " stroke" + (strokes === 1 ? "" : "s"),
-        stops: played.length + " stop" + (played.length === 1 ? "" : "s"),
-        standing: standing + (firsts ? ", " + fill(SCORE.firsts, { n: firsts }) : "")
+        stops: plural(played.length, "stop"),
+        keepers: plural(keepers, "keeper"),
+        firsts: firsts ? fill(SCORE.firsts, { n: firsts }) : "",
+        abandoned: abandoned ? fill(SCORE.abandonedCount, { n: abandoned }) : ""
       })
     };
   }
@@ -3959,8 +3957,7 @@ function boot() {
     const tally = {};
     for (const f of frames) for (const t of f.tags) tally[t] = (tally[t] || 0) + 1;
     const p = document.createElement("p");
-    p.textContent = frames.length + " frames, " + kept + " keeper" + (kept === 1 ? "" : "s") +
-      ". The card: " + scorecard().text + ". Eligible: ";
+    p.textContent = "The card: " + scorecard().text + ". Eligible: ";
     Object.keys(RULEBOOKS).forEach((k, i, arr) => {
       p.appendChild(tagNodes([k]));
       p.appendChild(document.createTextNode(" " + (tally[k] || 0) + (i < arr.length - 1 ? ", " : ".")));
@@ -4034,7 +4031,7 @@ function boot() {
       choices.appendChild(btn);
     } else {
       // a frame for the folder cannot be driven on from: try the stop
-      // again until it yields a keeper, or abandon it at ABANDON's price
+      // again until it yields a keeper, or abandon it
       const again = document.createElement("button");
       again.type = "button";
       again.textContent = RETRY.label;
