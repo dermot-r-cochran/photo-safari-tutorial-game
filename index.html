@@ -1209,6 +1209,88 @@ const ENCOUNTERS = {
     ]
   },
 
+  jacana: {
+    stop: "16:10", place: "Amboseli, the edge of the marsh",
+    title: "The jacana in the grass",
+    light: { ev: 13, label: "afternoon, bright, the marsh grass lit the same as the bird" },
+    subject: { name: "an African jacana walking the wet grass", motion: "walking", distance: 15, depth: 0.3 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the jacana", "the marsh grass, the same colour", "the open water, further out"],
+    examine: ["light", "jacana", "grass"],
+    enter: [
+      "A jacana walked the wet grass at the marsh edge on feet too big " +
+      "for it, chestnut on green, and the trouble was plain in the " +
+      "finder: the grass was lit exactly as the bird was, and at f/8 " +
+      "the grass was as sharp as the bird, and the bird went into it " +
+      "like a word into a paragraph.",
+      "It kept walking. The grass kept being grass."
+    ],
+    decisions: [
+      {
+        id: "grass", prompt: "The bird is the colour of the grass and the grass is as sharp as the bird. What do you do?",
+        options: [
+          {
+            label: "Open up. Wide open at 400 mm, and let the grass go soft in the camera.",
+            text: ["You opened the lens as far as it would go at the long " +
+                   "end. The grass behind went to a green wash and the " +
+                   "bird stood out of it, and nothing had to be done later."],
+            set: { aperture: 6.3, focal: 400 }
+          },
+          {
+            label: "f/8 as it is, and soften the grass afterwards on the computer.",
+            text: ["You took it at f/8 and fixed it at the desk: the grass " +
+                   "behind blurred by hand until the bird came forward. " +
+                   "It looks like the first answer. It is not the same " +
+                   "picture, and the rulebooks know the difference."],
+            frame: { processed: true }, set: { focal: 400 }
+          },
+          {
+            label: "f/16, so the whole bird is sharp, feet and all.",
+            text: ["You stopped down for the feet. The feet were sharp. So " +
+                   "was every blade of grass in Amboseli, and the bird was " +
+                   "one more green-lit thing among them."],
+            set: { aperture: 16, focal: 400 }
+          }
+        ]
+      },
+      {
+        id: "shutter", prompt: "And the shutter, for a bird walking on wet grass?",
+        options: [
+          { label: "The walking-around setting; the floor is 1/250 s.", text: ["A, Auto ISO, and the 1/250 s floor for a walking bird."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting, in case it flies.",
+            text: ["S, 1/2000 s. It did not fly. The ISO went up to pay " +
+                   "for a speed the bird did not use."],
+            settings: "birds"
+          },
+          {
+            label: "Drop the floor to 1/125 s. It is only walking, and the light is worth keeping clean.",
+            text: ["You let the floor down for a cleaner file, and the " +
+                   "camera took you at your word: ISO 100, 1/128 s, and " +
+                   "a jacana's foot is never still."],
+            settings: "walkAround", set: { minShutter: 1 / 125 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/african-jacana.jpg", title: "African Jacana",
+             alt: "An African jacana standing among short wet marsh grass, its deep chestnut body turned side-on, white face and throat below a black crown, pale blue bill, and its long thin legs disappearing into the weed below",
+             caption: "The processed frame: the grass behind softened on the computer, and tagged for the club's open competition only because of it." },
+    note: "Jacanas walk on floating vegetation on toes as long as the rest " +
+          "of the foot, spreading their weight across lily pads and weed; " +
+          "the marsh here is fed from under the ground by water off " +
+          "Kilimanjaro, which is why there is a marsh at all.",
+    afterword: [
+      "A background softened afterwards is not the same as a background " +
+      "softened in the lens, whatever the two look like side by side. " +
+      "The nature sections do not allow blurring that hides part of the " +
+      "scene, and the world awards bar anything added or taken away, so " +
+      "the processed frame enters the open competition only — and the " +
+      "honest fix was in the camera all along: a stop and a half wider, " +
+      "and the grass goes soft for free."
+    ]
+  },
+
   giraffe: {
     stop: "16:30", place: "the Giraffe Centre, Nairobi",
     title: "The giraffe at the rail",
@@ -1451,6 +1533,182 @@ const ENCOUNTERS = {
     ]
   },
 
+  deer: {
+    stop: "07:30", place: "a deer park at the edge of the city, near home, in mist",
+    onward: "Walk on.",
+    title: "The herd at fifty metres",
+    light: { ev: 12, label: "mist, soft and even, the tree line a suggestion" },
+    subject: { name: "a fallow buck at the park's fifty metres, grazing", motion: "stirs", distance: 50, depth: 1.5 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the herd", "the mist", "the sign that says fifty metres"],
+    examine: ["light", "bucks", "fifty"],
+    enter: [
+      "The herd was where the herd is, fifty metres off across the wet " +
+      "grass, and the mist had taken the tree line down to a grey idea " +
+      "behind them. Fifty metres is the park's rule, and the deer keep " +
+      "it more carefully than the people do.",
+      "At fifty metres a buck is a metre and a half of animal. On this " +
+      "sensor that is a fortieth of the frame at 50 mm and a fifth of it " +
+      "at 400. The arithmetic was done before you left the car, or it " +
+      "was not."
+    ],
+    decisions: [
+      {
+        id: "lens", prompt: "Fifty metres is the field's rule, and the herd keeps it. How much of the morning?",
+        options: [
+          {
+            label: "The long end. 400 mm, and the buck a fifth of the frame.",
+            text: ["You went to the long end and the nearest buck filled " +
+                   "a fifth of the frame, antlers and all, the mist " +
+                   "behind him doing the background's work for free."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          },
+          {
+            label: "The field. 50 mm: the tree line, the mist, and deer in it.",
+            text: ["You took the place. The frame is true to the mist and " +
+                   "the wet grass and the line of trees going to nothing, " +
+                   "and the deer in it are a fortieth of the width each. " +
+                   "A crop to the two nearest bucks is soft at web size, " +
+                   "because a fortieth of the pixels is not a picture."],
+            frame: { framing: "loose" }, set: { focal: 50 }, subject: { tiny: true }
+          },
+          {
+            label: "Halfway. 200 mm, for the two nearest bucks and the mist behind.",
+            text: ["You took the two nearest bucks together at 200 mm, " +
+                   "each a tenth of the frame, the mist closing behind " +
+                   "them. They read. The antlers do not."],
+            frame: { framing: "loose" }, set: { focal: 200 }
+          }
+        ]
+      },
+      {
+        id: "dial", prompt: "And the dial, in mist?",
+        options: [
+          {
+            label: "The walking-around setting, and look at the first frame on the back of the camera.",
+            text: ["A, f/8, Auto ISO. ISO 400 and 1/250 s in the mist, " +
+                   "and the first frame on the screen looked the way the " +
+                   "morning did. Mist is soft light, not low light."],
+            settings: "walkAround"
+          },
+          {
+            label: "The rut setting: S, 1/1000 s and up, in case the bucks spar.",
+            text: ["S, 1/1000 s. The bucks grazed. The ISO went where it " +
+                   "had to for a speed nothing used."],
+            settings: "birds", set: { shutter: 1 / 1000 }
+          },
+          {
+            label: "Whatever it is on. Last time out it was 1/1250 s at f/22 in the rain, and nobody looked.",
+            text: ["M, 1/1250 s, f/22, ISO 400, from a dial nobody had " +
+                   "checked since the rain. Every frame came back five " +
+                   "stops under and more, a raw lift finds noise with a " +
+                   "deer-shaped hole in it, and the first frame on the " +
+                   "screen would have said so before the second."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 1250, aperture: 22, iso: 400 }
+          }
+        ]
+      }
+    ],
+    /* No photograph yet. The mist frames of 19 September 2026 are true
+       to the mist, and the crop to the two nearest bucks is soft at web
+       size (FIELD-NOTES.md, the fallow deer entry); the rut on 24
+       October is the morning the long end goes out for. */
+    note: "The park asks for fifty metres from the herd and the herd is " +
+          "habituated by feeding, so a buck may close the distance on its " +
+          "own; stand still, hands down, and let it pass. That is the one " +
+          "frame the 50 mm was made for, and the reason it stays in the bag.",
+    afterword: [
+      "The lens is the decision, and it was made at the car. A 50 mm " +
+      "gives the field with deer in it and cannot give the deer; the long " +
+      "end gives the deer and cannot give the field. Bring the one the " +
+      "morning is for, and if the other is on the second body, so much " +
+      "the better. And look at the first frame, every outing: a dial " +
+      "left where the last day put it will take the whole morning " +
+      "before anyone notices, and the screen on the back would have " +
+      "told you in one glance."
+    ]
+  },
+
+  duck: {
+    stop: "09:15", place: "a park pond near home, April",
+    onward: "Walk on.",
+    title: "The diver",
+    light: { ev: 11, label: "bright overcast, the water dark green under it" },
+    subject: { name: "a tufted duck, under the water, somewhere", motion: "running", distance: 20, depth: 0.4 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the ripples", "the pond", "a mallard that is not the point"],
+    examine: ["light", "diver"],
+    enter: [
+      "He went under with a small roll, the way they do, and the pond " +
+      "closed over him. A tufted duck is a diver, not a dabbler: seconds " +
+      "at a time under the water, and up somewhere you were not pointing.",
+      "What follows coming up is the flap — the water shed off the wings " +
+      "in one movement before he settles. That is the picture, and it " +
+      "lasts about as long as it takes to say so."
+    ],
+    decisions: [
+      {
+        id: "where", prompt: "He went under. Where do you point?",
+        options: [
+          {
+            label: "Where he went down, and wait there.",
+            text: ["He came up eight metres to the left, flapped, and " +
+                   "settled before you had swung. You got the settle: a " +
+                   "sharp duck on a pond, the moment already over."],
+            subject: { motion: "stirs", distance: 24, name: "a tufted duck, settled, the flap over" }
+          },
+          {
+            label: "Nowhere. Camera down, and lift it when he surfaces.",
+            text: ["He came up, and by the time the camera was at your " +
+                   "eye he was a duck on a pond again. Sharp, and nothing " +
+                   "happening in it."],
+            subject: { motion: "stirs", name: "a tufted duck, settled, the flap over" }
+          },
+          {
+            label: "Where he went down, but loose: both eyes open, and swing the moment the water breaks.",
+            text: ["The water broke a few metres off where you were " +
+                   "looking and the lens was on him as the wing went " +
+                   "out, water coming off it in a sheet."],
+            subject: { motion: "running" }
+          }
+        ]
+      },
+      {
+        id: "shutter", prompt: "And the shutter, for a wing-flap on water?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO, the 1/250 s floor."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting.",
+            text: ["S, 1/2000 s, and the ISO where the overcast sends it."],
+            settings: "birds"
+          },
+          {
+            label: "The floor raised to 1/500 s. Halfway to birds.",
+            text: ["You raised the floor and the camera could not reach " +
+                   "it: ISO at its cap and the shutter at an eighth of " +
+                   "what a wing wants."],
+            settings: "walkAround", set: { minShutter: 1 / 500 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/tufted-duck-rising.jpg", title: "Tufted Duck Rising",
+             alt: "A male tufted duck reared up out of dark green water with one wing spread wide, black head with a drooping crest, golden eye and blue-grey bill, white flank showing, concentric ripples spreading out around him",
+             caption: "The flap, at the shooting-birds setting: the wing out, the water still leaving it." },
+    note: "Tufted ducks dive for seconds at a time and feed on the bottom, " +
+          "which is most of what makes them difficult to photograph — the " +
+          "wing-flap on surfacing is the one moment they give you, and " +
+          "they give it once per dive.",
+    afterword: [
+      "A diver surfaces where you were not pointing, so the answer is not " +
+      "to point harder. Stay loose, keep both eyes open, and treat the " +
+      "flap as what the shutter is for: it is a wing moving as fast as a " +
+      "wing moves, and the walking-around floor will not hold it. A body " +
+      "that tracks the subject holds him once he is up; nothing tracks " +
+      "him under the water."
+    ]
+  },
+
   woodland: {
     stop: "10:15", place: "a beech wood near home, the week after",
     onward: "Walk on.",
@@ -1618,6 +1876,90 @@ const ENCOUNTERS = {
       "nature definition, so a ringed bird loses nothing — do not " +
       "under-claim on a ring. White plumage in hard light is where vivid " +
       "clips first, and clipped whites are what a judge looks for."
+    ]
+  },
+
+  chick: {
+    stop: "12:30", place: "a rocky island in the bay, near home",
+    onward: "Walk on.",
+    title: "The chick on the boulders",
+    light: { ev: 14, label: "June sea light, bright, the granite throwing it back" },
+    subject: { name: "a great black-backed gull chick among the boulders, the parent on the rock above", motion: "stirs", distance: 8, depth: 0.2 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the chick", "the parent", "the path"],
+    examine: ["light", "chick", "parent"],
+    enter: [
+      "A chick the colour of the granite, speckled down and a stare, at " +
+      "the foot of a boulder a few metres off the path. On the boulder " +
+      "above it, the parent: the largest gull in the world, and it had " +
+      "already seen you.",
+      "The chick left its nest within a day or two of hatching and will " +
+      "spend seven weeks among these rocks. The parent stays within a " +
+      "few metres the whole time, and the reason is the neighbours."
+    ],
+    decisions: [
+      {
+        id: "distance", prompt: "The chick is a few metres off the path and the parent is watching you. How close?",
+        options: [
+          {
+            label: "No closer. The long end from the path, chick and parent together.",
+            text: ["You stayed on the path and took them both at the long " +
+                   "end: the parent on its rock, the chick at its feet, " +
+                   "the sea behind. The parent watched you do it and did " +
+                   "not move."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          },
+          {
+            label: "Three steps over the boulders, for a portrait that fills the frame.",
+            text: ["Three steps, and the parent came off its rock at you " +
+                   "with its wings open and the chick went under the " +
+                   "boulder. The frame is a wing, and the chick is where " +
+                   "the neighbours can see it."],
+            frame: { disturbed: true }, subject: { name: "a great black-backed gull coming off its rock at you", motion: "flying", distance: 4, depth: 0.5 }, set: { focal: 300 }
+          },
+          {
+            label: "The whole thing from the path at 135 mm: the boulders, the sea, the parent, the chick a speck at its feet.",
+            text: ["You took the place from the path — granite, sea, the " +
+                   "parent a shape on its rock, and the chick a speckled " +
+                   "speck you would have to point at."],
+            frame: { framing: "loose" }, set: { focal: 135 }, subject: { tiny: true }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "And the camera?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting. The parent may fly.",
+            text: ["S, 1/2000 s, for a parent that might come off its rock."],
+            settings: "birds"
+          },
+          {
+            label: "Wide open at the long end, for the down and nothing behind it.",
+            text: ["You opened up for the chick's down against a soft " +
+                   "sea. At eight metres the depth of field was the " +
+                   "chick and not much else."],
+            settings: "walkAround", set: { aperture: 6.3 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/great-black-backed-gull-with-chick.jpg", title: "Great Black-backed Gull with Chick",
+             alt: "An adult great black-backed gull standing on a granite boulder with a single downy grey-speckled chick at its feet, green ground cover and a strip of dark blue sea behind",
+             caption: "From the path: the parent on its boulder and the chick at its feet. Half an hour later three chicks were together on a ledge over the water." },
+    note: "The largest gull in the world eats the young of every gull on the " +
+          "island, its own neighbours' included, so a chick this age is " +
+          "safest exactly where it is, with a parent a few metres off. It " +
+          "will take four years to reach the slate-black mantle and the " +
+          "bulk that swallows a puffin whole.",
+    afterword: [
+      "The welfare of the subject comes before the photograph — the " +
+      "federation's definition says so in as many words, and the world " +
+      "awards bar anything that alters the animal's behaviour. A chick " +
+      "put off its boulder is a chick the neighbours can see, and the " +
+      "parent that came off its rock at you was not posing. The frame " +
+      "from the path was the frame; the long end is what the path is for."
     ]
   },
 
@@ -1826,6 +2168,45 @@ const EXAMINE = {
     text: () => "A microbead neck cushion on the kneeling mat, the lens " +
       "barrel in its curve: lower than any tripod, and it does not roll."
   },
+  bucks: {
+    label: "the herd",
+    text: () => "Fallow bucks, grazing, at the fifty metres the park asks for. " +
+      "A metre and a half of animal: a fifth of the frame at 400 mm, a " +
+      "fortieth at 50 mm. The arithmetic is the whole morning."
+  },
+  fifty: {
+    label: "the fifty metres",
+    text: () => "The field's own rule, and the herd keeps it. It is not a " +
+      "distance you can close; it is a distance you bring the right lens for."
+  },
+  jacana: {
+    label: "the jacana",
+    text: () => "Chestnut body, white face, a pale blue bill, and feet like " +
+      "snowshoes. Walking, always: a jacana on weed is never still."
+  },
+  grass: {
+    label: "the grass",
+    text: () => "The marsh grass behind the bird, lit exactly as the bird is " +
+      "and the same green. At f/8 it is as sharp as the bird. That is the " +
+      "problem, and the aperture is the fix."
+  },
+  diver: {
+    label: "the ripples",
+    text: () => "Rings spreading from where he went under. He will not come " +
+      "up there. He will come up somewhere near it, and flap once."
+  },
+  chick: {
+    label: "the chick",
+    text: () => "Speckled down the colour of the granite, a few metres off " +
+      "the path, at the foot of the parent's boulder. It is exactly where " +
+      "it is safest."
+  },
+  parent: {
+    label: "the parent",
+    text: () => "A great black-backed gull on its rock, and it has seen you. " +
+      "It stays within a few metres of the chick for seven weeks, and it " +
+      "will come off the rock if you come over the boulders."
+  },
   gull: {
     label: "the gull",
     text: () => "As white as a bird gets, under a white sky. The highlights " +
@@ -1934,6 +2315,8 @@ const LESSONS = {
   silhouette: { title: "A silhouette", text: "The bright side exposed, the dark side a shape: a topi-shaped hole in the dawn, and the honest frame for a backlit subject." },
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
   manualDark: { title: "Manual held the shutter", text: "The exposure came up short and the frame is a little dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. The raw file has the rest." },
+  processed: { title: "Softened afterwards", text: "The background was blurred on the computer to lift the subject out of it. The picture is yours to show, and the club's open competition takes it; the nature sections do not allow blurring that hides part of the scene, and the world awards bar anything added or taken away, so it enters the open competition only. The same softening in the lens — a stop or two wider — would have been allowed everywhere." },
+  disturbed: { title: "The subject was disturbed", text: "The frame was got by moving the animal: a parent off its rock, a chick off its boulder. The welfare of the subject comes before the photograph in the federation's definition, and the world awards bar anything that alters natural behaviour, so the frame enters the open competition only, and the frame from the path was the one to make." },
   reach: { title: "The lens ran out", text: "You reached for {wanted} mm and the lens in hand stops at {got}. The subject is smaller in the frame by that much, and a crop cannot put the pixels back. The lens was decided before the day, at the bag, not at the stop." },
   wideEnd: { title: "The lens would not go wide", text: "You reached for {wanted} mm and the lens in hand starts at {got}. The frame is the middle of the picture you meant, and the sky and the ground you wanted round it are outside the edges." },
   notMacro: { title: "Not a macro lens", text: "You went in for {wanted} and the lens in hand focuses no closer than about {got}. The cap did not fill the frame, and the category follows the magnification you got, not the one you meant. The macro lens was in the bag, or on the other body." },
@@ -2031,7 +2414,7 @@ const ROUTES = [
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
     stops: ["topi", "balloon", "lion", "sixtieth", "roller", "vultures", "hyena",
-            "kilimanjaro", "pair", "dusk"],
+            "kilimanjaro", "jacana", "pair", "dusk"],
     end: {
       title: "End of the day",
       text: ["The light went, the way it does there, in about four minutes. " +
@@ -2071,13 +2454,13 @@ const ROUTES = [
     id: "home", noun: "walk",
     kit: { main: "macro", companion: "long" },
     title: "Home ground",
-    sub: "a wood, an island and a hill near home, the week after, on foot",
-    stops: ["woodland", "gull", "goat"],
+    sub: "a deer park in mist, a pond, a wood, two islands and a hill near home, the week after, on foot",
+    stops: ["deer", "duck", "woodland", "gull", "chick", "goat"],
     end: {
       title: "End of the week",
-      text: ["Three frames near home, and three rulebooks that disagree " +
-             "about all of them. That is the whole tutorial: the camera " +
-             "is the easy part.",
+      text: ["Six frames near home, and three rulebooks that disagree " +
+             "about most of them. That is the whole tutorial: the camera " +
+             "is the easy part, and the lens was decided at the car.",
              "Today's drive picks a handful of stops from the safari day by " +
              "the date. Come back tomorrow and it is a different day."],
       nextLabel: "Today's drive"
@@ -2348,6 +2731,8 @@ function develop(enc, choices, kitId) {
   if (frame.mating) add("mating", null, "bars");
   if (frame.baited) add("baited");
   if (frame.captive) add("captive");
+  if (frame.processed) add("processed");
+  if (frame.disturbed) add("disturbed");
   if (frame.feral) add("feral");
   if (subject.tiny) {
     if (subject.framedAlone) add("tinyAlone", null, "sinks");
@@ -2383,7 +2768,9 @@ function eligibility({ frame, humanIn, keeper }) {
   // definitions and are covered by the IPF tags (the author's ruling,
   // 2026-09-15: allowed in the open, not in nature).
   const tags = ["DCC"];
-  const nature = frame.kind !== "documentary";
+  // a background blurred afterwards, or a subject moved for the frame,
+  // is out of the nature sections and the world awards alike
+  const nature = frame.kind !== "documentary" && !frame.processed && !frame.disturbed;
   if (nature && !frame.captive && !frame.baited) tags.push("WNPA");
   const federation = nature && humanIn.length === 0 && !frame.baited && !frame.captive && !frame.feral;
   if (federation) {

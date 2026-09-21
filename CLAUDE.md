@@ -39,7 +39,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Twelve stops
+- **The verdict is words; a photograph comes only after it.** Fifteen stops
   carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -128,6 +128,12 @@ here as tutorial content:
 - Category: what the subject is, not what it lies on — a wild lion on a
   track is Wildlife; a balloon, a rail or distant watchers make a frame
   Documentary; a plant is Macro at 1:1 and Nature below it.
+- A background softened afterwards (`frame.processed`) and a subject
+  moved for the frame (`frame.disturbed`) are each out of the nature
+  sections and the world awards alike, and enter the open competition
+  only — the jacana's page carries the club tag alone for exactly this,
+  and the federation's definition puts the subject's welfare before
+  the photograph (both 2026-09-21, with the four stops below).
 - Eligibility, by rulebook: the camera club's open competition takes
   anything that is the entrant's own work (its nature rounds follow the
   federation's definitions, so `DCC` is the open competition only — Dermot,
@@ -342,6 +348,21 @@ Until this ruling only a frame barred from the site lost its tags, so a
 motion-blurred lion still read as eligible for four competitions. The
 check fails a non-keeper carrying a tag, and a keeper without DCC, since
 the open competition takes any keeper.
+
+**Four stops from the portfolio's own notes, 2026-09-21** (Dermot's
+*yes these all sound good* on a survey of the 199 pages against the
+game): the fallow deer at the park's fifty metres in mist, from the
+19 September field note — the lens decided at the car, mist as soft
+light, and the 2025 morning lost to a dial nobody checked; no photograph,
+since the note says the crop is soft at web size — the tufted duck that
+surfaces where you were not pointing, the great black-backed gull chick
+on the boulders with its parent watching, and the jacana in grass the
+same colour, whose background was softened on the computer. Left for
+later from the same survey, each needing an engine axis first: the
+mono decision (cheetah, buffalo), the creative stack of a miss (ghost
+herd), a slow shutter chosen for propellers (the wingwalkers), and the
+one Urban Wildlife page (the hyrax on the coffee machine). A hide route
+waits on a hide morning with a note behind it.
 
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a

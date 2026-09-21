@@ -31,7 +31,7 @@ stop counts as ten shots. The contact sheet keeps the last frame you
 pressed and scores the drive like golf: every press of the shutter is a
 stroke, a keeper first time is the hole in one, par is a keeper first
 time at every stop, and an abandoned stop is ten. After the
-verdict, at twelve of the stops, the page shows the frame the stop was
+verdict, at fifteen of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
 frame, or a worse one, and the words say which. At one stop so far the
@@ -65,19 +65,22 @@ your own frames.
 
 Four drives:
 
-- **The safari drive** — ten stops on the Mara and at Amboseli, first
+- **The safari drive** — eleven stops on the Mara and at Amboseli, first
   light to dusk. A topi against the sunrise, a young lion on a vehicle
   track, a roller in eight colours, vultures at a kill, a hyena nobody
-  can find, elephants under Kilimanjaro at noon, a courting pair, a
-  lion in the last of the light.
+  can find, elephants under Kilimanjaro at noon, a jacana the colour of
+  the grass, a courting pair, a lion in the last of the light.
 - **Off the drive** — a boat on Lake Naivasha and the Giraffe Centre,
   on the road between the parks, one afternoon: a fish eagle and a
   boatman with a bucket, a giraffe at a rail. Two encounters arranged
   before you got there, kept off the game drive because they are not
   part of one.
-- **Home ground** — a beech wood, an island and a hill near home, the
-  week after, on foot: the one mode the safari never needed, a ringed
-  gull, a goat that nobody owns.
+- **Home ground** — a deer park in mist, a pond, a beech wood, two
+  islands and a hill near home, the week after, on foot: a herd at the
+  fifty metres the park asks for, a duck that surfaces where you were
+  not pointing, the one mode the safari never needed, a ringed gull, a
+  chick on the boulders with its parent watching, a goat that nobody
+  owns.
 - **Today's drive** — six stops picked from the safari day by the date,
   in the order of the day. The same day gives everyone the same drive;
   tomorrow is different.
@@ -121,8 +124,9 @@ into the game as they were learned:
   rulebooks would have said of it is beside the point.
 - **Ethics that the picture cannot show.** A baited eagle, a captive
   giraffe, a mating pair, a driver asked to leave the track, a
-  recognisable stranger — and the note each frame must carry, or the
-  folder it must stay in.
+  recognisable stranger, a chick put off its boulder, a background
+  softened afterwards — and the note each frame must carry, or the
+  folder it must stay in, or the one competition it can still enter.
 - **The lens is the decision.** What is on each body was settled at the
   bag, and the stop gets what that lens can give: the reach it has, the
   width it has, how close it focuses. The companion is there for the
