@@ -39,8 +39,8 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Nineteen stops
-  carry a `photo` — the author's own frame from that outing, at portfolio
+- **The verdict is words; a photograph comes only after it.** Twenty-one
+  stops carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
   framing decision) and never as the result (one picture cannot stand in
@@ -369,12 +369,18 @@ Amboseli; the ostrich the lens could not find in the haze, on the first
 Nairobi drive — with a new frame flag, `hunting`, for a shutter pressed
 before the lens had settled, which sinks the frame; and the single sloe
 at the reservoir hedge, learned on the macro, which looked like macro
-work and measured at one to seven. Left for later from the same survey,
-each needing an engine axis first: the
+work and measured at one to seven. **City walks go as far as
+the animals in them** (Dermot, 2026-09-21, *option 1 approved* of two: an
+urban wildlife walk, not architecture): the route `city`, *In the city*,
+holds the hyrax on the museum's coffee machine and the pigeon on the
+café tray, the first stops to file as Urban Wildlife; a `built` frame
+raises the `urban` note, and the buildings themselves stay out of the
+game — architecture would be a second tutorial inside the first. Left
+for later from the same survey, each needing an engine axis first: the
 mono decision (cheetah, buffalo), the creative stack of a miss (ghost
-herd), a slow shutter chosen for propellers (the wingwalkers), and the
-one Urban Wildlife page (the hyrax on the coffee machine). A hide route
-waits on a hide morning with a note behind it.
+herd), a slow shutter chosen for propellers (the wingwalkers), and a Tenerife
+landscape walk (six pages, no notes yet — a line per frame from Dermot
+first). A hide route waits on a hide morning with a note behind it.
 
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a
