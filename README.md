@@ -31,7 +31,7 @@ stop counts as ten shots. The contact sheet keeps the last frame you
 pressed and scores the drive like golf: every press of the shutter is a
 stroke, a keeper first time is the hole in one, par is a keeper first
 time at every stop, and an abandoned stop is ten. After the
-verdict, at nineteen of the stops, the page shows the frame the stop was
+verdict, at twenty-one of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
 frame, or a worse one, and the words say which. At one stop so far the
@@ -63,7 +63,7 @@ a picture style or a film simulation. The decisions generalise; the
 thresholds are the ones to check against your own camera's manual and
 your own frames.
 
-Four drives:
+Five drives:
 
 - **The safari drive** — thirteen stops on the Mara, at Nairobi and at
   Amboseli, first light to dusk. A topi against the sunrise, a young lion
@@ -84,6 +84,10 @@ Four drives:
   needed, a ringed gull, a chick on the boulders with its parent
   watching, a sloe that looked like macro and measured at one to seven,
   a goat that nobody owns.
+- **In the city** — a museum yard in Nairobi and a café table in Malmö:
+  a hyrax that chose a coffee machine, a pigeon with the manners of a
+  regular. The animals that live where people do, and the one category
+  that is for them; the buildings themselves stay out.
 - **Today's drive** — six stops picked from the safari day by the date,
   in the order of the day. The same day gives everyone the same drive;
   tomorrow is different.

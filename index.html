@@ -2300,6 +2300,168 @@ const ENCOUNTERS = {
     ]
   },
 
+  hyrax: {
+    stop: "11:30", place: "a museum yard in Nairobi, the old coffee machinery",
+    onward: "Walk on.",
+    title: "The hyrax on the coffee machine",
+    light: { ev: 10, label: "shade under a corrugated roof, the yard bright beyond it" },
+    subject: { name: "a rock hyrax sitting on the rusted drum of the old coffee machinery", motion: "stirs", distance: 4, depth: 0.3 },
+    frame: { kind: "wildlife", built: true, tells: [{ label: "the coffee machinery", excludable: false }] },
+    presences: ["the hyrax", "the drum it chose", "the shed, open at the sides"],
+    examine: ["light", "hyrax", "machinery"],
+    enter: [
+      "In the machinery shed behind the museum a rock hyrax sat on the " +
+      "rusted red drum of the old coffee works and looked straight at " +
+      "you, the way a thing does that has been looked at before and " +
+      "found it harmless. Nobody had put it there. It had chosen the " +
+      "machine, and the machine was warm.",
+      "It was a wild animal in a building, and the building was the point."
+    ],
+    decisions: [
+      {
+        id: "framing", prompt: "It chose the machine. What goes in the frame?",
+        options: [
+          {
+            label: "The hyrax and the drum it sits on. The machine is the picture.",
+            text: ["You took the animal on its machinery, rust and iron " +
+                   "and a wild face on top of them, the roof's corrugation " +
+                   "above. A picture of a place an animal had moved into."],
+            frame: { framing: "loose" }, set: { focal: 135 }
+          },
+          {
+            label: "The head against the dark, tight, and no machine in it.",
+            text: ["You went to the long end and took the face alone " +
+                   "against the shadow, and the frame looked like a wild " +
+                   "hyrax on a wild rock, which it was not."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          },
+          {
+            label: "Wide: the whole shed, the pipe, the bush beyond, and the hyrax a lump on the machinery.",
+            text: ["You went to 18 mm for the shed and its open sides, " +
+                   "and the hyrax was a brown shape on a red one that " +
+                   "you would have to point at."],
+            frame: { framing: "loose" }, set: { focal: 18 }, subject: { tiny: true }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "And the camera, under the roof?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO to 800 in the shade."], settings: "walkAround" },
+          {
+            label: "Wide open, for the shade and the eye.",
+            text: ["You opened the lens for the light there was, and the " +
+                   "eye was sharp and the rust behind it went soft."],
+            settings: "walkAround", set: { aperture: 5 }
+          },
+          {
+            label: "ISO 3200, fixed. It is dark in here.",
+            text: ["You pinned the ISO high for the shade, and the shade " +
+                   "came back full of coloured grain that the vivid " +
+                   "setting was glad to make more of."],
+            settings: "walkAround", set: { iso: 3200 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/rock-hyrax-on-the-coffee-machine.jpg", title: "Rock Hyrax on the Coffee Machine",
+             alt: "A rock hyrax sitting on the rusted red drum of the old coffee machinery at the Karen Blixen Museum, looking straight at the camera beneath a corrugated iron roof",
+             caption: "Filed as Urban Wildlife: a free-living animal that chose a machine. The world awards have a section for it; the federation's nature definition does not." },
+    note: "Rock hyraxes are the elephant's nearest living relatives, which " +
+          "nobody would guess; a colony lives in the museum's grounds and " +
+          "uses the old coffee works as it would use a kopje.",
+    afterword: [
+      "A free-living animal in a built place is Urban Wildlife: not " +
+      "captive, not a pet, and the building is what makes the picture. " +
+      "The world awards have a section for exactly this; the federation's " +
+      "nature definition bans any human element, so the machine that " +
+      "makes the picture is also what keeps it out of those sections — " +
+      "and hiding the machine in a tight crop does not change what the " +
+      "animal is sitting on."
+    ]
+  },
+
+  pigeon: {
+    stop: "13:00", place: "a café table in a Swedish city, lunchtime",
+    onward: "Walk on.",
+    title: "Table for one",
+    light: { ev: 13, label: "May sun on cobbles, the table half in shade" },
+    subject: { name: "a feral pigeon standing on a serving tray on a café table", motion: "stirs", distance: 1.5, depth: 0.15 },
+    frame: { kind: "wildlife", built: true, feral: true, tells: [{ label: "the tray and the table", excludable: false }], people: "distant" },
+    presences: ["the pigeon", "the tray, and what was on it", "the café, and its customers"],
+    examine: ["light", "pigeon", "tray"],
+    enter: [
+      "A pigeon stood on a black serving tray on a café table with its " +
+      "tail over the edge, iridescent at the neck, eating what somebody " +
+      "had left and looking at what somebody else still had. Nobody " +
+      "moved it. It had the manners of a regular.",
+      "A metre and a half away, with the walking-around lens at its " +
+      "short end, it was the easiest wild animal of the year."
+    ],
+    decisions: [
+      {
+        id: "framing", prompt: "A pigeon on somebody's tray. What is the picture?",
+        options: [
+          {
+            label: "Straight down from standing: the bird, the tray, the table, the cobbles.",
+            text: ["You took it from where you stood, the tray a black " +
+                   "disc on the wood, the cobbles beyond, the bird in " +
+                   "profile with its head up. A picture about a table."],
+            frame: { framing: "loose" }, set: { focal: 50 }
+          },
+          {
+            label: "Down to its level, and the street behind gone soft.",
+            text: ["You crouched to the tray's height and opened up, and " +
+                   "the neck went green and violet against a street that " +
+                   "was only colour. At that distance the depth of field " +
+                   "was the head and not the tail."],
+            frame: { framing: "tight" }, set: { focal: 100, aperture: 6.3 }
+          },
+          {
+            label: "The tray and the couple whose lunch it was, faces and all.",
+            text: ["You took the whole comedy, the bird and the two " +
+                   "people it was robbing, and the two people are " +
+                   "strangers with faces, and the frame went nowhere."],
+            frame: { framing: "loose", people: "recognisable" }, set: { focal: 50 }
+          }
+        ]
+      },
+      {
+        id: "settings", prompt: "It is a pigeon; it will not wait. And the camera?",
+        options: [
+          { label: "The walking-around setting.", text: ["A, f/8, Auto ISO, and the floor it never needed."], settings: "walkAround" },
+          {
+            label: "The shooting-birds setting. It is, after all, a bird.",
+            text: ["S, 1/2000 s, for a bird standing on a tray. The ISO " +
+                   "went up to pay for a speed nothing used."],
+            settings: "birds"
+          },
+          {
+            label: "The floor down to 1/125 s. It is standing still at arm's length.",
+            text: ["A, f/8, and the floor let down: at 50 mm and a metre " +
+                   "and a half a still bird needs no speed at all, and " +
+                   "the file stayed clean."],
+            settings: "walkAround", set: { minShutter: 1 / 125 }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/pigeon-on-the-cafe-tray.jpg", title: "Pigeon on the Café Tray",
+             alt: "A feral pigeon standing on a black rubber serving tray on a wooden café table, tail overhanging the tray's edge, its neck feathers iridescent green and violet, with cushioned pallet benches behind",
+             caption: "Urban Wildlife, and feral: the world awards take it, the federation's sections do not, and the club's open competition takes anything." },
+    note: "City pigeons are feral rock doves, descended from birds kept for " +
+          "food and messages and gone back to living on cliffs of their own " +
+          "choosing; a café table is a ledge with lunch on it.",
+    afterword: [
+      "Feral is the word that decides it: a free-living animal descended " +
+      "from a kept one is out of the federation's nature sections, in the " +
+      "world awards' urban section, and welcome in the club's open " +
+      "competition. The picture is honest about where it was taken and " +
+      "should stay so. And the customers are strangers with faces, so " +
+      "they are the one thing in the frame that bars it from the site."
+    ]
+  },
+
   goat: {
     stop: "15:30", place: "the hills above the city, near home",
     onward: "Walk on.",
@@ -2505,6 +2667,30 @@ const EXAMINE = {
     text: () => "A microbead neck cushion on the kneeling mat, the lens " +
       "barrel in its curve: lower than any tripod, and it does not roll."
   },
+  hyrax: {
+    label: "the hyrax",
+    text: () => "A rock hyrax, a wild animal, on a machine it chose. Not " +
+      "captive, not fed, not a pet: it lives in the grounds and the " +
+      "coffee works are its kopje."
+  },
+  machinery: {
+    label: "the machinery",
+    text: () => "Rust, iron, a corrugated roof. The hand of man, and the " +
+      "reason the picture is what it is. It cannot be cropped away " +
+      "honestly, and it need not be."
+  },
+  pigeon: {
+    label: "the pigeon",
+    text: () => "A feral rock dove on a serving tray, a metre and a half " +
+      "off, standing still. Feral counts as urban wildlife and not as " +
+      "nature; the neck is the picture."
+  },
+  tray: {
+    label: "the tray",
+    text: () => "Somebody's lunch, and the table it was on, and somewhere " +
+      "behind it the somebody. The tray is a tell you keep; the faces " +
+      "are the thing you cannot."
+  },
   pelican: {
     label: "the pelican",
     text: () => "Eight metres off, bill down, wings a little open, waiting. It " +
@@ -2690,6 +2876,7 @@ const LESSONS = {
   silhouette: { title: "A silhouette", text: "The bright side exposed, the dark side a shape: a topi-shaped hole in the dawn, and the honest frame for a backlit subject." },
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
   manualDark: { title: "Manual held the shutter", text: "The exposure came up short and the frame is a little dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. The raw file has the rest." },
+  urban: { title: "Urban wildlife", text: "A free-living animal in a built place: not captive, not a pet, and the building is part of the picture. It files as Urban Wildlife. The world awards have a section for exactly this; the federation's nature definition bans any human element, so it is out of those sections however tight the crop." },
   hunted: { title: "The lens had not found it", text: "The shutter went before the lens had settled, and the subject is a soft shape where a subject was. Haze and long grass have no edges for autofocus to hold; hold the half-press and let it work, press on the confirmation, or wait for the head against the sky." },
   processed: { title: "Softened afterwards", text: "The background was blurred on the computer to lift the subject out of it. The picture is yours to show, and the club's open competition takes it; the nature sections do not allow blurring that hides part of the scene, and the world awards bar anything added or taken away, so it enters the open competition only. The same softening in the lens — a stop or two wider — would have been allowed everywhere." },
   disturbed: { title: "The subject was disturbed", text: "The frame was got by moving the animal: a parent off its rock, a chick off its boulder. The welfare of the subject comes before the photograph in the federation's definition, and the world awards bar anything that alters natural behaviour, so the frame enters the open competition only, and the frame from the path was the one to make." },
@@ -2837,6 +3024,27 @@ const ROUTES = [
       text: ["Seven frames near home, and three rulebooks that disagree " +
              "about most of them. That is the whole tutorial: the camera " +
              "is the easy part, and the lens was decided at the car.",
+             "The city is next: the animals that live where people do."],
+      nextLabel: "In the city"
+    }
+  },
+  {
+    /* Urban wildlife, and only that: a free-living animal in a built
+       place is still wildlife photography, and the game's Urban
+       Wildlife category had no stop until these (Dermot, 2026-09-21,
+       option 1 of two: city walks as far as the animals in them go;
+       architecture stays out). */
+    id: "city", noun: "walk",
+    kit: { main: "zoom", companion: "long" },
+    title: "In the city",
+    sub: "a museum yard in Nairobi and a café table in Malmö: the animals that live where people do",
+    stops: ["hyrax", "pigeon"],
+    end: {
+      title: "End of the walk",
+      text: ["Two wild animals that chose a building, and the one " +
+             "category that is for them. The world awards have a section " +
+             "for it; the federation does not; the club takes anything " +
+             "that is yours.",
              "Today's drive picks a handful of stops from the safari day by " +
              "the date. Come back tomorrow and it is a different day."],
       nextLabel: "Today's drive"
@@ -3105,6 +3313,7 @@ function develop(enc, choices, kitId) {
   if (frame.people === "recognisable") add("people", null, "bars");
   else if (frame.people === "distant" && frame.framing === "loose") add("distantPeople");
   if (frame.mating) add("mating", null, "bars");
+  if (frame.built) add("urban");
   if (frame.baited) add("baited");
   if (frame.captive) add("captive");
   if (frame.processed) add("processed");
