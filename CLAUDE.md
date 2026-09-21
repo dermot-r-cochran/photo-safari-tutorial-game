@@ -375,9 +375,16 @@ urban wildlife walk, not architecture): the route `city`, *In the city*,
 holds the hyrax on the museum's coffee machine and the pigeon on the
 café tray, the first stops to file as Urban Wildlife; a `built` frame
 raises the `urban` note, and the buildings themselves stay out of the
-game — architecture would be a second tutorial inside the first. Left
-for later from the same survey, each needing an engine axis first: the
-mono decision (cheetah, buffalo), the creative stack of a miss (ghost
+game — architecture would be a second tutorial inside the first. **Monochrome is not a field decision** (Dermot, 2026-09-21: *mono
+would be editing post trip unless it is a lesson on how to rescue an
+image with high ISO, for example*), so the game has no mono axis and
+will not get one; the one place it belongs is as a rescue, and it is
+there — the ISO 1600 and 3200 lessons and the coaching tip say that
+chroma noise is colour and a monochrome conversion at the desk takes
+the colour out of the grain, a rescue and not a plan. A stop built on
+that rescue waits on a frame the portfolio says was one; none of the
+mono pages says so yet. Left
+for later from the same survey, each needing an engine axis first: the creative stack of a miss (ghost
 herd), a slow shutter chosen for propellers (the wingwalkers), and a Tenerife
 landscape walk (six pages, no notes yet — a line per frame from Dermot
 first). A hide route waits on a hide morning with a note behind it.
