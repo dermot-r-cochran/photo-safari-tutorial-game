@@ -156,8 +156,11 @@ here as tutorial content:
   those four combinations, each with the label the page shows (the
   75–240 stays on the shelf, as the notes have it);
   each route carries a default pair on different bodies, and the player
-  picks their own on the *Before you set out* card, then which camera is
-  in hand at each stop — a choice beside the questions, never one of
+  picks their own on the *Before you set out* card — which opens the
+  route, with its title and line, before the first scene is written
+  (Dermot, 2026-09-21: *with the choice of location but before the
+  description of the first scene*); setting out is what opens the first
+  stop — then which camera is in hand at each stop — a choice beside the questions, never one of
   them, recorded in the transcript and on the frame. The lens on the
   camera in hand gives what it can of the focal length an option reaches
   for (`reach`, `wideEnd`, and `tiny` at half the size or less) and

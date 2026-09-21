@@ -3011,6 +3011,7 @@ function boot() {
         state.kit = Object.assign({}, routeKit(route()));
         saveState();
       } else {
+        // the route and the kit, before the first scene
         box.appendChild(renderKitCard());
         return;
       }
@@ -3082,6 +3083,12 @@ function boot() {
      each body. The companion's list holds only the other body's kits. */
   function renderKitCard() {
     const card = document.createElement("div");
+    const r = route();
+    const title = document.createElement("div");
+    title.className = "stop-title";
+    title.textContent = r.title + (r.daily ? " (" + todayString() + ")" : "");
+    card.appendChild(title);
+    if (r.sub) addParas(card, [cap(r.sub) + "."], "prose");
     const prompt = document.createElement("p");
     prompt.className = "prompt";
     prompt.textContent = KIT_WORDS.prompt;
@@ -3130,7 +3137,14 @@ function boot() {
     const entry = { kind: "kit", main: mainId, companion: compId };
     state.history.push(entry);
     const el = renderHistoryEntry(entry);
+    // setting out opens the first stop
+    if (!state.history.some((h) => h.kind === "stop")) {
+      const first = { kind: "stop", stop: state.stop };
+      state.history.push(first);
+      renderHistoryEntry(first);
+    }
     saveState();
+    renderStops();
     renderCamera();
     renderActions();
     scrollToNew(el);
@@ -3247,10 +3261,13 @@ function boot() {
     scrollToNew(el || $("endcard"));
   }
 
+  /* Opening a route writes nothing to the transcript: the kit is chosen
+     first, with the route in view and before the first scene (Dermot,
+     2026-09-21), and setting out is what opens the first stop. A save
+     that holds only the old bare first stop is wound back to that. */
   function ensureOpened() {
-    if (state.history.length === 0) {
-      state.history.push({ kind: "stop", stop: 0 });
-      saveState();
+    if (!state.kit && !state.history.some((h) => h.kind === "frame" || h.kind === "chosen" || h.kind === "kit")) {
+      if (state.history.length) { state.history = []; saveState(); }
     }
   }
 
@@ -3280,7 +3297,7 @@ function boot() {
     if (!confirm(fill(NEXT_DAY.confirm, { noun: route().noun || "drive" }))) return;
     archiveDay();
     try { localStorage.removeItem(saveKey(route())); } catch (e) {}
-    state = { stop: 0, decision: 0, choices: [], history: [{ kind: "stop", stop: 0 }], kit: null, inHand: "main" };
+    state = { stop: 0, decision: 0, choices: [], history: [], kit: null, inHand: "main" };
     saveState();
     renderAll();
   });
