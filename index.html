@@ -300,6 +300,113 @@ const PRESETS = {
    picture would carry besides the subject — tells of the human hand,
    whether the encounter was baited or captive, who is in shot. */
 const ENCOUNTERS = {
+  dawn: {
+    stop: "06:05", place: "Amboseli, the plain before sunrise",
+    title: "Yesterday's dial at first light",
+    light: { ev: 7, label: "first light, the sun still under the ridge, the plain a shade lighter than the sky" },
+    subject: { name: "a line of zebra standing along the horizon, waiting for the sun", motion: "stirs", distance: 80, depth: 2 },
+    frame: { kind: "wildlife", tells: [], horizon: true },
+    presences: ["the zebra", "the ridge the sun is behind", "the driver, engine off", "the top plate of the camera"],
+    examine: ["light", "horizon", "dial"],
+    enter: [
+      "Out of the gate in the dark and stopped on the plain before the " +
+      "sun, with a line of zebra standing along the horizon the way they " +
+      "stand when they are waiting for something. The sky was one grey " +
+      "and the grass was another, and the whole of the difference " +
+      "between them was the zebra.",
+      "The camera was as you had left it the afternoon before, on the " +
+      "flamingos in full sun: a four-thousandth at f/22. Nobody had " +
+      "looked at the top plate since, and the light on the plain was " +
+      "eight stops short of what those numbers were set for."
+    ],
+    decisions: [
+      {
+        id: "dial", prompt: "The camera is on yesterday's numbers. Do you look?",
+        options: [
+          {
+            label: "No. Whatever it was on got the flamingos; press before the line moves.",
+            text: ["You pressed. The dial did what it was told, the ISO " +
+                   "climbed to its cap and stopped there, and the frame " +
+                   "came back black with a paler stripe across it where " +
+                   "the zebra had been."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 4000, aperture: 22, iso: "auto", isoMax: 1600, focal: 58 }
+          },
+          {
+            label: "Yes. The walking-around setting, and the lens on the beanbag on the door.",
+            text: ["You looked, turned the dial to A and f/8, let the ISO " +
+                   "go where it wanted, and rested the lens on the beanbag. " +
+                   "The camera went to its cap of 800 and then let the " +
+                   "shutter run out to a sixteenth, which on the bag was " +
+                   "fine, because nothing in the line was moving."],
+            settings: "walkAround", set: { support: "beanbag", focal: 58 }
+          },
+          {
+            label: "Yes. The shooting-birds setting: when the sun comes they may run.",
+            text: ["S at 1/2000 s asked the light for stops it did not " +
+                   "have. The lens opened as far as it goes, the ISO went " +
+                   "to 1600 and stopped, and the frame is five stops dark."],
+            settings: "birds", set: { focal: 58 }
+          },
+          {
+            label: "Yes. The walking-around setting, hand-held: the line is standing still.",
+            text: ["A and f/8, the ISO to its cap, and the shutter went to " +
+                   "a sixteenth. A sixteenth hand-held is a shake even at " +
+                   "58 mm, even standing still, even with the stabiliser " +
+                   "doing what it can."],
+            settings: "walkAround", set: { focal: 58 }
+          }
+        ]
+      },
+      {
+        id: "sun", prompt: "The line is standing. Take it now, or wait for the sun?",
+        options: [
+          {
+            label: "Now, tight on three of them at the long end.",
+            text: ["The nearest three, at 400 mm, before the light changed."],
+            set: { focal: 400 }, frame: { framing: "tight" }
+          },
+          {
+            label: "Now, the whole line at the wide end: the plain, the sky and the stripe between.",
+            text: ["You pulled back to 35 mm and took the place: two greys " +
+                   "and a stripe of zebra a fortieth of the frame each. It " +
+                   "is true to the morning, and at page size the zebra are " +
+                   "a texture."],
+            set: { focal: 35 }, frame: { framing: "loose" }, subject: { tiny: true }
+          },
+          {
+            label: "Wait. The sun is a minute under the ridge; when it comes, the dust will light.",
+            text: ["You waited, and four minutes later the sun came over " +
+                   "the ridge into the lens and lit the dust the line was " +
+                   "standing in. Everything in the frame was suddenly " +
+                   "bright, and a zebra against it was a shape with an " +
+                   "edge of light."],
+            light: { ev: 16, label: "the sun over the ridge, in the frame, the dust lit" },
+            set: { focal: 250 }, frame: { framing: "normal" }
+          }
+        ]
+      }
+    ],
+    miss: { file: "images/the-line-before-the-sun.jpg", title: "The Line Before the Sun",
+            alt: "A frame that is almost black, with a faint pale stripe across its lower third where a line of zebra stood on a dark plain under a dark sky",
+            caption: "Ten minutes before the sun, on the dial from the afternoon before: 1/4000 s at f/22, and the ISO at its cap. Black, with a paler stripe where the zebra were. Nobody had looked at the top plate." },
+    photo: { file: "images/zebra-in-the-morning-dust.jpg", title: "Zebra in the Morning Dust",
+             alt: "A zebra walking through drifting dust at dawn, with a grove of acacias receding into golden haze behind",
+             caption: "Four minutes later, on the same dial. The sun came over the ridge into the lens and lit the dust, and 1/4000 s at f/22 was suddenly an exposure: a zebra against light, with an edge of it. The stop marks f/22 soft, and it is; on a silhouette in dust nobody went looking for the pixels." },
+    note: "The dust at Amboseli's dawn is the herds' own, kicked up on the " +
+          "way to the swamp, and with the sun behind it the dust is the " +
+          "brightest thing on the plain.",
+    afterword: [
+      "The dial is the first thing to look at in the morning, before the " +
+      "light and before the animal, because it is still on whatever the " +
+      "last frame of yesterday needed, and yesterday ended in full sun. A " +
+      "camera left in manual does exactly what it is told and leaves the " +
+      "frame dark; a camera in A or S will find the exposure and spend " +
+      "the shutter or the ISO to do it, which is a different mistake and " +
+      "usually a smaller one. And the light before sunrise is not the " +
+      "light after it: four minutes moved this scene nine stops, which is " +
+      "more than any setting on the camera could."
+    ]
+  },
 
   topi: {
     stop: "06:20", place: "the Mara, first light",
@@ -2564,6 +2671,12 @@ const EXAMINE = {
     text: () => "The horizon carries scale and place at once. Keep it level, " +
       "or leave it out on purpose."
   },
+  dial: {
+    label: "the top plate",
+    text: () => "The top plate shows what the last frame needed, not what " +
+      "this one does. Read it before the light and before the animal; " +
+      "yesterday's numbers are still on it until somebody turns them."
+  },
   topi: {
     label: "the topi",
     text: () => "Backlit, so its edge is a rim of light and its body is a " +
@@ -2990,7 +3103,7 @@ const ROUTES = [
     kit: { main: "zoom", companion: "long" },
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
-    stops: ["topi", "balloon", "lion", "ostrich", "sixtieth", "roller", "vultures", "hyena",
+    stops: ["dawn", "topi", "balloon", "lion", "ostrich", "sixtieth", "roller", "vultures", "hyena",
             "kilimanjaro", "flamingos", "jacana", "pair", "dusk"],
     end: {
       title: "End of the day",
