@@ -162,14 +162,14 @@
   </div>
   <div class="card">
     <h2>About</h2>
-    <p style="margin:0">A one-file tutorial game: no server, no build, no
-       network. You make the choices a photographer makes in the field,
-       and the page develops the frame you would have got.
-       Progress saves to this browser only.</p>
+    <p style="margin:0">A tutorial game that runs entirely in your
+       browser: you make the choices a photographer makes in the field,
+       and the page develops the frame you would have got. Nothing is
+       sent anywhere, and progress saves to this browser only.</p>
     <p style="margin:0.6rem 0 0">Written by a novice for other novices:
        every lesson here was learned by getting it wrong first, and the
        photographs are the frames it was learned on.</p>
-    <p style="margin:0.6rem 0 0">A keeper would go on the site and is
+    <p style="margin:0.6rem 0 0">A keeper goes on the site and is
        tagged with the competitions it could enter. A frame for the
        folder is kept, not shown, entered nowhere, and is where the
        lessons come from.</p>
@@ -1291,6 +1291,7 @@ const ENCOUNTERS = {
   naivasha: {
     stop: "15:00", place: "Lake Naivasha, from a boat",
     title: "The fish eagle and the boatman",
+    onward: "Motor on.",
     light: { ev: 13, label: "afternoon sun off the water, bright and even" },
     subject: { name: "an African fish eagle in the drowned trees", motion: "flying", distance: 35, depth: 1, white: true },
     frame: { kind: "wildlife", tells: [] },
@@ -3043,6 +3044,18 @@ const NEXT_DAY = {
   keep: 30   // days kept per route, newest first
 };
 
+/* What the button says when a keeper moves the day on, by the route's
+   noun; a stop may say its own (`onward`). Not every outing is a drive:
+   a walk, a boat or a hide moves on in its own words (Dermot,
+   2026-09-25). */
+const ONWARD = {
+  drive: "Drive on.",
+  walk: "Walk on.",
+  boat: "Motor on.",
+  hide: "Sit on.",
+  outing: "On to the next."
+};
+
 /* The scorecard: plain counts. Stops played, keepers, keepers first
    time (the hole-in-one nod that survives from the golf card of
    2026-09-13), and stops abandoned. The strokes-and-par accounting went
@@ -3537,7 +3550,7 @@ function routeStops(route, dateStr) {
 
 /* For the tools: everything above, reachable without a page. */
 if (typeof globalThis !== "undefined") {
-  globalThis.SAFARI = { CAMERA, BODIES, KITS, KIT_WORDS, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, SCORE, decisionsFor, kitFor, kitLabel, routeKit,
+  globalThis.SAFARI = { CAMERA, BODIES, KITS, KIT_WORDS, PRESETS, ENCOUNTERS, EXAMINE, RULEBOOKS, LESSONS, ROUTES, RETRY, ABANDON, NEXT_DAY, ONWARD, SCORE, decisionsFor, kitFor, kitLabel, routeKit,
     assemble, expose, develop, eligibility, dailyStops, routeStops, depthOfField,
     lensMaxAperture, fmtShutter, fill };
 }
@@ -4145,7 +4158,7 @@ function boot() {
       // a keeper is a keeper: drive on
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.textContent = state.stop + 1 < stops.length ? (e.onward || "Drive on.") : "Call it a day.";
+      btn.textContent = state.stop + 1 < stops.length ? (e.onward || ONWARD[route().noun] || ONWARD.drive) : "Call it a day.";
       btn.addEventListener("click", driveOn);
       choices.appendChild(btn);
     } else {
