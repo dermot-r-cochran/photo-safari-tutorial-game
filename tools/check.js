@@ -169,6 +169,8 @@ if (S.SCORE && /stroke|par\b/i.test(Object.values(S.SCORE).join(" "))) fail("SCO
 for (const k of ["label", "confirm"]) if (!S.NEXT_DAY || !S.NEXT_DAY[k] || !S.NEXT_DAY[k].includes("{noun}")) fail("NEXT_DAY." + k + " is missing or does not carry {noun}");
 if (!S.NEXT_DAY || !S.NEXT_DAY.past) fail("NEXT_DAY.past has no heading for the past days");
 if (!S.NEXT_DAY || !(S.NEXT_DAY.keep >= 1)) fail("NEXT_DAY.keep must keep at least one day");
+// every route's noun has its own words for moving on: not every outing is a drive
+for (const r of S.ROUTES) if (!S.ONWARD || !S.ONWARD[r.noun]) fail("route " + r.id + " is a " + r.noun + ", and ONWARD has no words for one");
 // abandoning a stop has a label and words; it has no price since 2026-09-21
 if (!S.ABANDON || !S.ABANDON.label || !S.ABANDON.text || !S.ABANDON.text.length) fail("ABANDON has no label or text");
 if (S.ABANDON && "strokes" in S.ABANDON) fail("ABANDON has a price again; the card is plain counts");
