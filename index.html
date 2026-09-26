@@ -302,6 +302,100 @@ const PRESETS = {
    picture would carry besides the subject — tells of the human hand,
    whether the encounter was baited or captive, who is in shot. */
 const ENCOUNTERS = {
+  flats: {
+    stop: "10:40", place: "a tidal island in the bay, near home, the causeway rocks at low water",
+    onward: "Walk on.",
+    kit: "long",
+    title: "The crow after the flock",
+    light: { ev: 13, label: "flat grey cloud from edge to edge, thicker over the rocks" },
+    subject: { name: "a hooded crow on the causeway rocks, looking out over the water", motion: "stirs", distance: 12, depth: 0.3 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the crow", "the rocks, placed by hand", "the godwits along the far edge of the flats, a stripe"],
+    examine: ["light", "dial"],
+    enter: [
+      "Ten minutes earlier the godwits had stood in the shallows where " +
+      "the tide had drawn their line, and the camera had gone to the " +
+      "shooting-birds setting for the moment they went up. They had not " +
+      "gone up yet. On the way back along the causeway a hooded crow " +
+      "stood on the rock armour looking out over the water, twelve " +
+      "metres off, and did not move.",
+      "The dial was still where the flock had put it. Flat grey cloud " +
+      "from one edge of the sky to the other, thicker over the rocks: " +
+      "the kind of light that makes a meter happy and a picture flat."
+    ],
+    decisions: [
+      {
+        id: "dial", prompt: "The crow is standing, and the dial is set for the flock. The camera?",
+        options: [
+          {
+            label: "Leave it. It is set for the flock, and the flock is what the morning is for.",
+            text: ["S, 1/2000 s, for a bird that was standing still, and the " +
+                   "ISO went to 1600 to pay for it. Sharp, and grainy for " +
+                   "nothing; the frame is a keeper at page size and shows " +
+                   "its price at 100%."],
+            settings: "birds", set: { focal: 500 }
+          },
+          {
+            label: "Turn to the walking-around setting: it is standing.",
+            text: ["A, f/8, and the camera found 1/250 s at ISO 200. The " +
+                   "crow did not move, and the file is clean. Ten seconds " +
+                   "on the dial, and ten seconds back when the flock goes."],
+            settings: "walkAround", set: { focal: 500 }
+          },
+          {
+            label: "The walking-around setting, but wide open at 500 mm, for a soft sea behind the bird.",
+            text: ["f/6.7 at twelve metres put the eye sharp and the tail " +
+                   "going soft; the sea behind went to a grey wash, which " +
+                   "was the point, and the depth was the price."],
+            settings: "walkAround", set: { aperture: 6.7, focal: 500 }
+          }
+        ]
+      },
+      {
+        id: "framing", prompt: "And the frame?",
+        options: [
+          {
+            label: "Tight: the crow and its rock, the water above.",
+            text: ["The bird, the lichen on the block it stood on, and a " +
+                   "band of grey water over its head."],
+            frame: { framing: "tight" }
+          },
+          {
+            label: "The rocks and the water at 150 mm, the crow a small dark mark on them.",
+            text: ["You pulled back for the place: the causeway's rock " +
+                   "armour, the driftwood, the flats going out, and the " +
+                   "crow a tenth of the frame that reads as a stone."],
+            set: { focal: 150 }, frame: { framing: "loose" }, subject: { tiny: true }
+          },
+          {
+            label: "Step off the causeway onto the rocks for a lower angle.",
+            text: ["The crow let you take two steps and then did not: it " +
+                   "was on the next block along before the third, and the " +
+                   "frame is of the block."],
+            frame: { disturbed: true }
+          }
+        ]
+      }
+    ],
+    photo: { file: "images/hooded-crow-watching.jpg", title: "Hooded Crow, Watching",
+             alt: "A hooded crow standing on a granite block streaked with orange lichen, looking out over grey water, a bleached branch of driftwood across the rocks behind it",
+             caption: "The dial left where the flock had put it: 1/2500 s and ISO 1400 for a bird that was standing still. A keeper, and a grainy one at 100%; the flock went up half an hour later on the same dial and paid ISO 450 for wings that needed it." },
+    note: "The island is a sandbank that a harbour wall made, two centuries " +
+          "of silt gathering behind it, and the flats it stands in are where " +
+          "the godwits feed. The rocks the crow stood on are the causeway's, " +
+          "placed by hand, which files the crow out of the stricter nature " +
+          "competitions and bothers the crow not at all.",
+    afterword: [
+      "One dial for two subjects is the ordinary mistake of a morning, and " +
+      "it cuts both ways. The birds setting is right for wings and costs ISO " +
+      "on everything that stands still; the walking-around setting is right " +
+      "for the crow and would have smeared the flock. The setting belongs to " +
+      "the subject in front of the lens now, not the one ten minutes ago or " +
+      "ten minutes ahead, and a newer body makes the fast mistake cheap " +
+      "enough that it stops being noticed: ISO 1400 on a still crow is a " +
+      "fine web file and a grainy competition master."
+    ]
+  },
   dawn: {
     stop: "06:05", place: "Amboseli, the plain before sunrise",
     title: "Yesterday's dial at first light",
@@ -3159,11 +3253,11 @@ const ROUTES = [
     id: "home", noun: "walk",
     kit: { main: "macro", companion: "long" },
     title: "Home ground",
-    sub: "a deer park in mist, a pond, a wood, two islands, a reservoir hedge and a hill near home, the week after, on foot",
-    stops: ["deer", "duck", "woodland", "gull", "chick", "sloe", "goat"],
+    sub: "a deer park in mist, a pond, a wood, two islands, a reservoir hedge, a hill and a tidal island's flats near home, the week after, on foot",
+    stops: ["deer", "duck", "woodland", "gull", "chick", "sloe", "goat", "flats"],
     end: {
       title: "End of the week",
-      text: ["Seven frames near home, and three rulebooks that disagree " +
+      text: ["Eight frames near home, and three rulebooks that disagree " +
              "about most of them. That is the whole tutorial: the camera " +
              "is the easy part, and the lens was decided at the car.",
              "Two cities are next: the animals that live where people do."],
