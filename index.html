@@ -2011,8 +2011,9 @@ const ENCOUNTERS = {
     enter: [
       "The herd was where the herd is, fifty metres off across the wet " +
       "grass, and the mist had taken the tree line down to a grey idea " +
-      "behind them. Fifty metres is the park's rule, and the deer keep " +
-      "it more carefully than the people do.",
+      "behind them. Fifty metres is the park's rule, and it is yours to " +
+      "keep: the deer are fed here and do not care, and a buck will walk " +
+      "up to a group.",
       "At fifty metres a buck is a metre and a half of animal. On this " +
       "sensor that is a fortieth of the frame at 50 mm and a fifth of it " +
       "at 400. The arithmetic was done before you left the car, or it " +
@@ -2020,7 +2021,7 @@ const ENCOUNTERS = {
     ],
     decisions: [
       {
-        id: "lens", prompt: "Fifty metres is the field's rule, and the herd keeps it. How much of the morning?",
+        id: "lens", prompt: "Fifty metres is the park's rule, and it is yours to keep. How much of the morning?",
         options: [
           {
             label: "The long end. 400 mm, and the buck a fifth of the frame.",
@@ -2959,7 +2960,7 @@ const EXAMINE = {
   },
   fifty: {
     label: "the fifty metres",
-    text: () => "The field's own rule, and the herd keeps it. It is not a " +
+    text: () => "The park's rule, and yours to keep; the deer, fed here, do not. It is not a " +
       "distance you can close; it is a distance you bring the right lens for."
   },
   jacana: {
