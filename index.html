@@ -113,9 +113,10 @@
   }
   .author-frame figcaption { color: var(--dim); font-size: 0.95em; margin-top: 0.4rem; }
   .author-frame figcaption b { color: var(--earth); }
-  .frame-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
   .frame-pair .author-frame { margin-top: 1rem; }
-  @media (max-width: 640px) { .frame-pair { grid-template-columns: 1fr; } }
+  .frame-pair .counterpart { max-width: 46%; margin-top: 0.6rem; }
+  .frame-pair .counterpart figcaption { font-size: 0.88em; }
+  @media (max-width: 640px) { .frame-pair .counterpart { max-width: 100%; } }
   #endcard {
     border: 1px solid var(--grass); border-radius: 8px;
     background: var(--panel); padding: 1rem 1.2rem; margin-top: 1.6rem;
@@ -3809,10 +3810,18 @@ function boot() {
     }
     if (e.afterword) addParas(box, e.afterword, "prose");
     if (e.miss && e.photo) {
+      /* The frame the player's own settings made comes first and large;
+         the other frame sits small beneath it (Dermot, 2026-09-27,
+         option 2). A keeper, or a frame kept out for what it shows rather
+         than how it was taken, is the author's keeper; a technical miss is
+         the author's miss. */
+      const gotIt = r.keeper || r.unpublishable;
       const pair = document.createElement("div");
       pair.className = "frame-pair";
-      pair.appendChild(renderPhoto(e.miss, "The frame this stop was got wrong on"));
-      pair.appendChild(renderPhoto(e.photo));
+      pair.appendChild(renderPhoto(gotIt ? e.photo : e.miss, gotIt ? "The frame you got" : "The frame you took"));
+      const other = renderPhoto(gotIt ? e.miss : e.photo, gotIt ? "The frame the other setting gave" : "The frame the right setting gave");
+      other.classList.add("counterpart");
+      pair.appendChild(other);
       box.appendChild(pair);
     } else if (e.photo) box.appendChild(renderPhoto(e.photo));
     t.appendChild(box);
@@ -3822,8 +3831,9 @@ function boot() {
   /* The frame a stop was learned on: the author's own photograph, shown
      only after the player's verdict so it is a comparison and never the
      answer. A stop may also carry a `miss` — the author's frame of the
-     same scenario got wrong — and then the two render side by side, the
-     miss first, under their own leads. The rest of the comment stands:
+     same scenario got wrong — and then the frame the player's settings
+     made renders first and large, and the other one small beneath it,
+     each under its own lead. The rest of the comment stands:
      answer. The page works without the file — a missing picture hides
      its own card. */
   function renderPhoto(photo, lead) {
