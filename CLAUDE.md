@@ -55,9 +55,14 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   2026-09-15: his photographs, *especially the near-miss failures*, may be
   reused in the tutorial, *especially if there are both positive and
   negative examples of the same scenario*). The miss is the author's own
-  frame of the same scenario got wrong; the two render side by side after
-  the verdict, the miss first under *The frame this stop was got wrong on*,
-  and a miss never stands without the photo it answers (the check holds
+  frame of the same scenario got wrong; after the verdict the frame the
+  player's own settings made renders first and large (*The frame you got*
+  for a keeper, *The frame you took* for a technical miss) and the other
+  sits small beneath it (*the frame the other setting gave* / *the frame
+  the right setting gave*) — Dermot's option 2 of 2026-09-27, replacing the
+  side-by-side pair that led with the miss whatever the verdict. A frame
+  kept out for what it shows counts as got, since the settings were right.
+  A miss never stands without the photo it answers (the check holds
   both). A miss may come straight from the archive, unpublished, at site
   size, under the same licence; its caption may state the settings it was
   taken at, because the point of it is the settings. The first pair is
