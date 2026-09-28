@@ -92,6 +92,16 @@ voice: no claims of expertise, no judging register, and where a photograph
 differs from its stop (a different hour, a different animal) the caption
 says so.
 
+**Advice, not orders** (Dermot, 2026-09-28, given for the statistics course
+and extended here at his *Yes please*: *don't tell the reader or student
+what to do, but offer advice, wisdom and general principles*; *the softer
+tone is more effective for teaching, at least for advanced topics*). A
+coaching line says what happened and what the light or the subject was
+asking for; it does not issue instructions. *The motion is worth reading
+before the light*, not *read the motion*. The controls help and the
+README's how-to-play steps describe the game's controls and are not
+teaching, so they may still say press and shoot.
+
 **Lessons learned from now on may be worked into the tutorial** (Dermot's
 standing direction, 2026-09-13). When a day in the field adds to or
 corrects an entry in the portfolio's `FIELD-NOTES.md`, or a site rule
