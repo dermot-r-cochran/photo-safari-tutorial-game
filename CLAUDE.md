@@ -441,3 +441,31 @@ Engine MIT (`LICENSE`); the stops, lessons and notes CC BY 4.0
 photographs CC BY-NC-ND 4.0 (`LICENSE-PHOTOS.md`), the portfolio's own
 terms, and excluded from the CC BY grant. The field notes the lessons
 restate are the author's own.
+
+## Related repositories
+
+The map of Dermot's public repositories and what crosses between them is
+`RELATED-REPOSITORIES.md` in `dermot-r-cochran/star-rangers`; this section
+names only this repository's own neighbours (added 2026-09-29 at his
+direction, after a session had to discover a sibling by listing his
+repositories).
+
+- **`dermot-r-cochran/dermot-cochran-photography`** supplies both halves of
+  this game: the frames under `images/` (copies at site size under the
+  portfolio's CC BY-NC-ND terms, 26 at the time of writing) and the model's
+  thresholds, restated from its `FIELD-NOTES.md`, `STYLE.md` and `CLAUDE.md`
+  as *The model* above says. Copies, not links: a frame unlisted or re-edited
+  there stays as it was here until someone copies it again, and the
+  portfolio's pull requests say so when a frame this game carries changes.
+- **`dermot-r-cochran/photo-safari-range`** is the sibling arcade, begun four
+  days after this game. It shares the register rules (no makes or models,
+  made there on 2026-09-17 and applied here the same day; advice after the
+  fact, orders only in the moment) and the frames' arrangement, and
+  deliberately not the scoring: this game retired golf for a plain count, the
+  range runs on a clock with no stroke count, and neither should be made like
+  the other. No code crosses; each has its own engine and check.
+- **`dermot-r-cochran/four-islands-quest`** is where the prime directive above
+  was written; this repository inherits it whole.
+- **`dermot-r-cochran/applied-statistics-for-AI-engineers`** is the other
+  one-file page in the account. *Advice, not orders* was given for it on
+  2026-09-28 and extended here at Dermot's *Yes please* the same day.
