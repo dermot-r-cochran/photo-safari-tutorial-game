@@ -30,12 +30,13 @@ frame for the folder; you can abandon the stop instead. The contact
 sheet keeps the last frame you pressed and keeps a plain count of the
 drive: stops played, keepers, keepers first time, stops abandoned, and
 under each stop how many presses it took. After the
-verdict, at twenty-one of the stops, the page shows the frame the stop was
+verdict, at twenty-two of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
-frame, or a worse one, and the words say which. At one stop so far the
-frame that was got wrong sits beside the one that was got right, the
-same scenario two days apart, and the captions say what changed.
+frame, or a worse one, and the words say which. At four stops so far
+the author's own frame of the same scenario got wrong is there too:
+the frame your settings made comes first and large, the other sits
+small beneath it, and the captions say what changed.
 
 This is written by a novice for other novices and for younger
 photographers. Nothing in it is expert opinion. Every lesson was
@@ -64,7 +65,7 @@ your own frames.
 
 Five drives:
 
-- **The safari drive** — thirteen stops on the Mara, at Nairobi and at
+- **The safari drive** — fourteen stops on the Mara, at Nairobi and at
   Amboseli, first light to dusk. A topi against the sunrise, a young lion
   on a vehicle track, an ostrich the lens could not find, a roller in
   eight colours, vultures at a kill, a hyena nobody can find, elephants
@@ -77,12 +78,13 @@ Five drives:
   giraffe at a rail. Three encounters arranged before you got there,
   kept off the game drive because they are not part of one.
 - **Home ground** — a deer park in mist, a pond, a beech wood, two
-  islands, a reservoir hedge and a hill near home, the week after, on
-  foot: a herd at the fifty metres the park asks for, a duck that
-  surfaces where you were not pointing, the one mode the safari never
-  needed, a ringed gull, a chick on the boulders with its parent
-  watching, a sloe that looked like macro and measured at one to seven,
-  a goat that nobody owns.
+  islands, a reservoir hedge, a hill and a tidal island's flats near
+  home, the week after, on foot: a herd at the fifty metres the park
+  asks for, a duck that surfaces where you were not pointing, the one
+  mode the safari never needed, a ringed gull, a chick on the boulders
+  with its parent watching, a sloe that looked like macro and measured
+  at one to seven, a goat that nobody owns, a crow on the causeway rocks
+  with the dial still set for the flock.
 - **Two cities** — a museum yard in Nairobi and a café table in Malmö:
   a hyrax that chose a coffee machine, a pigeon with the manners of a
   regular. The animals that live where people do, and the one category
