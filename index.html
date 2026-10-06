@@ -826,8 +826,8 @@ const ENCOUNTERS = {
       "category is about what the subject is, not what it is lying on. " +
       "The tyre marks only matter to the federation's nature sections, " +
       "which ban any human element in frame — and a tight frame at the " +
-      "long end simply does not have them in it. Walk the frame for tells " +
-      "before you press, not after."
+      "long end simply does not have them in it. The frame is worth " +
+      "walking for tells before the press, not after."
     ]
   },
 
@@ -1828,8 +1828,8 @@ const ENCOUNTERS = {
       "A captive animal is out of the nature competitions whatever the " +
       "frame shows, and a tight portrait that hides the rail does not " +
       "change that — it only makes the picture look like a claim it " +
-      "cannot back. Tag it honestly, file it as documentary if the hand of " +
-      "man is in it, and let the note say where it was taken."
+      "cannot back. Honestly tagged, it files as documentary if the hand " +
+      "of man is in it, and its note says where it was taken."
     ]
   },
 
@@ -3070,13 +3070,13 @@ const LESSONS = {
   motionBlur: { title: "Motion blur", text: "The subject moved during the exposure. The shutter needed to be about {need} for {motion}; it was {got}." },
   shake: { title: "Camera shake", text: "Hand-held at {focal} mm on a crop sensor, the shutter wants to be {need} or faster even with the stabiliser; it was {got}. A support would have removed the reason." },
   windBlur: { title: "The caps moved", text: "On a support the shutter is safe from shake at any length, but the subject stirred: anything slower than 1/2 s blurs a cap in a breeze that is not felt at head height. It was {got}." },
-  mirrorSlap: { title: "Mirror slap", text: "Between 1/15 s and 1/2 s on a support, the mirror's own thump softens the frame, doubled at high magnification. Fire from live view, where the mirror is already up, with the timer or a remote." },
+  mirrorSlap: { title: "Mirror slap", text: "Between 1/15 s and 1/2 s on a support, the mirror's own thump softens the frame, doubled at high magnification. Live view, where the mirror is already up, with the timer or a remote, keeps the thump out of the frame." },
   under: { title: "Underexposed", text: "The frame came out {stops} stops dark — the lens could not open further and the ISO had reached its cap. A dark raw file is recoverable; a blurred one is not, which is why manual leaves it dark instead of lengthening the shutter." },
   over: { title: "Overexposed", text: "The frame came out {stops} stops bright — the shutter and aperture could not close down enough for the ISO set. Blown highlights are the one thing the sensor cannot give back." },
   blownSky: { title: "The sky went white", text: "Metering for a dark subject against a bright sky opens up until the sky clips. A silhouette is the honest frame here: expose for the bright side and let the dark side be a shape." },
   noise1600: { title: "Chroma noise at 1600", text: "ISO 1600 shows coloured grain in the shadows, and a vivid picture control amplifies it. Usable at web size; a competition master wants less. Chroma noise is colour, so a monochrome conversion at the desk takes the colour out of the grain and leaves grain that reads as film — a rescue, not a plan." },
   noise3200: { title: "ISO 3200", text: "At 3200 the shadows are coloured grain and the fine detail is gone. It is the setting to spend last, after a support and a slower shutter have been tried. What is left can sometimes be rescued at the desk: the coloured grain is chroma, and monochrome takes the colour out of it, so a frame that will not stand in colour may stand as a black-and-white — but the fine detail does not come back." },
-  thinDepth: { title: "Too little depth", text: "Depth of field at f/{aperture} came to about {dof} for a subject {depth} deep: the eye is sharp and the rest is not. Stop down a little, or shoot from further back and crop." },
+  thinDepth: { title: "Too little depth", text: "Depth of field at f/{aperture} came to about {dof} for a subject {depth} deep: the eye is sharp and the rest is not. Stopping down a little, or shooting from further back and cropping, would have bought the rest." },
   diffraction: { title: "Diffraction", text: "On 5-micron pixels f/16 and beyond soften everything, and at 1:1 the effective aperture doubles — f/11 set is f/22 in effect. Depth bought this way costs the sharpness it was bought for." },
   vividWhite: { title: "Vivid clipped the whites", text: "Vivid raises contrast, and contrast clips whites first. Gull and eagle plumage in the brightest stops is exactly what a judge looks at, and exactly what vivid throws away. Standard or neutral for white subjects." },
   vividSaturated: { title: "Vivid blew a channel", text: "A subject that is already saturated has no headroom: vivid pushes one channel past clipping and the texture goes with it — a crimson rose becomes a shape, a roller's blue a flat patch. A notch calmer keeps the feathers." },
@@ -3084,14 +3084,14 @@ const LESSONS = {
   flat: { title: "Flatter than the house look", text: "Standard on ordinary scenery is safe and a little flat; vivid is the established look for skies, sunsets and distance, and consistency across a portfolio is worth something by itself. No harm done — the raw file is neutral either way." },
   harsh: { title: "Noon light", text: "Overhead sun puts a shadow under every belly and haze over every distance. The frame is a record, not a picture. A cloud would have been a softbox the size of a county." },
   tell: { title: "A human element in frame", text: "{tell} is in the frame. The world awards do not mind; the federation's nature and wildlife sections do. A frame that keeps it is still a picture — it just files elsewhere." },
-  tellExcluded: { title: "The tell is out of the frame", text: "{tell} lies outside the edge of this framing, so nothing built is in the picture and the federation's sections stay open. Walk the frame for tells before pressing, not after." },
-  ring: { title: "A ring is allowed", text: "Scientific tags, collars and bands are specifically permitted by the nature definition. Do not under-claim on a ring." },
+  tellExcluded: { title: "The tell is out of the frame", text: "{tell} lies outside the edge of this framing, so nothing built is in the picture and the federation's sections stay open. The frame's edges are worth walking for tells before pressing, not after." },
+  ring: { title: "A ring is allowed", text: "Scientific tags, collars and bands are specifically permitted by the nature definition, so a ring is no reason to under-claim." },
   baited: { title: "Baited", text: "The opportunity was arranged, so the frame is out of every nature and wildlife competition, whatever it shows — the world awards, the federation's nature section and its wildlife section, and the club's own nature competitions, which run on the same definitions; the club's open competition is the one that remains. It is still yours to show, filed as wildlife; it must carry a note that says how it was got, because the picture cannot." },
-  captive: { title: "Captive", text: "A captive animal is out of the world awards and out of the federation's wildlife section, however wild the frame looks. Tag it honestly." },
+  captive: { title: "Captive", text: "A captive animal is out of the world awards and out of the federation's wildlife section, however wild the frame looks, and an honest tag says so." },
   feral: { title: "Feral", text: "A free-living animal descended from domestic stock qualifies for the world awards, which ban only captive and restrained animals, and not for the federation's nature sections, which exclude feral and domestic animals. Same picture, different tags." },
   people: { title: "A recognisable person", text: "No recognisable person goes on the site. The frame is deleted, blurred or cropped — and cropping is usually the honest one, because it changes nothing about the pixels that remain." },
   distantPeople: { title: "Distant figures", text: "Silhouettes and strangers a hundred metres off are fine and always have been: nobody could name them. Documentary, and a good one." },
-  mating: { title: "Not for the site", text: "Where a sequence covers mating, publish the pair before or after and leave the act in the folder. The behaviour can be written about in the note; say it in words, don't show it." },
+  mating: { title: "Not for the site", text: "Where a sequence covers mating, the pair before or after is the frame to publish, and the act stays in the folder. The behaviour can be written about in the note: said in words, not shown." },
   tiny: { title: "The subject does not read", text: "At {share} of the frame width, and the tone of the ground it sits in, the subject fails to read at page size. When the geometry hides it — the herd on the skyline and the animal far below — the note is the fix and the frame stays as shot." },
   tinyAlone: { title: "Cropped, and lost", text: "The crop made the subject a little larger and threw away the skyline that told the viewer where and when this was. A hyena in a puddle, anywhere. The whole frame with a note that says where to look was the better picture." },
   offTrack: { title: "Stay on the track", text: "Leaving the track for a closer frame damages the ground and the rule the park runs on; the driver was right. A picture is never worth the ground it is stood on." },
@@ -3099,7 +3099,7 @@ const LESSONS = {
   neutral: { title: "Neutral decides nothing", text: "Neutral holds every tone and commits to none: the whites are safe, the blue is safe, and the JPEG looks as if nobody chose anything. It wants a pass in the raw editor before it goes anywhere, which is fine if that is the plan and a chore if it was not." },
   silhouette: { title: "A silhouette", text: "The bright side exposed, the dark side a shape: a topi-shaped hole in the dawn, and the honest frame for a backlit subject." },
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
-  manualDark: { title: "Manual held the shutter", text: "The exposure came up short and the frame is a little dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. The raw file has the rest." },
+  manualDark: { title: "Manual held the shutter", text: "The frame came out {stops} stops dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. A dark raw file gives back a little; past two and a half stops, the model's own line, the dark is the frame." },
   urban: { title: "Urban wildlife", text: "A free-living animal in a built place: not captive, not a pet, and the building is part of the picture. It files as Urban Wildlife. The world awards have a section for exactly this; the federation's nature definition bans any human element, so it is out of those sections however tight the crop." },
   hunted: { title: "The lens had not found it", text: "The shutter went before the lens had settled, and the subject is a soft shape where a subject was. Haze and long grass have no edges for autofocus to hold; the half-press held until it settles, the press on the confirmation, or the head against the sky is what it needed." },
   processed: { title: "Softened afterwards", text: "The background was blurred on the computer to lift the subject out of it. The picture is yours to show, and the club's open competition takes it; the nature sections do not allow blurring that hides part of the scene, and the world awards bar anything added or taken away, so it enters the open competition only. The same softening in the lens — a stop or two wider — would have been allowed everywhere." },
