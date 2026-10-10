@@ -71,12 +71,16 @@ Five drives:
   eight colours, vultures at a kill, a hyena nobody can find, elephants
   under Kilimanjaro at noon, flamingos under the cloud that made the
   picture, a jacana the colour of the grass, a courting pair, a lion in
-  the last of the light.
+  the last of the light. *`tools/check.js`, checks "every stop is on
+  exactly one route of its own" and "the route as shipped must be
+  playable"; `tools/check-docs.js` holds the count.*
 - **Off the drive** — a boat on Lake Naivasha and the Giraffe Centre,
   on the road between the parks, one afternoon: a fish eagle and a
   boatman with a bucket, a pelican that swam up for the same bucket, a
   giraffe at a rail. Three encounters arranged before you got there,
   kept off the game drive because they are not part of one.
+  *`tools/check.js`, the same two checks; `tools/check-docs.js` holds the
+  count.*
 - **Home ground** — a deer park in mist, a pond, a beech wood, two
   islands, a reservoir hedge, a hill and a tidal island's flats near
   home, the week after, on foot: a herd at the fifty metres the park
@@ -84,14 +88,19 @@ Five drives:
   mode the safari never needed, a ringed gull, a chick on the boulders
   with its parent watching, a sloe that looked like macro and measured
   at one to seven, a goat that nobody owns, a crow on the causeway rocks
-  with the dial still set for the flock.
+  with the dial still set for the flock. *`tools/check.js`, the same two
+  checks.*
 - **Two cities** — a museum yard in Nairobi and a café table in Malmö:
   a hyrax that chose a coffee machine, a pigeon with the manners of a
   regular. The animals that live where people do, and the one category
-  that is for them; the buildings themselves stay out.
+  that is for them; the buildings themselves stay out. *`tools/check.js`,
+  the same two checks; the Urban Wildlife category is one of the six it
+  allows, and no test yet holds these two stops to it.*
 - **Today's drive** — six stops picked from the safari day by the date,
   in the order of the day. The same day gives everyone the same drive;
-  tomorrow is different.
+  tomorrow is different. *`tools/check.js`, the route checks whose failures
+  read "today's drive is not deterministic" and "today's drive is not in
+  the order of the day"; that tomorrow differs is only a warning there.*
 
 ## What it teaches
 
@@ -103,19 +112,28 @@ into the game as they were learned:
   once Auto ISO hits its cap, which is fine for a lion and fatal for a
   mushroom in a breeze; shutter priority is the only mode that promises
   1/2000 s to a landing vulture; manual leaves a frame dark rather than
-  blurred, and a dark raw file is recoverable.
+  blurred, and a dark raw file is recoverable. *No test yet of the modes
+  themselves; `tools/check.js` develops every path at every stop on every
+  kit within the dials (check "every path on every kit develops cleanly
+  and keeps its invariants").*
 - **Exposure, sharpness, depth and noise**, from a small model of a real
   camera: a 14-megapixel crop sensor with 5-micron pixels, so
   diffraction softens from f/11 and is plain by f/16; ISO 400 clean, 800
   fine, 1600 showing chroma noise that a vivid picture control amplifies;
   depth of field about a millimetre at 1:1 and f/8; mirror slap between
   1/15 s and 1/2 s on a support unless live view keeps the mirror up.
+  *No test yet of these thresholds; the same check holds every number the
+  model gives to a number, and every finding to a lesson in `LESSONS`.*
 - **The vivid dial.** The house look for scenery, and the wrong setting
   for a white bird in hard light or a subject that is already saturated.
+  *No test yet.*
 - **What is in the frame besides the subject.** A vehicle track, a
   balloon, a feeding rail, three people on a far vehicle, a numbered leg
   ring — and what each does to the frame's category and to its
   competition eligibility, which are different questions.
+  *`tools/check.js` holds every category to the six the game files under
+  and every tag to a rulebook; what each presence does to them has no test
+  yet.*
 - **The rulebooks**, which disagree with each other on purpose. The
   game tags every keeper with the competitions it could enter, by the
   short names the author's portfolio uses: **DCC**, Dublin Camera Club's
@@ -129,19 +147,30 @@ into the game as they were learned:
   each rulebook card links to the rules themselves — the cards are one
   reader's summary written for a game, not the rules. A frame that is
   not a keeper carries no tags: it is entered nowhere, so what the
-  rulebooks would have said of it is beside the point.
+  rulebooks would have said of it is beside the point. *`tools/check.js`,
+  check "only a keeper is tagged: a frame for the folder is entered
+  nowhere" (which also fails a keeper without DCC), the failure
+  "IPF-Wildlife without IPF-Nature", and the rulebook check that every
+  card has an https link to the rules.*
 - **Ethics that the picture cannot show.** A baited eagle, a captive
   giraffe, a mating pair, a driver asked to leave the track, a
   recognisable stranger, a chick put off its boulder, a background
   softened afterwards — and the note each frame must carry, or the
   folder it must stay in, or the one competition it can still enter.
+  *`tools/check.js`, check "a frame that is not a keeper always says why"
+  (a finding that sinks or bars it); each case's own outcome has no test
+  yet.*
 - **The lens is the decision.** What is on each body was settled at the
   bag, and the stop gets what that lens can give: the reach it has, the
   width it has, how close it focuses. The companion is there for the
-  stop the main camera cannot make.
+  stop the main camera cannot make. *`tools/check.js`, checks "the kit:
+  every kit a body and a lens; every route's pair two kits on different
+  bodies" and "the route as shipped must be playable: one of its two
+  default kits yields a keeper at every stop on it"; reach and close focus
+  have no test yet.*
 - **The note.** Never describe what is visible; add what is not. Except
   when the subject genuinely fails to read, and then the note may say
-  where to look.
+  where to look. *No test yet: a rule of the writing.*
 
 ## How it is built
 
@@ -165,6 +194,15 @@ lesson, every tag a real rulebook, every route's default pair on two
 bodies and able to make a keeper at each of its stops, every drive
 resolving, today's drive deterministic. It
 is what CI runs, and it installs nothing.
+
+Each capability in the lists above names the check in `tools/check.js`
+that proves it, by the comment it sits under or the failure it prints, or
+says it has no test yet (the README-proof convention, 10 October 2026).
+`tools/check-docs.js` holds the Markdown to the disk: every relative link
+in this README resolves, no Markdown file carries a second front-matter
+block, and the counts above (the stops with a frame and with a miss, the
+drives, the stops on the safari drive, off it and on today's) match the
+page. CI runs both.
 
 The engine descends from the author's one-file quest engine,
 [four-islands-quest](https://github.com/dermot-r-cochran/four-islands-quest):

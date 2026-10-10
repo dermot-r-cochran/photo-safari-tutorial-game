@@ -19,6 +19,9 @@ jobs:
       - name: Every stop develops, every finding is a lesson, every photograph is shown
         run: node tools/check.js
 
+      - name: Every README link resolves, one front-matter block at most, the counts match the page
+        run: node tools/check-docs.js
+
       - name: The page is one file with its two sections
         run: |
           grep -q "WORLD DATA" index.html
