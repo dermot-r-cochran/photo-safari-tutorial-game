@@ -432,7 +432,13 @@ was actually in, and the animals did what they did.
 `.github/workflows/pages.yml` serves `index.html` and `images/` from
 GitHub Pages on every push to `main` (Dermot's choice, 2026-09-13, over a subdomain of the
 photography site; a subdomain can point at the same Pages site later with
-a CNAME). CI (`ci.yml`) runs the check on every PR and installs nothing.
+a CNAME). CI (`ci.yml`) runs the check on every PR and installs nothing,
+and `tools/check-docs.js` beside it: the README's relative links resolve,
+no Markdown file has a second front-matter block, and the README's counts
+of stops, drives and frames match the page. Every capability the README
+lists names the check in `tools/check.js` that proves it, or says "no test
+yet" or "not yet implemented" (Dermot, 10 October 2026); keep that true
+when a capability or a check changes.
 
 ## Licence
 
