@@ -62,6 +62,10 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   the right setting gave*) — Dermot's option 2 of 2026-09-27, replacing the
   side-by-side pair that led with the miss whatever the verdict. A frame
   kept out for what it shows counts as got, since the settings were right.
+  Where both frames were taken on settings the player did not choose
+  (the `dawn` stop: both on yesterday's dial), the stop's `pairLeads`
+  names the two, the photograph first, whatever the verdict (Dermot,
+  2026-10-16), so the card never calls either *the frame you got*.
   A miss never stands without the photo it answers (the check holds
   both). A miss may come straight from the archive, unpublished, at site
   size, under the same licence; its caption may state the settings it was
@@ -209,8 +213,10 @@ Change a threshold only when the field notes change; say which note.
 
 **The numbers are one camera's** (Dermot, 2026-09-13: *my tutorial
 instructions are specific to my own range of Nikon cameras and might not
-generalize*). The game says so on the Camera card (`CAMERA.caveat`) and in
-the README rather than pretending otherwise: the thresholds belong to the
+generalize*). The game says so on the Camera card and in
+the README rather than pretending otherwise (the card shows the one line
+`CAMERA.caveatShort` and folds the full `CAMERA.caveat` under *Why these
+numbers?*, Dermot, 2026-10-16): the thresholds belong to the
 author's older crop-sensor body, the decisions carry over, and a
 reader with another camera checks the thresholds against their own. Keep
 that caveat visible; don't generalise a number to make it sound universal,
@@ -358,8 +364,11 @@ card text; the record's fields are now `stops`, `keepers`, `firsts`,
 *sinks* the frame (one for the folder), one that *bars* it from the site
 altogether (a recognisable person, a mating sequence), or neither; the
 verdict opens with *Not a keeper: …* naming the sinking findings, those
-findings are set in the drop colour, and the contact sheet carries the
-same names in brackets. A new finding that should sink a frame is added
+findings are set in the drop colour and come first, and the contact sheet
+carries the same names in brackets. The findings that neither sink nor bar
+follow under a small *Worth noting* label (Dermot, 2026-10-16), so a
+keeper with advice on it does not read as half a failure; that is display
+only, and changes no verdict. A new finding that should sink a frame is added
 with `"sinks"` (or `"bars"`), never by setting the flag beside it; the
 check fails a non-keeper with no such finding and a keeper with one.
 
