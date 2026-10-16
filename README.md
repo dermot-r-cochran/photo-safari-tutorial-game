@@ -66,8 +66,8 @@ your own frames.
 Five drives:
 
 - **The safari drive** — fourteen stops on the Mara, at Nairobi and at
-  Amboseli, first light to dusk. A topi against the sunrise, a young lion
-  on a vehicle track, an ostrich the lens could not find, a roller in
+  Amboseli, first light to dusk. A topi against the sunrise, an ostrich
+  the lens could not find, a young lion on a vehicle track, a roller in
   eight colours, vultures at a kill, a hyena nobody can find, elephants
   under Kilimanjaro at noon, flamingos under the cloud that made the
   picture, a jacana the colour of the grass, a courting pair, a lion in

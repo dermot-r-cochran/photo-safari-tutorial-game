@@ -58,6 +58,7 @@
     margin: 1.6rem 0 0.4rem; font-size: 0.85rem; font-weight: bold;
     letter-spacing: 0.12em; text-transform: uppercase; color: var(--grass);
   }
+  .stop-place { margin: 0 0 0.4rem; color: var(--dim); font-style: italic; }
   .prose p { margin: 0.7rem 0; }
   .chosen { color: var(--earth); font-style: italic; margin: 1rem 0 0.2rem; }
   .chosen::before { content: "➤ "; }
@@ -3214,7 +3215,7 @@ const ROUTES = [
     kit: { main: "zoom", companion: "long" },
     title: "The safari drive",
     sub: "a day on the Mara and at Amboseli, first light to dusk",
-    stops: ["dawn", "topi", "balloon", "lion", "ostrich", "sixtieth", "roller", "vultures", "hyena",
+    stops: ["dawn", "topi", "balloon", "ostrich", "lion", "sixtieth", "roller", "vultures", "hyena",
             "kilimanjaro", "flamingos", "jacana", "pair", "dusk"],
     end: {
       title: "End of the day",
@@ -3325,9 +3326,19 @@ function describeEV(ev) {
   return "very little light";
 }
 
+/* The model's shutter is exact; the page shows the nearest speed a
+   camera would actually set, in thirds of a stop, so the verdict reads
+   1/250 s rather than 1/256 s. Display only: the scoring keeps the
+   exact value. */
+const SHUTTER_SPEEDS = [8000, 6400, 5000, 4000, 3200, 2500, 2000, 1600, 1250, 1000, 800,
+  640, 500, 400, 320, 250, 200, 160, 125, 100, 80, 60, 50, 40, 30, 25, 20, 15, 13, 10,
+  8, 6, 5, 4, 3, 2.5, 2, 1.6, 1.3];
 function fmtShutter(t) {
   if (t >= 1) return (Math.round(t * 10) / 10) + " s";
-  return "1/" + Math.round(1 / t) + " s";
+  const d = SHUTTER_SPEEDS.reduce((best, x) =>
+    Math.abs(Math.log(x * t)) < Math.abs(Math.log(best * t)) ? x : best);
+  if (d < 1.5) return (Math.round(10 / d) / 10) + " s";
+  return "1/" + d + " s";
 }
 
 function lensMaxAperture(lens, focal) {
@@ -3865,6 +3876,13 @@ function boot() {
       h.className = "stop-title";
       h.textContent = e.stop + " · " + e.title;
       t.appendChild(h);
+      // the place, so a drive that moves between parks says where it is
+      if (e.place) {
+        const pl = document.createElement("p");
+        pl.className = "stop-place";
+        pl.textContent = cap(e.place);
+        t.appendChild(pl);
+      }
       addParas(t, e.enter, "prose");
       return h;
     } else if (entry.kind === "chosen") {
