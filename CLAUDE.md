@@ -125,7 +125,7 @@ conventions in `dermot-cochran-photography` (`FIELD-NOTES.md`, `STYLE.md`
 and the category and competition sections of its `CLAUDE.md`), restated
 here as tutorial content:
 
-- A 14-megapixel crop sensor with 5.1-micron pixels: diffraction softens
+- A 14-megapixel crop sensor with 5.0-micron pixels: diffraction softens
   from f/11 and is obvious by f/16; at 1:1 the effective aperture doubles.
   ISO 400 clean, 800 fine, 1600 chroma noise a vivid picture control
   amplifies, 3200 a last resort.
