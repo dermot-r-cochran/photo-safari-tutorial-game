@@ -209,6 +209,14 @@ here as tutorial content:
   and the 150–500 are stabilised (unset scores as the zoom does; the 50
   mm and the 75–240 are marked unstabilised from the notes).
 
+**The dial habit is the DSLR's** (Dermot, 2026-10-18: *M for macro, A
+for walking around, S for shooting birds. This only applies to* the
+older crop-sensor DSLR *and similar camera bodies*). The game says so in
+the woodland afterword, the folded caveat and the README, and does not
+claim the habit for the mirrorless, whose own dial use no note records.
+The presets themselves state their numbers and still develop on either
+body; only the mnemonic is scoped.
+
 Change a threshold only when the field notes change; say which note.
 
 **The numbers are one camera's** (Dermot, 2026-09-13: *my tutorial
