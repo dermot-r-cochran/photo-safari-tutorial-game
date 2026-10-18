@@ -108,7 +108,8 @@ The lessons are the author's own field notes and site rules, written
 into the game as they were learned:
 
 - **The three modes.** *M for macro, A for walking around, S for
-  shooting birds* — and why: aperture priority lengthens the shutter
+  shooting birds* — the DSLR's dial habit, and that of bodies like it;
+  the mirrorless is not claimed to follow it — and why: aperture priority lengthens the shutter
   once Auto ISO hits its cap, which is fine for a lion and fatal for a
   mushroom in a breeze; shutter priority is the only mode that promises
   1/2000 s to a landing vulture; manual leaves a frame dark rather than
