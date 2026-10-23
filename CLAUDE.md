@@ -435,6 +435,13 @@ recall nothing of the decisions behind them (*nothing that I can
 remember*), so it stays out rather than be invented; it was one or two
 days on the 18–400 alone, which is what the one-body route exists for,
 and a return visit with a note per frame would put it in. A hide route waits on a hide morning with a note behind it.
+A macro route waits the same way, on a macro day with the 70 mm and a
+note behind it (Dermot, 2026-10-23, *option 1* of three): the two macro
+stops stay on *Home ground* until then and move into it when it comes,
+and no lens the author does not own is added to make one, since it would
+have no note, no frame and no place on a card that says the cameras are
+his. The other two options were a line in the sloe's afterword on what a
+true 1:1 would have needed, and an imaginary lens marked as such.
 
 Then `node tools/check.js`: it develops every combination of the stop's
 options, requires at least one to be a keeper, holds every finding to a
