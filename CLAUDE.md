@@ -7,7 +7,8 @@ code in this repository.
 
 A one-file browser tutorial game about wildlife photography. Open
 `index.html` in any browser: no server, no build, no dependencies, no
-network, no framework, no pictures. The player makes the decisions a
+network, no framework, and no pictures but the author's own photographs
+after a verdict. The player makes the decisions a
 photographer makes in the field and the page develops the frame they would
 have got, names the lessons, files the frame under a category and, if it
 is a keeper, tags it against three competition rulebooks. Progress saves

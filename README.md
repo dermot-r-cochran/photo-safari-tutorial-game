@@ -115,21 +115,31 @@ into the game as they were learned:
   once Auto ISO hits its cap, which is fine for a lion and fatal for a
   mushroom in a breeze; shutter priority is the only mode that promises
   1/2000 s to a landing vulture; manual leaves a frame dark rather than
-  blurred, and a dark raw file is recoverable. *No test yet of the modes
-  themselves; `tools/check.js` develops every path at every stop on every
-  kit within the dials (check "every path on every kit develops cleanly
-  and keeps its invariants").*
+  blurred, and a dark raw file is recoverable. *`tools/check.js`, the
+  check "the model's numbers are the README's": at first light, A reaches
+  its ISO cap and lets the shutter run out, S and M stop at the cap and
+  leave the frame dark, and manual holds the shutter it was given; the
+  same file develops every path at every stop on every kit within the
+  dials (check "every path on every kit develops cleanly and keeps its
+  invariants").*
 - **Exposure, sharpness, depth and noise**, from a small model of a real
   camera: a 14-megapixel crop sensor with 5-micron pixels, so
   diffraction softens from f/11 and is plain by f/16; ISO 400 clean, 800
   fine, 1600 showing chroma noise that a vivid picture control amplifies;
   depth of field about a millimetre at 1:1 and f/8; mirror slap between
   1/15 s and 1/2 s on a support unless live view keeps the mirror up.
-  *No test yet of these thresholds; the same check holds every number the
-  model gives to a number, and every finding to a lesson in `LESSONS`.*
+  *`tools/check.js`, the check "the model's numbers are the README's"
+  holds each of these on a made-up stop: the three motion floors, the
+  hand-held rule and the stabiliser's two stops, the noise steps at 400,
+  800, 1600 and 3200, f/16 and the doubling at 1:1, the millimetre at
+  f/8, and the mirror's band with live view as the way out. The path
+  check holds every number the model gives to a number, and every
+  finding to a lesson in `LESSONS`.*
 - **The vivid dial.** The house look for scenery, and the wrong setting
   for a white bird in hard light or a subject that is already saturated.
-  *No test yet.*
+  *`tools/check.js`, the same model check: vivid sinks a white subject
+  and a saturated one, standard holds the whites, and standard on
+  scenery reads flat in kind light only.*
 - **What is in the frame besides the subject.** A vehicle track, a
   balloon, a feeding rail, three people on a far vehicle, a numbered leg
   ring — and what each does to the frame's category and to its
@@ -169,8 +179,10 @@ into the game as they were learned:
   stop the main camera cannot make. *`tools/check.js`, checks "the kit:
   every kit a body and a lens; every route's pair two kits on different
   bodies" and "the route as shipped must be playable: one of its two
-  default kits yields a keeper at every stop on it"; reach and close focus
-  have no test yet.*
+  default kits yields a keeper at every stop on it"; and the model check
+  holds the reach, the wide end and the close focus of each lens: 500 mm
+  on the 18–400 stops at 400, 18 mm on the 150–500 starts at 150, and
+  1:1 on anything but the macro is about 1:4.*
 - **The note.** Never describe what is visible; add what is not. Except
   when the subject genuinely fails to read, and then the note may say
   where to look. *No test yet: a rule of the writing.*
