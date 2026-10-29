@@ -7,8 +7,9 @@
  * every combination of its options and holds the result to the shape
  * the page relies on: every finding names a lesson that exists, every
  * tag is a rulebook, no number is NaN, every drive resolves, and the
- * day's drive is the same for the same date. Node only — nothing to
- * install, in CI or out.
+ * day's drive is the same for the same date. Before any of that, the
+ * model's own numbers — the thresholds the README states — are held on
+ * a made-up stop. Node only — nothing to install, in CI or out.
  *
  *     node tools/check.js
  */
@@ -63,6 +64,107 @@ function questions(enc) {
   if (S.decisionsFor(fake, [1]).map((d) => d.id).join() !== "a,b1") fail("decisionsFor does not follow an option's `then`");
   if (S.decisionsFor(fake, [0]).map((d) => d.id).join() !== "a,b") fail("decisionsFor does not fall back to the stop's next decision");
   if (questions(fake).map((d) => d.id).join() !== "a,b1,b") fail("questions() misses a branch");
+}
+
+// the model's numbers are the README's: every threshold "What it teaches"
+// states is held here on a made-up stop, so a number that drifts in the
+// engine or in the prose is caught before a reader checks it against
+// their own camera (the README-proof convention, 2026-10-10)
+{
+  const stop = (light, subject, frame, set) => ({
+    light: Object.assign({ ev: 13 }, light),
+    subject: Object.assign({ motion: "still", distance: 30, depth: 1 }, subject),
+    frame: Object.assign({ kind: "wildlife", tells: [] }, frame),
+    decisions: [{ id: "one", prompt: "?", options: [{ label: "x", set: set || {} }] }]
+  });
+  const run = (what, light, subject, frame, set, kit) => {
+    try { return S.develop(stop(light, subject, frame, set), [0], kit || "zoom"); }
+    catch (e) { fail("the model's numbers: " + what + " threw: " + e.message); return null; }
+  };
+  const has = (r, key) => !!r && r.findings.some((f) => f.key === key);
+  const sinks = (r, key) => !!r && r.findings.some((f) => f.key === key && f.sinks);
+  const expect = (cond, what) => { if (!cond) fail("the model's numbers: " + what); };
+  const std = { picture: "standard" };
+
+  // motion floors: flying 1/2000 s, running 1/1000 s, walking 1/250 s
+  for (const [motion, floor, ev] of [["flying", 2000, 16], ["running", 1000, 15], ["walking", 250, 13]]) {
+    const slow = run(motion, { ev }, { motion }, {}, Object.assign({ mode: "S", shutter: 2 / floor, iso: 100 }, std));
+    const fast = run(motion, { ev }, { motion }, {}, Object.assign({ mode: "S", shutter: 1 / floor, iso: 100 }, std));
+    expect(sinks(slow, "motionBlur"), motion + " at 1/" + floor / 2 + " s should blur and sink the frame");
+    expect(fast && fast.keeper && !has(fast, "motionBlur"), motion + " at 1/" + floor + " s should be sharp and a keeper");
+  }
+  // hand-held, a still subject: 1/(focal × 1.5), two stops back for the stabiliser; the 50 mm has none
+  const h100 = run("hand-held 400 mm", {}, {}, {}, Object.assign({ mode: "S", shutter: 1 / 100, iso: 100 }, std));
+  const h200 = run("hand-held 400 mm", {}, {}, {}, Object.assign({ mode: "S", shutter: 1 / 200, iso: 100 }, std));
+  expect(sinks(h100, "shake"), "hand-held at 400 mm, 1/100 s is under the 1/150 s the stabiliser allows and should shake");
+  expect(h200 && !has(h200, "shake"), "hand-held at 400 mm, 1/200 s is over the floor and should hold");
+  const f60 = run("the 50 mm hand-held", {}, {}, {}, Object.assign({ mode: "S", shutter: 1 / 60, iso: 100, focal: 50 }, std), "fifty");
+  const f100 = run("the 50 mm hand-held", {}, {}, {}, Object.assign({ mode: "S", shutter: 1 / 100, iso: 100, focal: 50 }, std), "fifty");
+  expect(sinks(f60, "shake"), "the unstabilised 50 mm at 1/60 s is under 1/75 s and should shake");
+  expect(f100 && !has(f100, "shake"), "the unstabilised 50 mm at 1/100 s should hold");
+  // on a support: safe from shake at any length, but a subject that stirs blurs past 1/2 s
+  const tripod = { support: "tripod", liveView: true };
+  const quarter = run("stirs on a support", { ev: 7 }, { motion: "stirs" }, {}, Object.assign({ mode: "S", shutter: 1 / 4, iso: 100 }, tripod, std), "long");
+  const second = run("stirs on a support", { ev: 7 }, { motion: "stirs" }, {}, Object.assign({ mode: "S", shutter: 1, iso: 100 }, tripod, std), "long");
+  expect(quarter && quarter.keeper && !has(quarter, "windBlur") && !has(quarter, "shake"), "a subject that stirs at 1/4 s on a support should hold");
+  expect(sinks(second, "windBlur"), "a subject that stirs at 1 s on a support should blur: the caps move");
+  // mirror slap between 1/15 s and 1/2 s on a support, unless live view; the mirrorless has no mirror
+  const slap = (set, kit) => run("mirror slap", { ev: 9 }, {}, {}, Object.assign({ mode: "S", shutter: 1 / 8, iso: 100, support: "tripod", liveView: false }, set, std), kit);
+  expect(sinks(slap({}), "mirrorSlap"), "the DSLR at 1/8 s on a support through the finder should take the mirror's thump");
+  expect(!has(slap({ liveView: true }), "mirrorSlap"), "live view keeps the mirror up, so 1/8 s on a support should hold");
+  expect(!has(slap({}, "long"), "mirrorSlap"), "the mirrorless has no mirror to thump at 1/8 s");
+  expect(!has(slap({ shutter: 1 / 30 }), "mirrorSlap"), "1/30 s is outside the mirror's band");
+  // ISO 400 clean, 800 fine, 1600 chroma noise that vivid amplifies, 3200 a last resort
+  const at = (iso, picture) => run("ISO " + iso, {}, {}, {}, { mode: "A", aperture: 8, iso, picture: picture || "standard" });
+  expect(!has(at(400), "noise1600") && !has(at(400), "noise3200"), "ISO 400 should be clean");
+  expect(!has(at(800), "noise1600") && !has(at(800), "noise3200"), "ISO 800 should be fine");
+  expect(has(at(1600), "noise1600") && !sinks(at(1600), "noise1600"), "ISO 1600 should show chroma noise without sinking the frame");
+  expect(has(at(3200), "noise3200"), "ISO 3200 should be the last resort");
+  expect(has(at(1600, "vivid"), "vividHarsh") && !has(at(800, "vivid"), "vividHarsh"), "vivid should amplify the noise at 1600 and not at 800");
+  // diffraction softens from f/16 and sinks at f/22; at 1:1 the aperture doubles, so f/11 sinks and f/8 passes
+  const atF = (aperture, frame, kit) => run("f/" + aperture, { ev: 13 }, {}, frame || {}, Object.assign({ mode: "A", aperture, iso: 100 }, tripod, std), kit);
+  expect(!has(atF(11), "diffraction"), "f/11 should not diffract");
+  expect(has(atF(16), "diffraction") && !sinks(atF(16), "diffraction"), "f/16 should soften without sinking the frame");
+  expect(sinks(atF(22), "diffraction"), "f/22 should sink the frame to diffraction");
+  const oneToOne = { kind: "plant", magnification: 1 };
+  const close = { distance: 0.14, depth: 0.01 };
+  const m11 = run("f/11 at 1:1", { ev: 6 }, close, oneToOne, Object.assign({ mode: "A", aperture: 11, iso: 100, focal: 70 }, tripod, std), "macro");
+  const m8 = run("f/8 at 1:1", { ev: 6 }, close, oneToOne, Object.assign({ mode: "A", aperture: 8, iso: 100, focal: 70 }, tripod, std), "macro");
+  expect(sinks(m11, "diffraction"), "f/11 at 1:1 is f/22 in effect and should sink the frame");
+  expect(m8 && !has(m8, "diffraction") && has(m8, "macro") && m8.category === "Macro", "f/8 at 1:1 should pass, and one cap filling the frame is Macro");
+  const m5 = run("1:5 on the macro", { ev: 6 }, close, { kind: "plant", magnification: 0.2 }, Object.assign({ mode: "A", aperture: 8, iso: 100, focal: 70 }, tripod, std), "macro");
+  expect(m5 && has(m5, "closeUp") && m5.category === "Nature", "1:5 is close-up work and files as Nature");
+  // depth of field about a millimetre at 1:1 and f/8
+  const dof = S.depthOfField(8, 70, 0.14);
+  expect(dof > 0.0005 && dof < 0.002, "depth of field at 1:1 and f/8 should be about a millimetre, not " + dof);
+  // Auto ISO: in A it holds ISO 100 until the shutter would drop under the floor, raises to the cap, then
+  // lets the shutter lengthen; in S and M it stops at the cap and leaves the frame dark; manual holds its shutter
+  const aBright = run("A in good light", { ev: 13 }, {}, {}, Object.assign({}, S.PRESETS.walkAround, std));
+  expect(aBright && aBright.exposure.iso === 200 && aBright.exposure.shutter <= 1 / 250 + 1e-9, "A at EV 13 should stop at ISO 200 with the shutter on its 1/250 s floor");
+  const aDim = run("A at first light", { ev: 7 }, { motion: "stirs" }, {}, Object.assign({}, S.PRESETS.walkAround, { support: "beanbag" }, std));
+  expect(aDim && aDim.exposure.iso === 800 && aDim.exposure.shutter > 1 / 20 && aDim.keeper, "A at EV 7 should reach its cap of 800 and let the shutter run out to about 1/16 s");
+  const sDim = run("S at first light", { ev: 7 }, { motion: "stirs" }, {}, Object.assign({}, S.PRESETS.birds, std));
+  expect(sDim && sDim.exposure.iso === 1600 && Math.abs(sDim.exposure.shutter - 1 / 2000) < 1e-9 && sinks(sDim, "under"), "S at EV 7 should keep 1/2000 s, stop at ISO 1600 and leave the frame dark");
+  const mDim = run("M at first light", { ev: 7 }, { motion: "stirs" }, {}, Object.assign({ mode: "M", aperture: 8, shutter: 1 / 2000, iso: "auto", isoMax: 1600 }, std));
+  expect(mDim && mDim.exposure.iso === 1600 && Math.abs(mDim.exposure.shutter - 1 / 2000) < 1e-9 && sinks(mDim, "manualDark"), "M at EV 7 should hold 1/2000 s, stop at ISO 1600 and leave the frame dark rather than blurred");
+  // the vivid dial: it clips white plumage and blows a saturated channel; standard on scenery is flat only in kind light
+  const vivid = { mode: "A", aperture: 8, iso: 100, picture: "vivid" };
+  expect(sinks(run("vivid on white", {}, { white: true }, {}, vivid), "vividWhite"), "vivid on a white subject should clip the whites and sink the frame");
+  expect(sinks(run("vivid on saturated", {}, { saturated: true }, {}, vivid), "vividSaturated"), "vivid on a saturated subject should blow a channel and sink the frame");
+  expect(!has(run("standard on white", {}, { white: true }, {}, Object.assign({ mode: "A", aperture: 8, iso: 100 }, std)), "vividWhite"), "standard on a white subject should hold the whites");
+  const scene = (frame) => run("standard on scenery", { ev: 13 }, {}, Object.assign({ kind: "landscape" }, frame), Object.assign({ mode: "A", aperture: 8, iso: 100, focal: 18 }, std));
+  expect(has(scene({}), "flat"), "standard on scenery in kind light should read flatter than the house look");
+  expect(!has(scene({ harsh: true }), "flat") && has(scene({ harsh: true }), "harsh"), "standard on scenery in harsh light is the right call, not flat");
+  // the lens in hand: its reach, its wide end and how close it focuses
+  const far = run("500 mm on the zoom", {}, {}, {}, { mode: "A", aperture: 8, iso: 100, focal: 500 });
+  expect(far && has(far, "reach") && far.exposure && far.settings.focal === 400, "500 mm on the 18–400 should stop at 400 and say the lens ran out");
+  const wide = run("18 mm on the long zoom", {}, {}, { kind: "landscape" }, { mode: "A", aperture: 8, iso: 100, focal: 18 }, "long");
+  expect(wide && has(wide, "wideEnd") && wide.settings.focal === 150, "18 mm on the 150–500 should stop at 150 and say the lens would not go wide");
+  const dot = run("400 mm on the 50", {}, {}, {}, { mode: "A", aperture: 8, iso: 100, focal: 400 }, "fifty");
+  expect(has(dot, "tiny"), "400 mm reached for on the 50 mm leaves the subject a dot that does not read");
+  const nm = run("1:1 on the zoom", { ev: 6 }, close, oneToOne, Object.assign({ mode: "A", aperture: 8, iso: 100, focal: 70 }, tripod, std));
+  expect(nm && has(nm, "notMacro") && has(nm, "closeUp") && nm.category === "Nature", "1:1 reached for on the zoom should stop at about 1:4 and file as Nature");
+  expect(!has(m8, "notMacro"), "the 70 mm macro should reach 1:1");
 }
 
 // the kit: every kit a body and a lens; every route's pair two kits on
