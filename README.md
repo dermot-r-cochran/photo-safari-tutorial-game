@@ -30,10 +30,10 @@ frame for the folder; you can abandon the stop instead. The contact
 sheet keeps the last frame you pressed and keeps a plain count of the
 drive: stops played, keepers, keepers first time, stops abandoned, and
 under each stop how many presses it took. After the
-verdict, at twenty-four of the stops, the page shows the frame the stop was
+verdict, at twenty-five of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
-frame, or a worse one, and the words say which. At five stops so far
+frame, or a worse one, and the words say which. At six stops so far
 the author's own frame of the same scenario got wrong is there too:
 the frame your settings made comes first and large, the other sits
 small beneath it, and the captions say what changed. A frame the
@@ -86,7 +86,8 @@ Five drives:
 - **Home ground** — a deer park in mist, a pond, a beech wood, two
   islands, a reservoir hedge, a hill and a tidal island's flats near
   home, the week after, on foot: a herd at the fifty metres the park
-  asks for, a duck that surfaces where you were not pointing, the one
+  asks for, the moon by day over the same park, a duck that surfaces
+  where you were not pointing, the one
   mode the safari never needed, a ringed gull, a chick on the boulders
   with its parent watching, a sloe that looked like macro and measured
   at one to seven, a goat that nobody owns, a crow on the causeway rocks

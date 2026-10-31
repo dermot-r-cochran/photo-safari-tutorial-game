@@ -2116,6 +2116,87 @@ const ENCOUNTERS = {
     ]
   },
 
+  moon: {
+    stop: "11:15", place: "the same deer park on a clear October morning, the rut, the moon still up",
+    onward: "Walk on.",
+    title: "The moon by day",
+    kit: "long",
+    light: { ev: 14, label: "clear late-morning sun, the sky a deep even blue" },
+    subject: { name: "a half moon, high in the blue, over an oak", motion: "still", distance: 384400000, depth: 3474000, white: true },
+    frame: { kind: "landscape", tells: [] },
+    presences: ["the moon", "the oak", "the blue"],
+    examine: ["moonlight", "oak"],
+    enter: [
+      "On the walk out to the herd, a half moon stood high in a clear sky " +
+      "over an oak still in its gold leaves. Nobody else had looked up.",
+      "The moon is a long way off and lit by the same sun that is lighting " +
+      "the oak. It is the brightest thing in the sky after the sun, and " +
+      "also the one thing in the frame with almost no edges."
+    ],
+    decisions: [
+      {
+        id: "focus", prompt: "The oak is in the corner and the moon is in the blue. Where does the focus go?",
+        options: [
+          {
+            label: "On the moon itself: the focus point on its edge, then the frame.",
+            text: ["You put the focus point on the moon's lit edge and " +
+                   "waited for the confirmation, then let the oak come into " +
+                   "the corner. The craters along the shadow line came up " +
+                   "sharp; the leaves, a long way nearer, went to soft gold."],
+            set: { focal: 500 }
+          },
+          {
+            label: "Wherever the camera chooses. It knows what the subject is.",
+            text: ["The camera chose the nearest thing with the most edges, " +
+                   "which was the oak. Every leaf is sharp, and the moon " +
+                   "behind them is a pale smudge in the blue."],
+            frame: { foreground: true }, set: { focal: 200 }
+          }
+        ]
+      },
+      {
+        id: "exposure", prompt: "And the exposure, for a white rock in a blue sky?",
+        options: [
+          {
+            label: "Daylight numbers: 1/800 s at f/6.7, Auto ISO.",
+            text: ["M, 1/800 s, f/6.7, and the Auto ISO settled at 200. " +
+                   "The sky stayed blue and the moon stayed grey and white, " +
+                   "with its craters in it."],
+            settings: "birds", set: { mode: "M", shutter: 1 / 800, aperture: 6.7, picture: "standard" }
+          },
+          {
+            label: "Night numbers. It is the moon: a long shutter and a high ISO.",
+            text: ["M, 1/15 s, f/6.7, ISO 3200. The moon is not dark because " +
+                   "the night is: the frame came back as a white page with " +
+                   "a brighter disc somewhere in it, and the long end shook " +
+                   "it as well."],
+            settings: "walkAround", set: { mode: "M", shutter: 1 / 15, aperture: 6.7, iso: 3200, picture: "standard" }
+          },
+        ]
+      }
+    ],
+    miss: { file: "images/the-moon-behind-the-leaves.jpg", title: "The Moon Behind the Leaves",
+            alt: "The top of an oak in gold autumn leaves against a deep-blue sky, every leaf sharp, and above them a pale half moon gone soft and blurred",
+            caption: "Thirteen seconds after the frame beside it, at 193 mm with the oak in the frame: 1/400 s, f/5.3, ISO 100. The autofocus took the leaves, and the moon is the one thing in it that is not sharp." },
+    photo: { file: "images/the-moon-by-day.jpg", title: "The Moon by Day",
+             alt: "A half moon high in a plain deep-blue sky, craters showing along its shadow edge, with soft out-of-focus gold oak leaves in the lower right corner",
+             caption: "The author's first sharp frame of the moon, on the morning of the rut: handheld at the long end, the focus on the moon and the oak let go." },
+    note: "The author's earlier handheld frames of the moon, at 400 mm, " +
+          "were all soft. This one was not: a fast shutter, a low ISO, and " +
+          "the focus on the moon rather than on anything nearer.",
+    afterword: [
+      "The moon is a rock in full sunlight, so it wants daylight numbers " +
+      "at any hour; by night the sky around it goes black, but the moon " +
+      "itself does not get any darker. The daytime moon is the easy " +
+      "introduction, because the meter and the eye agree about it.",
+      "Autofocus goes to the nearest thing with edges, and a plain sky has " +
+      "none. With a branch or a roof in the frame, the focus point is worth " +
+      "putting on the moon's lit edge first and the frame composed " +
+      "afterwards: the foreground can be soft and still be part of the " +
+      "picture, but a soft moon cannot."
+    ]
+  },
+
   duck: {
     stop: "09:15", place: "a park pond near home, April",
     onward: "Walk on.",
@@ -2963,6 +3044,17 @@ const EXAMINE = {
       "grass the same tone as the haze. There is no edge on him for a " +
       "lens to hold until the head comes up."
   },
+  moonlight: {
+    label: "the moon",
+    text: () => "A rock in full sun, a long way off. By day the sky around it " +
+      "is blue and by night it is black, but the moon is as bright as " +
+      "sunlit ground either way, and it is exposed like sunlit ground."
+  },
+  oak: {
+    label: "the oak",
+    text: () => "Near, gold, and full of edges: everything an autofocus lens " +
+      "likes, and nothing the frame is about."
+  },
   haze: {
     label: "the haze",
     text: () => "Soft light, not low light — but soft light has no edges, " +
@@ -3127,6 +3219,7 @@ const LESSONS = {
   supported: { title: "On a support", text: "The lens on the beanbag, a still subject, the shutter running long and the ISO staying down: the frame is clean because nothing had to be spent to get it." },
   manualDark: { title: "Manual held the shutter", text: "The frame came out {stops} stops dark rather than blurred, because manual does not lengthen the shutter when the ISO cap is reached. A dark raw file gives back a little; past two and a half stops, the model's own line, the dark is the frame." },
   urban: { title: "Urban wildlife", text: "A free-living animal in a built place: not captive, not a pet, and the building is part of the picture. It files as Urban Wildlife. The world awards have a section for exactly this; the federation's nature definition bans any human element, so it is out of those sections however tight the crop." },
+  foreground: { title: "The focus went to the nearer thing", text: "Autofocus took the nearest subject with the most edges, and the one the frame was for is soft behind it. A plain sky gives the lens nothing to hold; the focus point on the subject first, and the frame composed afterwards, is what it needed." },
   hunted: { title: "The lens had not found it", text: "The shutter went before the lens had settled, and the subject is a soft shape where a subject was. Haze and long grass have no edges for autofocus to hold; the half-press held until it settles, the press on the confirmation, or the head against the sky is what it needed." },
   processed: { title: "Softened afterwards", text: "The background was blurred on the computer to lift the subject out of it. The picture is yours to show, and the club's open competition takes it; the nature sections do not allow blurring that hides part of the scene, and the world awards bar anything added or taken away, so it enters the open competition only. The same softening in the lens — a stop or two wider — would have been allowed everywhere." },
   disturbed: { title: "The subject was disturbed", text: "The frame was got by moving the animal: a parent off its rock, a chick off its boulder. The welfare of the subject comes before the photograph in the federation's definition, and the world awards bar anything that alters natural behaviour, so the frame enters the open competition only, and the frame from the path was the one to make." },
@@ -3281,11 +3374,11 @@ const ROUTES = [
     id: "home", noun: "walk",
     kit: { main: "macro", companion: "long" },
     title: "Home ground",
-    sub: "a deer park in mist, a pond, a wood, two islands, a reservoir hedge, a hill and a tidal island's flats near home, the week after, on foot",
-    stops: ["deer", "duck", "woodland", "gull", "chick", "sloe", "goat", "flats"],
+    sub: "a deer park in mist and again under the moon, a pond, a wood, two islands, a reservoir hedge, a hill and a tidal island's flats near home, the week after, on foot",
+    stops: ["deer", "moon", "duck", "woodland", "gull", "chick", "sloe", "goat", "flats"],
     end: {
       title: "End of the week",
-      text: ["Eight frames near home, and three rulebooks that disagree " +
+      text: ["Nine frames near home, and three rulebooks that disagree " +
              "about most of them. That is the whole tutorial: the camera " +
              "is the easy part, and the lens was decided at the car.",
              "Two cities are next: the animals that live where people do."],
@@ -3596,6 +3689,7 @@ function develop(enc, choices, kitId) {
   if (frame.processed) add("processed");
   if (frame.disturbed) add("disturbed");
   if (frame.hunting) add("hunted", null, "sinks");
+  if (frame.foreground) add("foreground", null, "sinks");
   if (frame.feral) add("feral");
   if (subject.tiny) {
     if (subject.framedAlone) add("tinyAlone", null, "sinks");
