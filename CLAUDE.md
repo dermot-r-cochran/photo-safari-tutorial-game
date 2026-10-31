@@ -40,7 +40,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
-- **The verdict is words; a photograph comes only after it.** Twenty-four
+- **The verdict is words; a photograph comes only after it.** Twenty-five
   stops carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -520,7 +520,7 @@ repositories).
 
 - **`dermot-r-cochran/dermot-cochran-photography`** supplies both halves of
   this game: the frames under `images/` (copies at site size under the
-  portfolio's CC BY-NC-ND terms, 29 at the time of writing) and the model's
+  portfolio's CC BY-NC-ND terms, 31 at the time of writing) and the model's
   thresholds, restated from its `FIELD-NOTES.md`, `STYLE.md` and `CLAUDE.md`
   as *The model* above says. Copies, not links: a frame unlisted or re-edited
   there stays as it was here until someone copies it again, and the
