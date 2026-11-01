@@ -3735,7 +3735,11 @@ function eligibility({ frame, humanIn, keeper }) {
   // is out of the nature sections and the world awards alike
   const nature = frame.kind !== "documentary" && !frame.processed && !frame.disturbed;
   if (nature && !frame.captive && !frame.baited) tags.push("WNPA");
-  const federation = nature && humanIn.length === 0 && !frame.baited && !frame.captive && !frame.feral;
+  // a built place is a human element whether or not a tell names it, and
+  // so are distant figures left in a loose frame (Dermot, 2026-11-01:
+  // "Yes, all (a)")
+  const figures = frame.people === "distant" && frame.framing === "loose";
+  const federation = nature && humanIn.length === 0 && !frame.built && !figures && !frame.baited && !frame.captive && !frame.feral;
   if (federation) {
     tags.push("IPF-Nature");
     if (frame.kind === "wildlife") tags.push("IPF-Wildlife");

@@ -152,7 +152,9 @@ into the game as they were learned:
   stop: a track leaves the subject Wildlife and shuts the federation's
   sections, and framed out opens them again; a rail or a balloon makes
   the frame Documentary; the watchers on a far vehicle do the same in a
-  loose frame and not in a tight one; a ring is noted as allowed.*
+  loose frame and not in a tight one, and so do distant figures with no
+  vehicle; a built place shuts the federation's sections with no tell to
+  name; a ring is noted as allowed.*
 - **The rulebooks**, which disagree with each other on purpose. The
   game tags every keeper with the competitions it could enter, by the
   short names the author's portfolio uses: **DCC**, Dublin Camera Club's
