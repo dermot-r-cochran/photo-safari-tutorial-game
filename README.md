@@ -97,8 +97,9 @@ Five drives:
   a hyrax that chose a coffee machine, a pigeon with the manners of a
   regular. The animals that live where people do, and the one category
   that is for them; the buildings themselves stay out. *`tools/check.js`,
-  the same two checks; the Urban Wildlife category is one of the six it
-  allows, and no test yet holds these two stops to it.*
+  the same two checks, and the check "the two city stops file as Urban
+  Wildlife": every path at both stops, on every kit, files there, and a
+  keeper has the world awards open and the federation's sections shut.*
 - **Today's drive** — six stops picked from the safari day by the date,
   in the order of the day. The same day gives everyone the same drive;
   tomorrow is different. *`tools/check.js`, the route checks whose failures
@@ -146,8 +147,12 @@ into the game as they were learned:
   ring — and what each does to the frame's category and to its
   competition eligibility, which are different questions.
   *`tools/check.js` holds every category to the six the game files under
-  and every tag to a rulebook; what each presence does to them has no test
-  yet.*
+  and every tag to a rulebook, and the check "what each presence does to
+  the frame's category and its tags" holds each of these on a made-up
+  stop: a track leaves the subject Wildlife and shuts the federation's
+  sections, and framed out opens them again; a rail or a balloon makes
+  the frame Documentary; the watchers on a far vehicle do the same in a
+  loose frame and not in a tight one; a ring is noted as allowed.*
 - **The rulebooks**, which disagree with each other on purpose. The
   game tags every keeper with the competitions it could enter, by the
   short names the author's portfolio uses: **DCC**, Dublin Camera Club's
@@ -172,8 +177,12 @@ into the game as they were learned:
   softened afterwards — and the note each frame must carry, or the
   folder it must stay in, or the one competition it can still enter.
   *`tools/check.js`, check "a frame that is not a keeper always says why"
-  (a finding that sinks or bars it); each case's own outcome has no test
-  yet.*
+  (a finding that sinks or bars it), and the presences check above holds
+  each case the frame carries as a flag: baited, captive, softened
+  afterwards and disturbed each stay a keeper in the open competition
+  only, and a recognisable stranger or a mating pair bars the frame with
+  no tags at all. The driver asked to leave the track is a lesson, not a
+  flag, and has no test of its own.*
 - **The lens is the decision.** What is on each body was settled at the
   bag, and the stop gets what that lens can give: the reach it has, the
   width it has, how close it focuses. The companion is there for the
