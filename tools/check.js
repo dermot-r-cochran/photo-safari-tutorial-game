@@ -218,6 +218,10 @@ function questions(enc) {
   const far = files("distant figures in a loose frame", { people: "distant", framing: "loose", tells: [watchers] }, "Documentary", awards);
   expect(has(far, "distantPeople"), "distant figures should be noted as fine");
   files("distant figures framed out", { people: "distant", framing: "tight", tells: [watchers] }, "Wildlife", every);
+  // the figures alone, with no vehicle to name as a tell, are still a human element in a loose frame
+  // (Dermot, 2026-11-01); framed tight they are out of it
+  files("distant figures with no vehicle, loose", { people: "distant", framing: "loose" }, "Documentary", awards);
+  files("distant figures with no vehicle, tight", { people: "distant", framing: "tight" }, "Wildlife", every);
   // a recognisable stranger and a mating pair bar the frame from the site: for the folder, and no tags at all
   for (const [what, frame, key] of [["a recognisable stranger", { people: "recognisable" }, "people"], ["a mating pair", { mating: true }, "mating"]]) {
     const r = files(what, frame, "Wildlife", []);
@@ -227,6 +231,8 @@ function questions(enc) {
   // is Urban Wildlife, the world awards' own section and not the federation's; feral is the same split
   const built = files("a free-living animal in a built place", { built: true, tells: [{ label: "the coffee machinery", excludable: false }] }, "Urban Wildlife", awards);
   expect(has(built, "urban"), "a built place should raise the urban note");
+  // the built place shuts the federation's sections by itself, with no tell to name (Dermot, 2026-11-01)
+  files("a built place with no tell", { built: true }, "Urban Wildlife", awards);
   const feral = files("a feral animal", { feral: true }, "Wildlife", awards);
   expect(has(feral, "feral"), "feral should be named");
   // baited, captive, softened afterwards, disturbed: still a keeper, and the open competition only

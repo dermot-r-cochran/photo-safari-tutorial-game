@@ -170,7 +170,10 @@ here as tutorial content:
   baiting but not built environments, feral animals or gardens; the
   federation's nature section bars any human element except a scientific
   ring, plus cultivated plants, feral and domestic animals and baiting; its
-  wildlife section adds wild and free. Baiting bars a frame from the
+  wildlife section adds wild and free. A built place counts as a human
+  element whether or not a tell names it, and so do distant figures left
+  in a loose frame (Dermot, 2026-11-01, *Yes, all (a)*; no shipped stop's
+  tags moved). Baiting bars a frame from the
   nature *and* the wildlife competitions alike (Dermot's correction,
   2026-09-13: *the fishing eagle baited would also be excluded from most
   wildlife competitions not just nature*) — the tags always did this; the
