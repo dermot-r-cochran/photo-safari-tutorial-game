@@ -167,6 +167,76 @@ function questions(enc) {
   expect(!has(m8, "notMacro"), "the 70 mm macro should reach 1:1");
 }
 
+// what each presence does to the frame's category and its tags: the
+// README's "what is in the frame besides the subject" and "ethics that
+// the picture cannot show", each held on the same made-up stop. The
+// path is a keeper in kind light, so only the presence decides the
+// outcome; the outcomes are the rulebooks as CLAUDE.md's "The model"
+// reads them, and the stops carry each presence the way it is tried here
+{
+  const stop = (frame, subject) => ({
+    light: { ev: 13 },
+    subject: Object.assign({ motion: "still", distance: 30, depth: 1 }, subject),
+    frame: Object.assign({ kind: "wildlife", tells: [] }, frame),
+    decisions: [{ id: "one", prompt: "?", options: [{ label: "x", set: Object.assign({}, S.PRESETS.walkAround, { picture: "standard", focal: 200 }) }] }]
+  });
+  const run = (what, frame, subject) => {
+    try { return S.develop(stop(frame, subject), [0], "zoom"); }
+    catch (e) { fail("the presences: " + what + " threw: " + e.message); return null; }
+  };
+  const has = (r, key) => !!r && r.findings.some((f) => f.key === key);
+  const expect = (cond, what) => { if (!cond) fail("the presences: " + what); };
+  const files = (what, frame, category, tags, subject) => {
+    const r = run(what, frame, subject);
+    if (!r) return r;
+    if (r.category !== category) fail("the presences: " + what + " should file as " + category + ", not " + r.category);
+    if (r.tags.join() !== tags.join()) fail("the presences: " + what + " should carry " + (tags.join(", ") || "no tags") + ", not " + (r.tags.join(", ") || "none"));
+    return r;
+  };
+  const every = ["DCC", "WNPA", "IPF-Nature", "IPF-Wildlife"], open = ["DCC"], awards = ["DCC", "WNPA"];
+  // nothing in the frame but the subject: Wildlife, and every rulebook open
+  const plain = files("a wild subject alone", {}, "Wildlife", every);
+  expect(plain && plain.keeper, "a wild subject alone in kind light should be a keeper");
+  // a minor tell (a vehicle track) shuts the federation's sections but does not change
+  // what the subject is; framed tight, an excludable tell is outside the edge and they open again
+  const track = { label: "the vehicle track", excludable: true, minor: true };
+  const t = files("a track in a loose frame", { framing: "loose", tells: [track] }, "Wildlife", awards);
+  expect(has(t, "tell"), "a track in the frame should be named as a tell");
+  const tt = files("a track framed out", { framing: "tight", tells: [track] }, "Wildlife", every);
+  expect(has(tt, "tellExcluded") && !has(tt, "tell"), "a tight frame should put an excludable tell outside the edge");
+  // a major tell (a feeding rail, a balloon) makes the frame Documentary
+  files("a rail in the frame", { tells: [{ label: "the feeding rail", excludable: false }] }, "Documentary", awards);
+  const balloon = { label: "the balloon", excludable: true };
+  files("a balloon over scenery", { kind: "landscape", framing: "loose", tells: [balloon] }, "Documentary", awards);
+  files("scenery with the balloon framed out", { kind: "landscape", framing: "tight", tells: [balloon] }, "Landscape", ["DCC", "WNPA", "IPF-Nature"]);
+  // a scientific ring is the one human element the federation allows
+  const ring = files("a numbered leg ring", { tells: [{ label: "the numbered leg ring", ring: true, excludable: false }] }, "Wildlife", every);
+  expect(has(ring, "ring") && !has(ring, "tell"), "a ring should be noted as allowed, not as a tell");
+  // three people on a far vehicle, as the stops carry them: the vehicle a tell, the figures distant;
+  // loose, the frame is Documentary and the federation shut; tight, they are out of it
+  const watchers = { label: "the other vehicle and its watchers", excludable: true };
+  const far = files("distant figures in a loose frame", { people: "distant", framing: "loose", tells: [watchers] }, "Documentary", awards);
+  expect(has(far, "distantPeople"), "distant figures should be noted as fine");
+  files("distant figures framed out", { people: "distant", framing: "tight", tells: [watchers] }, "Wildlife", every);
+  // a recognisable stranger and a mating pair bar the frame from the site: for the folder, and no tags at all
+  for (const [what, frame, key] of [["a recognisable stranger", { people: "recognisable" }, "people"], ["a mating pair", { mating: true }, "mating"]]) {
+    const r = files(what, frame, "Wildlife", []);
+    expect(r && !r.keeper && r.unpublishable && r.findings.some((f) => f.key === key && f.bars), what + " should bar the frame from the site");
+  }
+  // the animals that live where people do: a built place, with the building in the frame as its tell,
+  // is Urban Wildlife, the world awards' own section and not the federation's; feral is the same split
+  const built = files("a free-living animal in a built place", { built: true, tells: [{ label: "the coffee machinery", excludable: false }] }, "Urban Wildlife", awards);
+  expect(has(built, "urban"), "a built place should raise the urban note");
+  const feral = files("a feral animal", { feral: true }, "Wildlife", awards);
+  expect(has(feral, "feral"), "feral should be named");
+  // baited, captive, softened afterwards, disturbed: still a keeper, and the open competition only
+  for (const [what, frame, key] of [["baited", { baited: true }, "baited"], ["captive", { captive: true }, "captive"], ["a background softened afterwards", { processed: true }, "processed"], ["a subject disturbed for the frame", { disturbed: true }, "disturbed"]]) {
+    const r = files(what, frame, "Wildlife", open);
+    expect(r && r.keeper && has(r, key), what + " should stay a keeper, with the finding that names it");
+  }
+  files("baited, with the bucket in the frame", { baited: true, kind: "documentary", tells: [{ label: "the bucket", excludable: false }] }, "Documentary", open);
+}
+
 // the kit: every kit a body and a lens; every route's pair two kits on
 // different bodies (one lens on each, none changed in the field); every
 // stop's own kit one that its route carries
@@ -305,6 +375,22 @@ for (const r of S.ROUTES) {
     if (JSON.stringify(stops) === JSON.stringify(other)) console.log("  warn: two consecutive days gave the same drive");
     const times = stops.map((id) => S.ENCOUNTERS[id].stop);
     if (times.slice().sort().join() !== times.join()) fail("today's drive is not in the order of the day");
+  }
+}
+
+// the two city stops file as Urban Wildlife: every path at every stop on
+// the route `city`, on every kit, is in the one category that is for the
+// animals that live where people do, and a keeper there has the world
+// awards open and the federation's sections shut (Dermot, 2026-09-21: an
+// urban wildlife walk, not architecture)
+{
+  const city = S.ROUTES.find((r) => r.id === "city");
+  if (!city) fail("there is no route `city`");
+  else for (const id of city.stops) for (const kit of Object.keys(S.KITS)) for (const choices of combos(S.ENCOUNTERS[id])) {
+    let r;
+    try { r = S.develop(S.ENCOUNTERS[id], choices, kit); } catch (e) { continue; }   // the path check above has already failed it
+    if (r.category !== "Urban Wildlife") fail(id + " " + JSON.stringify(choices) + " on " + kit + " files as " + r.category + ", not Urban Wildlife");
+    if (r.keeper && (!r.tags.includes("WNPA") || r.tags.some((t) => t.startsWith("IPF")))) fail(id + " " + JSON.stringify(choices) + " on " + kit + ": a city keeper carries " + r.tags.join(", ") + "; the world awards take it and the federation's sections do not");
   }
 }
 
