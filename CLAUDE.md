@@ -81,6 +81,15 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   beside *Vulture in Flight*. Before adding a `photo`, check the
   portfolio page carries no `unlisted: true`; a page unlisted only as a
   duplicate may still be a photo.
+- **A `photo` may carry `alternates`**, frames of the same scene a moment
+  apart (Dermot, 2026-11-03: if a stop is shot twice, it is fine to show
+  slightly different frames each time). Each press at the stop shows the
+  next frame in turn (`frameFor`, counted by the press's place in the
+  history, so a transcript replays what it showed), and the check holds
+  each alternate to the photo's rules. The first is the `dusk` stop:
+  *Lion Portrait at Dusk*, then *The Coalition*, seven minutes later. The
+  portfolio unlisted that page only as a near-duplicate of *The Watch*,
+  which is why it may still be a photo here.
 - **A card may disagree with its stop's verdict**, as long as the caption
   says so (Dermot, 2026-09-15, on *Two and a Half Seconds* at the `woodland`
   stop: "I like the two-and-a-half-seconds as a creative shot despite the
@@ -525,7 +534,7 @@ repositories).
 
 - **`dermot-r-cochran/dermot-cochran-photography`** supplies both halves of
   this game: the frames under `images/` (copies at site size under the
-  portfolio's CC BY-NC-ND terms, 33 at the time of writing) and the model's
+  portfolio's CC BY-NC-ND terms, 34 at the time of writing) and the model's
   thresholds, restated from its `FIELD-NOTES.md`, `STYLE.md` and `CLAUDE.md`
   as *The model* above says. Copies, not links: a frame unlisted or re-edited
   there stays as it was here until someone copies it again, and the

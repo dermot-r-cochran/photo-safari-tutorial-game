@@ -2002,7 +2002,12 @@ const ENCOUNTERS = {
     ],
     photo: { file: "images/lion-portrait-at-dusk.jpg", title: "Lion Portrait at Dusk",
              alt: "Close portrait of a male lion with a full mane, lit by soft evening light, a second lion visible behind",
-             caption: "Soft evening light and a second lion behind: the same animal, the same twenty metres, the last frame of the day." },
+             caption: "Soft evening light and a second lion behind: the same animal, the same twenty metres, the last frame of the day.",
+             alternates: [
+               { file: "images/the-coalition.jpg", title: "The Coalition",
+                 alt: "Two male lions resting side by side in long grass at dusk, both alert and looking off to the right",
+                 caption: "Seven minutes later, the same coalition: two of the males side by side, both watching the same thing off the frame, and the light lower again." }
+             ] },
     note: "He is watching a herd of zebra come down to drink at the " +
           "river a kilometre off, and will go for them after full dark. " +
           "The rest of the pride is behind the vehicle, out of frame and " +
@@ -3962,7 +3967,13 @@ function boot() {
       box.appendChild(n);
     }
     if (e.afterword) addParas(box, e.afterword, "prose");
-    if (e.miss && e.photo) {
+    /* A photo may carry `alternates`, frames of the same scene a moment
+       apart (Dermot, 2026-11-03: a stop shot twice may show slightly
+       different frames each time). Each press at the stop shows the next
+       in turn, counted by the press's place in the history, so a
+       transcript replays the frame it showed. */
+    const photo = frameFor(e.photo, state.history.filter((h) => h.kind === "frame" && h.stop === entry.stop).indexOf(entry));
+    if (e.miss && photo) {
       /* The frame the player's own settings made comes first and large;
          the other frame sits small beneath it (Dermot, 2026-09-27,
          option 2). A keeper, or a frame kept out for what it shows rather
@@ -3974,14 +3985,14 @@ function boot() {
       // a stop whose frames were both taken on settings the player did
       // not choose names them itself, the photograph first
       const fixed = e.pairLeads;
-      const first = fixed || gotIt ? e.photo : e.miss;
+      const first = fixed || gotIt ? photo : e.miss;
       pair.appendChild(renderPhoto(first, fixed ? fixed[0] : gotIt ? "The frame you got" : "The frame you took"));
-      const other = renderPhoto(first === e.photo ? e.miss : e.photo,
+      const other = renderPhoto(first === photo ? e.miss : photo,
         fixed ? fixed[1] : gotIt ? "The frame the other setting gave" : "The frame the right setting gave");
       other.classList.add("counterpart");
       pair.appendChild(other);
       box.appendChild(pair);
-    } else if (e.photo) box.appendChild(renderPhoto(e.photo));
+    } else if (photo) box.appendChild(renderPhoto(photo));
     t.appendChild(box);
     return box;
   }
@@ -3993,6 +4004,11 @@ function boot() {
      made renders first and large, and the other one small beneath it,
      each under its own lead. The page works without the file — a missing picture hides
      its own card. */
+  function frameFor(photo, nth) {
+    if (!photo || !photo.alternates || !photo.alternates.length) return photo;
+    const all = [photo].concat(photo.alternates);
+    return all[Math.max(nth, 0) % all.length];
+  }
   function renderPhoto(photo, lead) {
     const fig = document.createElement("figure");
     fig.className = "author-frame";

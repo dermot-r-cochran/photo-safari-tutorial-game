@@ -320,8 +320,12 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   // frame of the same scenario got wrong, shown beside it. Same shape,
   // same checks, and a miss never stands without the photo it answers.
   if (enc.miss && !enc.photo) fail(id + ": a miss needs a photo to stand beside");
-  for (const kind of ["photo", "miss"]) {
-    const ph = enc[kind];
+  // a photo's `alternates` are frames of the same scene a moment apart,
+  // shown in turn on each press; each is held to the photo's checks
+  const alts = (enc.photo && enc.photo.alternates) || [];
+  if (enc.photo && enc.photo.alternates && !Array.isArray(enc.photo.alternates)) fail(id + ": photo.alternates must be a list");
+  const cards = [["photo", enc.photo], ["miss", enc.miss]].concat(alts.map((a, i) => ["photo alternate " + (i + 1), a]));
+  for (const [kind, ph] of cards) {
     if (!ph) continue;
     if (!/^images\/[a-z0-9-]+\.jpg$/.test(ph.file || "")) fail(id + ": " + kind + " file must live under images/: " + ph.file);
     else {
@@ -333,7 +337,8 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
   }
 }
 // every picture in images/ belongs to a stop
-const shown = new Set(Object.values(S.ENCOUNTERS).flatMap((e) => [e.photo && e.photo.file, e.miss && e.miss.file]).filter(Boolean));
+const shown = new Set(Object.values(S.ENCOUNTERS).flatMap((e) => [e.photo && e.photo.file, e.miss && e.miss.file]
+  .concat(((e.photo && e.photo.alternates) || []).map((a) => a.file))).filter(Boolean));
 const imgDir = path.join(root, "images");
 if (fs.existsSync(imgDir)) for (const f of fs.readdirSync(imgDir)) {
   if (!shown.has("images/" + f)) fail("images/" + f + " is shown at no stop");
