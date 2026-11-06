@@ -40,6 +40,10 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   assistant. The check reads the script by loading it into a bare VM
   context — no `document`, so the page never boots — and calls the model
   through the `SAFARI` export at the end of the engine's pure section.
+  `tools/check-play.js` runs the same script a second time with a stub
+  document, so the page section below the export is played too (see *The
+  page is played without a browser*); it reads nothing out of the file but
+  the element ids, and the page gets no test hook.
 - **The verdict is words; a photograph comes only after it.** Twenty-six
   stops carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
@@ -475,6 +479,53 @@ every non-keeper to no tags at all. Prose is general-audience, in the
 register of the existing stops; every situation so far is one the author
 was actually in, and the animals did what they did.
 
+## The page is played without a browser
+
+Added 2026-11-06 on the next-improvement question, after the sibling
+`photo-safari-range` did the same on 2026-11-05 and found three flaws in
+its page section. Everything below the `SAFARI` export — the kit card,
+the in-hand row, the questions, the verdict box and its photograph, try
+again and abandon, the contact sheet, the saves, the next day and the
+past days, the endcard — had no test, because `tools/check.js` loads no
+document; the README promised each of them with nothing behind the
+promise. `tools/check-play.js` runs the same script with a stub for the
+browser: every element the HTML gives an id (parsed from the markup, with
+its `hidden`; an id the page gives an element it makes, the kit card's
+selects, is found in the tree, as in a browser), elements that keep what
+is written to them, a `select` whose value is its selected option's, a
+localStorage in memory, a `confirm` the check answers, and a
+`window.scrollTo` that does nothing. It then plays every route: the kit
+card proposes the route's pair and refills the companion's list when the
+main camera changes; setting out writes the pair and opens the first
+stop; a look is written once however often it is pressed; the companion
+reaches the camera card and the main camera comes back; a frame for the
+folder names what sank it, is entered nowhere, and offers try again and
+abandon and nothing else; a barred frame is not published and its sheet
+line carries no category; a keeper's tags are the model's and expand to
+their rulebooks' names, its note and its findings are on the page under
+*Worth noting*; the frame the stop was learned on comes after the verdict,
+the player's own frame first and large beside a miss (and `pairLeads`
+where the stop names them), the second frame on a stop shot twice; an
+abandoned stop reads so on the sheet and the drive moves on; the endcard
+carries the route's words, the card and the way to the next drive, and
+the route's day survives a switch away and back; a page reopened on the
+same store comes back to the same route with its frames; the next day
+asks, does nothing when declined, and when agreed puts the card under
+the local date with a line per stop, clears the transcript and the
+sheet, and proposes yesterday's pair (the city walk sets out on the pair
+swapped so there is something to remember). Which paths are keepers it
+reads from the model through the export, so a stop that changes is still
+played right. Sixteen mutations of the page section (a folder frame
+allowed to drive on, the pair swapped, the save dropped, the day never
+archived, the alternates never shown, yesterday's pair forgotten, a look
+written twice, a folder frame tagged, the photograph above the verdict,
+abandon not moving on, the next day without asking, the endcard's button
+gone, the companion not reaching the hand, the note dropped, *Worth
+noting* gone, the wrong route after a switch) each failed it. Its first
+run on the shipped page found no flaw. The stub lives in the tool, and a
+new document API the page section uses is added to the stub when the
+check fails with a TypeError naming it.
+
 ## Publishing
 
 `.github/workflows/pages.yml` serves `index.html` and `images/` from
@@ -483,10 +534,11 @@ photography site; a subdomain can point at the same Pages site later with
 a CNAME). CI (`ci.yml`) runs the check on every PR and installs nothing,
 and `tools/check-docs.js` beside it: the README's relative links resolve,
 no Markdown file has a second front-matter block, and the README's counts
-of stops, drives and frames match the page. Every capability the README
-lists names the check in `tools/check.js` that proves it, or says "no test
-yet" or "not yet implemented" (Dermot, 10 October 2026); keep that true
-when a capability or a check changes.
+of stops, drives and frames match the page; and `tools/check-play.js`
+(the page boots and every drive plays). Every capability the README
+lists names the check in `tools/check.js` or `tools/check-play.js` that
+proves it, or says "no test yet" or "not yet implemented" (Dermot, 10
+October 2026); keep that true when a capability or a check changes.
 
 ## Licence
 
