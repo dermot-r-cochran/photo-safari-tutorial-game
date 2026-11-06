@@ -8,7 +8,10 @@ the same file and nothing else. Progress saves to that browser's
 localStorage only, per drive, and so do the past days: when you start
 the next day on a drive, that day's scorecard and its stops' lines are
 kept under the date beneath the contact sheet, and the transcript is
-cleared.
+cleared. *`tools/check-play.js`, which plays the page on a stub for the
+browser: a page reopened on the same store comes back to the same drive
+with its frames and its card, and the next day puts the card under the
+date, clears the transcript, and proposes yesterday's pair of cameras.*
 
 ## What it is
 
@@ -38,7 +41,12 @@ the author's own frame of the same scenario got wrong is there too:
 the frame your settings made comes first and large, the other sits
 small beneath it, and the captions say what changed. A frame the
 author's site took down as below its bar is only ever the one got
-wrong, never the one learned on.
+wrong, never the one learned on. *`tools/check-play.js` plays each of
+these on every drive: a frame for the folder offers try again and
+abandon and nothing else, an abandoned stop reads so on the sheet and
+the drive moves on, the frame the stop was learned on comes after the
+verdict with the frame your settings made first and large, a stop shot
+twice shows its second frame, and the sheet's counts are the card's.*
 
 This is written by a novice for other novices and for younger
 photographers. Nothing in it is expert opinion. Every lesson was
@@ -222,14 +230,26 @@ bodies and able to make a keeper at each of its stops, every drive
 resolving, today's drive deterministic. It
 is what CI runs, and it installs nothing.
 
-Each capability in the lists above names the check in `tools/check.js`
-that proves it, by the comment it sits under or the failure it prints, or
-says it has no test yet (the README-proof convention, 10 October 2026).
-`tools/check-docs.js` holds the Markdown to the disk: every relative link
-in this README resolves, no Markdown file carries a second front-matter
-block, and the counts above (the stops with a frame and with a miss, the
-drives, the stops on the safari drive, off it and on today's) match the
-page. CI runs both.
+`tools/check-play.js` plays the page without a browser. It runs the same
+script with a stub for the document: every element the HTML gives an id,
+elements that keep what is written to them, a localStorage in memory and
+a `confirm` the check answers. Then it does what a player does, on every
+drive: sets out with a pair of cameras, looks at something, picks up the
+companion, answers the questions, presses the shutter, reads the verdict
+and the frame beneath it, tries a stop again, abandons one, drives on to
+the endcard, reopens the page on its save, and starts the next day. Which
+paths are keepers it reads from the model, so a stop that changes is
+still played right. The page gets no test hook; the stub only stands in
+for the browser.
+
+Each capability in the lists above names the check in `tools/check.js` or
+`tools/check-play.js` that proves it, by the comment it sits under or the
+failure it prints, or says it has no test yet (the README-proof
+convention, 10 October 2026). `tools/check-docs.js` holds the Markdown to
+the disk: every relative link in this README resolves, no Markdown file
+carries a second front-matter block, and the counts above (the stops with
+a frame and with a miss, the drives, the stops on the safari drive, off
+it and on today's) match the page. CI runs all three.
 
 The engine descends from the author's one-file quest engine,
 [four-islands-quest](https://github.com/dermot-r-cochran/four-islands-quest):
