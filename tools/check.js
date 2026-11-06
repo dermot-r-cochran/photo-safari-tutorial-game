@@ -292,7 +292,8 @@ for (const [id, enc] of Object.entries(S.ENCOUNTERS)) {
       if (typeof v !== "number" || Number.isNaN(v)) fail(id + " " + JSON.stringify(choices) + ": " + k + " is " + v);
     }
     if (x.shutter < 1 / 4000 - 1e-9 || x.shutter > 30 + 1e-9) fail(id + ": shutter out of range " + x.shutter);
-    if (x.aperture < widest - 1e-9 || x.aperture > 22) fail(id + ": aperture out of range " + x.aperture);
+    // The zoom stops down to f/36 at its long end: the thicket stop's frames were taken there.
+    if (x.aperture < widest - 1e-9 || x.aperture > 36) fail(id + ": aperture out of range " + x.aperture);
     for (const f of r.findings) {
       if (!S.LESSONS[f.key]) fail(id + " raised finding " + f.key + ", which is not in LESSONS");
       else {

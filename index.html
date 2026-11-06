@@ -618,6 +618,96 @@ const ENCOUNTERS = {
     ]
   },
 
+  thicket: {
+    stop: "06:40", place: "the Mara, the edge of a thorn thicket",
+    title: "The young lion at f/36",
+    light: { ev: 9, label: "first light, and less of it again under the thorn" },
+    subject: { name: "a young lion lying up at the edge of the thicket", motion: "still", distance: 30, depth: 0.5 },
+    frame: { kind: "wildlife", tells: [] },
+    presences: ["the young lion", "the thicket", "the window sill, and a beanbag on it", "the top of the camera"],
+    examine: ["light", "younglion", "beanbag", "dial"],
+    enter: [
+      "The driver stopped short of a thorn thicket and turned the engine " +
+      "off. A young lion lay in the mouth of it, a first bit of mane " +
+      "coming in, looking straight out at the vehicle with no great " +
+      "interest. He had plainly been there all night and meant to stay.",
+      "The sun was not on him and would not be for a long while. You had " +
+      "been shooting for a quarter of an hour already, and the screen " +
+      "had looked a little dark, and you had put that down to the hour."
+    ],
+    decisions: [
+      {
+        id: "settings", prompt: "He is not going anywhere. What does the camera do?",
+        options: [
+          {
+            label: "What it has been doing. The frames are coming, and he might not stay.",
+            text: ["You kept shooting. M, f/36, 1/60 s, as it had been for a " +
+                   "quarter of an hour. Nothing on the camera complained."],
+            settings: "walkAround", set: { mode: "M", aperture: 36, shutter: 1 / 60, isoMax: 1600, focal: 300 }
+          },
+          {
+            label: "Keep f/36 and take the ISO to 3200 to pay for it.",
+            text: ["You kept the aperture and bought the light back with " +
+                   "ISO 3200. The frame came up brighter, and softer than " +
+                   "the sensor could account for."],
+            settings: "walkAround", set: { mode: "M", aperture: 36, shutter: 1 / 60, iso: 3200, focal: 300 }
+          },
+          {
+            label: "Read the top of the camera, then open up to f/8 and rest the lens on the beanbag. M, 1/60 s.",
+            text: ["You looked at the numbers for the first time that " +
+                   "morning. f/36. You opened up to f/8, and with the lens " +
+                   "pressed into the beanbag the sixtieth was no trouble " +
+                   "on an animal lying still."],
+            settings: "walkAround", set: { mode: "M", aperture: 8, shutter: 1 / 60, isoMax: 1600, focal: 300, support: "beanbag" }
+          },
+          {
+            label: "Back to the walking-around setting, hand-held.",
+            text: ["A, f/8, Auto ISO to 800. The camera took the aperture " +
+                   "back from you, ran the ISO to its cap and let the " +
+                   "shutter go under the floor to find the rest."],
+            settings: "walkAround", set: { focal: 300 }
+          }
+        ]
+      },
+      {
+        id: "framing", prompt: "And the thicket?",
+        options: [
+          {
+            label: "Keep the thorn around him. It is where he lives.",
+            text: ["You left the dark branches round him, so that he looks " +
+                   "out of them."],
+            frame: { framing: "loose" }
+          },
+          {
+            label: "In close, on the face and the first of the mane.",
+            text: ["You went in on the face and let the thorn fall away."],
+            frame: { framing: "tight" }, set: { focal: 400 }
+          }
+        ]
+      }
+    ],
+    miss: { file: "images/young-lion-at-f36.jpg", title: "Young Lion at f/36",
+            alt: "A young lion lying at the mouth of a dark thorn thicket, looking straight at the camera, the whole frame dim, grainy and slightly soft",
+            caption: "f/36 at 1/60 s, more than four stops given away at the aperture alone against f/8. This is the raw file lifted as far as it would go, so the grain shows, and it is soft from diffraction and a slow shutter together. The whole dawn run came out like it." },
+    photo: { file: "images/cheetah-at-f8.jpg", title: "Cheetah at f/8",
+             alt: "A cheetah walking left to right across tall golden grass, side on, sharp from nose to the rings of its tail",
+             caption: "About two hours later, the same morning and the same lens: f/8 at 1/250 s and ISO 100. A different animal in far better light, so the hour did part of this. The aperture did the rest, and no frame of that dawn run had it." },
+    note: "Manual keeps exactly what it is given, which is its virtue, and " +
+          "it says nothing when what it was given is wrong. This run went on " +
+          "for a quarter of an hour at f/25 to f/36 and a sixtieth of a " +
+          "second, and the dark frames were put down to the dawn.",
+    afterword: [
+      "The numbers on top of the camera are worth reading before the first " +
+      "frame of a drive, and again whenever the frames look wrong, because " +
+      "the hour is such a good excuse. f/36 lets in about a twentieth of " +
+      "the light of f/8, and on this sensor it softens the picture as well, " +
+      "so the frame pays twice: once in the dark, and once in the detail " +
+      "that lifting the dark afterwards cannot put back. An animal lying " +
+      "still asked for very little here. A wide aperture and a beanbag " +
+      "would have done it. The frame this was learned on sits below, with " +
+      "one from later that morning."
+    ]
+  },
   balloon: {
     stop: "06:50", place: "the Mara, the plain below the escarpment",
     title: "The balloon",
@@ -2922,6 +3012,11 @@ const EXAMINE = {
       "closed. Twenty-five metres. The eye is what has to be sharp; the " +
       "shoulder behind it is half a metre further back."
   },
+  younglion: {
+    label: "the young lion",
+    text: () => "About thirty metres off, on his side at the mouth of the thicket, head up. The mane is only "
+      + "starting. He has no reason to move and shows no sign of finding one."
+  },
   track: {
     label: "the track",
     text: () => "Bare earth with tyre marks. A human element for the " +
@@ -3344,7 +3439,7 @@ const ROUTES = [
     kit: { main: "zoom", companion: "long" },
     title: "The safari drive",
     sub: "a day on the Mara, at Nairobi and at Amboseli, first light to dusk",
-    stops: ["dawn", "topi", "balloon", "ostrich", "lion", "sixtieth", "roller", "vultures", "hyena",
+    stops: ["dawn", "topi", "thicket", "balloon", "ostrich", "lion", "sixtieth", "roller", "vultures", "hyena",
             "kilimanjaro", "flamingos", "jacana", "pair", "dusk"],
     end: {
       title: "End of the day",

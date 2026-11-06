@@ -44,7 +44,7 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   document, so the page section below the export is played too (see *The
   page is played without a browser*); it reads nothing out of the file but
   the element ids, and the page gets no test hook.
-- **The verdict is words; a photograph comes only after it.** Twenty-six
+- **The verdict is words; a photograph comes only after it.** Twenty-seven
   stops carry a `photo` — the author's own frame from that outing, at portfolio
   site size under `images/` — rendered as a comparison card *after* the
   player's verdict, never at the top of a stop (it would answer the
@@ -85,6 +85,10 @@ a stop.** Preserve that; the rules below follow from it, and they are the
   beside *Vulture in Flight*. Before adding a `photo`, check the
   portfolio page carries no `unlisted: true`; a page unlisted only as a
   duplicate may still be a photo.
+- **One `photo` is not on the portfolio** (Dermot, 2026-11-06, *Yes, DSC_6118*):
+  *Cheetah at f/8* at the `thicket` stop, from the same morning and lens as
+  the f/36 lion, chosen as that frame's positive and copied from the card at
+  site size. Its caption says it is a different animal in better light.
 - **A `photo` may carry `alternates`**, frames of the same scene a moment
   apart (Dermot, 2026-11-03: if a stop is shot twice, it is fine to show
   slightly different frames each time). Each press at the stop shows the

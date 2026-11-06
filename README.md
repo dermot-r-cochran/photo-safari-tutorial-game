@@ -33,10 +33,10 @@ frame for the folder; you can abandon the stop instead. The contact
 sheet keeps the last frame you pressed and keeps a plain count of the
 drive: stops played, keepers, keepers first time, stops abandoned, and
 under each stop how many presses it took. After the
-verdict, at twenty-six of the stops, the page shows the frame the stop was
+verdict, at twenty-seven of the stops, the page shows the frame the stop was
 learned on — the author's own photograph from that outing — as a
 comparison, never as the answer: your choices may have got you a better
-frame, or a worse one, and the words say which. At seven stops so far
+frame, or a worse one, and the words say which. At eight stops so far
 the author's own frame of the same scenario got wrong is there too:
 the frame your settings made comes first and large, the other sits
 small beneath it, and the captions say what changed. A frame the
@@ -75,8 +75,8 @@ your own frames.
 
 Five drives:
 
-- **The safari drive** — fourteen stops on the Mara, at Nairobi and at
-  Amboseli, first light to dusk. A topi against the sunrise, an ostrich
+- **The safari drive** — fifteen stops on the Mara, at Nairobi and at
+  Amboseli, first light to dusk. A topi against the sunrise, a young lion at the wrong aperture, an ostrich
   the lens could not find, a young lion on a vehicle track, a roller in
   eight colours, vultures at a kill, a hyena nobody can find, elephants
   under Kilimanjaro at noon, flamingos under the cloud that made the
