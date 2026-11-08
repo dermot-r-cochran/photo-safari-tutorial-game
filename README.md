@@ -8,10 +8,16 @@ the same file and nothing else. Progress saves to that browser's
 localStorage only, per drive, and so do the past days: when you start
 the next day on a drive, that day's scorecard and its stops' lines are
 kept under the date beneath the contact sheet, and the transcript is
-cleared. *`tools/check-play.js`, which plays the page on a stub for the
-browser: a page reopened on the same store comes back to the same drive
-with its frames and its card, and the next day puts the card under the
-date, clears the transcript, and proposes yesterday's pair of cameras.*
+cleared. A page reopened mid-drive, or a drive you come back to, picks
+up where your last action left it — the stop just opened, the verdict
+just read, the endcard once the day is done — rather than at the top of
+the day's transcript. *`tools/check-play.js`, which plays the page on a
+stub for the browser: a page reopened on the same store comes back to
+the same drive with its frames and its card and lands on the stop just
+opened, or on the endcard of a finished day, holds that landing while a
+photograph above it loads and lets it go once you scroll; and the next
+day puts the card under the date, clears the transcript, and proposes
+yesterday's pair of cameras.*
 
 ## What it is
 
@@ -237,7 +243,8 @@ a `confirm` the check answers. Then it does what a player does, on every
 drive: sets out with a pair of cameras, looks at something, picks up the
 companion, answers the questions, presses the shutter, reads the verdict
 and the frame beneath it, tries a stop again, abandons one, drives on to
-the endcard, reopens the page on its save, and starts the next day. Which
+the endcard, reopens the page on its save and finds it where it was
+left, and starts the next day. Which
 paths are keepers it reads from the model, so a stop that changes is
 still played right. The page gets no test hook; the stub only stands in
 for the browser.
