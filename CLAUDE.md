@@ -498,7 +498,8 @@ its `hidden`; an id the page gives an element it makes, the kit card's
 selects, is found in the tree, as in a browser), elements that keep what
 is written to them, a `select` whose value is its selected option's, a
 localStorage in memory, a `confirm` the check answers, and a
-`window.scrollTo` that does nothing. It then plays every route: the kit
+`window.scrollTo` that only remembers it was called (as `scrollIntoView`
+remembers its element, since 2026-11-08). It then plays every route: the kit
 card proposes the route's pair and refills the companion's list when the
 main camera changes; setting out writes the pair and opens the first
 stop; a look is written once however often it is pressed; the companion
@@ -529,6 +530,36 @@ noting* gone, the wrong route after a switch) each failed it. Its first
 run on the shipped page found no flaw. The stub lives in the tool, and a
 new document API the page section uses is added to the stub when the
 check fails with a TypeError naming it.
+
+**The page picks up where the last action left it** (added 2026-11-08 on
+the reader's question, asked after the check above: what does a player
+meet that the check does not?). A page reopened mid-drive, or a drive
+come back to from another, rendered the whole day's transcript and left
+the view at its top: on a home-ground walk two stops in, the next choice
+sat three thousand five hundred pixels down a 768-pixel window, and a
+fifteen-stop safari day would have been several times that. `renderAll`
+now returns the element the last history entry wrote, and `resumeAt`
+brings it to the top of the view — the stop just opened, the verdict just
+read, a rulebook just read, or the endcard once the day is done — at
+once rather than smoothly, as `boot` and `switchRoute` both do; a route
+with nothing written yet opens at the top as before. Because the
+photographs are lazy-loaded and carry no dimensions, one loading above
+the landing would push it down, so the landing is held while they load
+and let go at the reader's first wheel, touch, key or pointer. Nothing in
+the data section, the model, the words or the order of the page moved.
+`tools/check-play.js` holds it: the stub remembers what was last brought
+to the top (and `window.scrollTo`, as the top), and the check reopens the
+page after each route's first stop and asks that it landed on the stop
+just opened, that a photograph loading afterwards puts it back there,
+that it stays put once the reader has scrolled, that a finished day
+reopened or come back to lands on its endcard, and that a fresh route
+opens at the top. Seven mutations (no landing on boot, the first entry
+instead of the last, the hold never released, no re-landing on a load,
+coming back to a route going to the top, a finished day landing on its
+last frame, a fresh route landing nowhere) each fail it, and the shipped
+page of 6 November fails it fourteen times. The sibling engines
+(`four-islands-quest`, `photo-safari-range`) open at the top the same
+way; the fix is theirs to take up, not applied from here.
 
 ## Publishing
 

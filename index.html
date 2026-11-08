@@ -4811,13 +4811,16 @@ function boot() {
     loadState();
     ensureOpened();
     saveState();
-    renderAll();
-    window.scrollTo({ top: 0 });
+    resumeAt(renderAll());
   }
 
+  /* Renders the whole page from the state, and returns the element the
+     last history entry wrote, so the view can be put back where the last
+     action left it. */
   function renderAll() {
     $("transcript").innerHTML = "";
-    for (const entry of state.history) renderHistoryEntry(entry);
+    let last = null;
+    for (const entry of state.history) last = renderHistoryEntry(entry) || last;
     renderStopLine();
     renderRoutes();
     renderStops();
@@ -4825,6 +4828,28 @@ function boot() {
     renderSheet();
     renderRulebooks();
     renderActions();
+    return last;
+  }
+
+  /* A page reopened mid-drive, or a drive come back to, picks up where
+     its last action left it: the view lands on what that action wrote —
+     the stop just opened, the verdict just read, the endcard once the day
+     is done — rather than at the top of the day's transcript, which on a
+     drive half played sat screens above the next choice (2026-11-08). The
+     landing is at once, not smooth, and is held while the photographs
+     above it load and push it down, until the reader first scrolls or
+     presses something. A route with nothing written yet opens at the top. */
+  function resumeAt(el) {
+    if (state.stop >= stops.length) el = $("endcard");
+    if (!el || !el.scrollIntoView) { window.scrollTo({ top: 0 }); return; }
+    const land = () => el.scrollIntoView({ block: "start" });
+    land();
+    let held = true;
+    const release = () => { held = false; };
+    for (const ev of ["wheel", "touchstart", "keydown", "pointerdown"]) window.addEventListener(ev, release, { once: true, passive: true });
+    for (const img of $("transcript").querySelectorAll("img")) {
+      if (!img.complete) img.addEventListener("load", () => { if (held) land(); }, { once: true });
+    }
   }
 
   $("restart").addEventListener("click", () => {
@@ -4839,7 +4864,7 @@ function boot() {
   loadCurrentRoute();
   loadState();
   ensureOpened();
-  renderAll();
+  resumeAt(renderAll());
 }
 
 if (typeof document !== "undefined") boot();

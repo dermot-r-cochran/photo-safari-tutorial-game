@@ -72,8 +72,11 @@ class El {
   }
   append(...cs) { for (const c of cs) this.appendChild(c); }
   remove() { if (this.parent) { const i = this.parent.children.indexOf(this); if (i >= 0) this.parent.children.splice(i, 1); this.parent = null; } }
-  scrollIntoView() {}
+  // the view: what the page last brought to the top is remembered, so the check can ask where the reader landed
+  scrollIntoView() { scrolled.el = this; }
   focus() {}
+  // descendants by tag name, which is all the page asks of it
+  querySelectorAll(sel) { return this.all().slice(1).filter((e) => e.tagName === sel.toUpperCase()); }
   addEventListener(type, fn) { (this.listeners[type] = this.listeners[type] || []).push(fn); }
   dispatch(type, ev) { for (const fn of (this.listeners[type] || []).slice()) fn(ev || { type }); }
   // every element in the tree below this one, this one included
@@ -82,8 +85,14 @@ class El {
   findAll(pred) { return this.all().filter(pred); }
 }
 
+// where the page last put the view: an element brought to the top, "top" for the top of the page, null for nowhere yet
+const scrolled = { el: null };
+
 // a fresh page: every element the HTML gives an id, the script run against it on the given store
 function openPage(store, answers) {
+  scrolled.el = null;
+  const win = new El("window");
+  win.scrollTo = () => { scrolled.el = "top"; };
   const byId = {};
   for (const tag of html.matchAll(/<(\w+)\b([^>]*)>/g)) {
     const attrs = tag[2], id = (attrs.match(/\bid="([^"]+)"/) || [])[1];
@@ -103,12 +112,12 @@ function openPage(store, answers) {
     },
     localStorage: { getItem: (k) => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: (k) => { delete store[k]; } },
     confirm: () => { answers.asked++; return answers.yes; },
-    window: { scrollTo() {} }
+    window: win
   };
   sandbox.globalThis = sandbox;
   vm.createContext(sandbox);
   vm.runInContext(m[1], sandbox, { filename: "index.html" });
-  return { $: sandbox.document.getElementById, S: sandbox.SAFARI };
+  return { $: sandbox.document.getElementById, S: sandbox.SAFARI, win };
 }
 
 // ---- the player's hands ----
@@ -146,8 +155,9 @@ try {
   console.log(checks + " checks, " + fails + " failures");
   process.exit(1);
 }
-let { $, S } = page;
+let { $, S, win } = page;
 if (!S) { fail("the script did not export SAFARI"); console.log(checks + " checks, " + fails + " failures"); process.exit(1); }
+const reopen = () => { page = openPage(store, answers); $ = page.$; S = page.S; win = page.win; };
 
 // ---- the page as it opens ----
 {
@@ -165,6 +175,7 @@ if (!S) { fail("the script did not export SAFARI"); console.log(checks + " check
   if (!cam.includes("In hand: the main camera") || !cam.includes(S.CAMERA.caveatShort) || !cam.includes("Why these numbers?")) fail("the camera card lacks the hand, the caveat line or its fold: " + cam.slice(0, 200));
   for (const key of Object.keys(S.RULEBOOKS)) if (!button($("rulebooks"), key + " — " + S.RULEBOOKS[key].name)) fail("the rulebooks card has no button for " + key);
   if (!$("endcard").hidden) fail("the endcard is showing before any drive");
+  if (scrolled.el && scrolled.el !== "top") fail("a fresh page, with nothing written yet, did not open at the top: " + scrolled.el.textContent.slice(0, 60));
   ok();
 }
 
@@ -339,6 +350,23 @@ S.ROUTES.forEach((r, ri) => {
       if (buttons($("actions")).length !== 1 + (enc.examine || []).length) fail(here + ": after a keeper the choices are " + buttons($("actions")).join(" | "));
       click(go);
       if (i + 1 < stops.length && withClass($("stops"), "done").length !== i + 1) fail(here + ": the stops card does not strike the stops done");
+      if (i === 0 && i + 1 < stops.length) {
+        // the page reopened mid-drive lands where the last action left it: on the stop just opened, not at the top of the day
+        const next = S.ENCOUNTERS[stops[i + 1]];
+        reopen();
+        const landed = scrolled.el;
+        const titles = withClass($("transcript"), "stop-title");
+        if (!landed || landed === "top" || landed !== last(titles) || landed.textContent !== next.stop + " · " + next.title) fail(here + ": reopening mid-drive landed on " + (landed === "top" ? "the top of the page" : landed ? JSON.stringify(landed.textContent.slice(0, 60)) : "nothing") + ", not the stop just opened");
+        // the landing is held while a photograph above it loads, and let go once the reader moves
+        const img = $("transcript").find((e) => e.tagName === "IMG");
+        if (img) {   // a first stop without a photograph (today's drive, on some dates) has nothing to load
+          scrolled.el = null; img.dispatch("load");
+          if (scrolled.el !== landed) fail(here + ": a photograph loading after the reopen did not put the view back on the stop");
+          win.dispatch("wheel");
+          scrolled.el = null; img.dispatch("load");
+          if (scrolled.el !== null) fail(here + ": the view was pulled back to the stop after the reader had scrolled");
+        }
+      }
     });
 
     // the endcard: the drive's words, the card's counts, the tally, the way to the next drive
@@ -358,18 +386,21 @@ S.ROUTES.forEach((r, ri) => {
         click(next);
         if ($("stop-line").textContent !== S.ROUTES[ri + 1].title + " · " + S.ROUTES[ri + 1].sub) fail(where + ": the endcard's button did not open " + S.ROUTES[ri + 1].title);
         if (!$("endcard").hidden) fail(where + ": the next route opens on this one's endcard");
-        // back to this route: its day is still there
+        if (scrolled.el !== "top") fail(where + ": a fresh route did not open at the top");
+        // back to this route: its day is still there, and the view lands on its endcard
         click($("routes").find((e) => e.tagName === "BUTTON" && e.textContent.startsWith(r.title)));
         if ($("endcard").hidden || withClass($("transcript"), "frame").length < stops.length) fail(where + ": coming back to the route lost its day");
+        if (scrolled.el !== $("endcard")) fail(where + ": coming back to a finished route did not land on its endcard");
       }
     } else if (end.findAll((e) => e.tagName === "BUTTON").length) fail(where + ": the last route's endcard offers a next drive: " + buttons(end).join(" | "));
 
     // the save: a fresh page on the same browser opens on this route with the day as it was left
     const frames = withClass($("transcript"), "frame").length;
-    page = openPage(store, answers); $ = page.$; S = page.S;
+    reopen();
     if ($("stop-line").textContent !== r.title + " · " + r.sub) fail(where + ": reopening the page did not come back to this route: " + $("stop-line").textContent);
     if (withClass($("transcript"), "frame").length !== frames) fail(where + ": reopening the page replayed " + withClass($("transcript"), "frame").length + " frames of " + frames);
     if ($("endcard").hidden || !$("sheet").textContent.startsWith(card)) fail(where + ": reopening the page lost the endcard or the card");
+    if (scrolled.el !== $("endcard")) fail(where + ": reopening the page on a finished day did not land on the endcard");
 
     // the next day: declined, nothing moves; agreed, the card goes to the past days under the date and the transcript clears
     const daysBefore = $("days").textContent;
@@ -403,7 +434,7 @@ S.ROUTES.forEach((r, ri) => {
     ok();
   } catch (e) {
     fail(where + ": " + (e.stack || e).toString().split("\n").slice(0, 3).join(" | "));
-    try { page = openPage(store, answers); $ = page.$; S = page.S; } catch (e2) { /* the next route reports its own */ }
+    try { reopen(); } catch (e2) { /* the next route reports its own */ }
   }
 });
 
