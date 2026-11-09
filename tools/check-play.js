@@ -9,8 +9,9 @@
  * the next day and the past days, the endcard) had no test. This check
  * gives the same script a stub document: every element id the HTML
  * carries, elements that keep what is written to them, a localStorage in
- * memory, a `confirm` the check answers, and a `window.scrollTo` that
- * does nothing. Then it does what a player does: opens the page, sets
+ * memory, a `confirm` the check answers, and a `window.scrollTo` and
+ * `scrollIntoView` that remember where the view was put. Then it does
+ * what a player does: opens the page, sets
  * out on each drive with a pair of cameras, looks at something, picks up
  * the companion, answers the questions, presses the shutter, reads the
  * verdict and the frame it was learned on, tries a stop again, abandons
@@ -93,6 +94,7 @@ function openPage(store, answers) {
   scrolled.el = null;
   const win = new El("window");
   win.scrollTo = () => { scrolled.el = "top"; };
+  win.history = { scrollRestoration: "auto" };   // as a browser opens: the page is expected to turn it off, or a reload undoes its landing
   const byId = {};
   for (const tag of html.matchAll(/<(\w+)\b([^>]*)>/g)) {
     const attrs = tag[2], id = (attrs.match(/\bid="([^"]+)"/) || [])[1];
@@ -176,6 +178,7 @@ const reopen = () => { page = openPage(store, answers); $ = page.$; S = page.S; 
   for (const key of Object.keys(S.RULEBOOKS)) if (!button($("rulebooks"), key + " — " + S.RULEBOOKS[key].name)) fail("the rulebooks card has no button for " + key);
   if (!$("endcard").hidden) fail("the endcard is showing before any drive");
   if (scrolled.el && scrolled.el !== "top") fail("a fresh page, with nothing written yet, did not open at the top: " + scrolled.el.textContent.slice(0, 60));
+  if (win.history.scrollRestoration !== "manual") fail("the page left the browser's scroll restoration on, so a reload would put the view back where it was over the landing");
   ok();
 }
 
@@ -362,6 +365,8 @@ S.ROUTES.forEach((r, ri) => {
         if (img) {   // a first stop without a photograph (today's drive, on some dates) has nothing to load
           scrolled.el = null; img.dispatch("load");
           if (scrolled.el !== landed) fail(here + ": a photograph loading after the reopen did not put the view back on the stop");
+          scrolled.el = null; img.dispatch("error");   // a photograph that fails hides its card, which moves the landing as a load does
+          if (scrolled.el !== landed) fail(here + ": a photograph failing to load after the reopen did not put the view back on the stop");
           win.dispatch("wheel");
           scrolled.el = null; img.dispatch("load");
           if (scrolled.el !== null) fail(here + ": the view was pulled back to the stop after the reader had scrolled");

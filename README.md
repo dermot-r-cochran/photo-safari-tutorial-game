@@ -15,7 +15,9 @@ the day's transcript. *`tools/check-play.js`, which plays the page on a
 stub for the browser: a page reopened on the same store comes back to
 the same drive with its frames and its card and lands on the stop just
 opened, or on the endcard of a finished day, holds that landing while a
-photograph above it loads and lets it go once you scroll; and the next
+photograph above it loads or fails to, keeps it when the browser would
+put the view back where it was before a reload, and lets it go once you
+scroll; and the next
 day puts the card under the date, clears the transcript, and proposes
 yesterday's pair of cameras.*
 
