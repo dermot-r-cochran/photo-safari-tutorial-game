@@ -4838,8 +4838,13 @@ function boot() {
      drive half played sat screens above the next choice (2026-11-08). The
      landing is at once, not smooth, and is held while the photographs
      above it load and push it down, until the reader first scrolls or
-     presses something. A route with nothing written yet opens at the top. */
+     presses something. A route with nothing written yet opens at the top.
+     The browser's own scroll restoration is turned off, because on a
+     reload it put the view back where the reader had been before, over
+     the landing, once the photographs had loaded (measured in two
+     Chromium browsers, 2026-11-09). */
   function resumeAt(el) {
+    if (window.history && "scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
     if (state.stop >= stops.length) el = $("endcard");
     if (!el || !el.scrollIntoView) { window.scrollTo({ top: 0 }); return; }
     const land = () => el.scrollIntoView({ block: "start" });

@@ -561,6 +561,30 @@ page of 6 November fails it fourteen times. The sibling engines
 (`four-islands-quest`, `photo-safari-range`) open at the top the same
 way; the fix is theirs to take up, not applied from here.
 
+**The landing survives a reload** (added 2026-11-09 on the whole-repo
+question, after the two things #57 left unmeasured were measured where
+they could be). Headless Chrome and Edge, driven over the DevTools
+protocol with nothing installed, on a home-ground walk two stops in,
+the reader scrolled up to 1,000 px and the page reloaded: with the
+photographs loading at once the browser's own scroll restoration put the
+view back at 1,000 px once the page had its height, the stop 3,619 px
+below, and with the photographs slowed to 1.5 s the page landed first and
+the restoration undid it when they arrived. `history.scrollRestoration`
+set to `manual` in `resumeAt` landed it in both, so the page now sets it;
+a fresh route still opens at the top as before, by its own `scrollTo`.
+The same runs with every photograph returning 404 showed Chromium's
+scroll anchoring keeping the stop in place when a card hides, so the
+failed-load pull-up #57 left open does not happen there; a re-landing
+on a photograph's `error` was written and withdrawn on the counter-critic's
+sort (no reader on the record meets it), and is Dermot's option if a
+WebKit measurement ever shows it. `tools/check-play.js` gives the stub a
+`history` that opens on `auto` and asks that the page turned it off; the
+mutation (the restoration left on) fails it. Not measured: WebKit. No
+Safari runs on this machine and installing a WebKit build was not within
+this session's grant; restoration on reload is a behaviour WebKit shares,
+so the fix is expected to carry. Nothing in the data section, the model,
+the words or the order of the page moved.
+
 ## Publishing
 
 `.github/workflows/pages.yml` serves `index.html` and `images/` from
