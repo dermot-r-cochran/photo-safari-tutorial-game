@@ -573,18 +573,17 @@ the restoration undid it when they arrived. `history.scrollRestoration`
 set to `manual` in `resumeAt` landed it in both, so the page now sets it;
 a fresh route still opens at the top as before, by its own `scrollTo`.
 The same runs with every photograph returning 404 showed Chromium's
-scroll anchoring correcting the pull-up when a card hides, so the hold
-now also re-lands on a photograph's `error`, for the engines without
-anchoring. `tools/check-play.js` gives the stub a `history` that opens
-on `auto` and asks that the page turned it off, and asks that a
-photograph failing after the reopen puts the view back; two mutations
-(the restoration left on, the error not held) each fail it. Not
-measured: WebKit. No Safari runs on this machine and installing a
-WebKit build was not within this session's grant; restoration on reload
-is a behaviour WebKit shares, so the fix is expected to carry, and the
-error hold is for exactly the case Safari's lack of scroll anchoring
-leaves open. Nothing in the data section, the model, the words or the
-order of the page moved.
+scroll anchoring keeping the stop in place when a card hides, so the
+failed-load pull-up #57 left open does not happen there; a re-landing
+on a photograph's `error` was written and withdrawn on the counter-critic's
+sort (no reader on the record meets it), and is Dermot's option if a
+WebKit measurement ever shows it. `tools/check-play.js` gives the stub a
+`history` that opens on `auto` and asks that the page turned it off; the
+mutation (the restoration left on) fails it. Not measured: WebKit. No
+Safari runs on this machine and installing a WebKit build was not within
+this session's grant; restoration on reload is a behaviour WebKit shares,
+so the fix is expected to carry. Nothing in the data section, the model,
+the words or the order of the page moved.
 
 ## Publishing
 

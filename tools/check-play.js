@@ -365,8 +365,6 @@ S.ROUTES.forEach((r, ri) => {
         if (img) {   // a first stop without a photograph (today's drive, on some dates) has nothing to load
           scrolled.el = null; img.dispatch("load");
           if (scrolled.el !== landed) fail(here + ": a photograph loading after the reopen did not put the view back on the stop");
-          scrolled.el = null; img.dispatch("error");   // a photograph that fails hides its card, which moves the landing as a load does
-          if (scrolled.el !== landed) fail(here + ": a photograph failing to load after the reopen did not put the view back on the stop");
           win.dispatch("wheel");
           scrolled.el = null; img.dispatch("load");
           if (scrolled.el !== null) fail(here + ": the view was pulled back to the stop after the reader had scrolled");
