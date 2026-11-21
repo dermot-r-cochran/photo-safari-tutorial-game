@@ -276,3 +276,10 @@ photographs are CC BY-NC-ND 4.0 (`LICENSE-PHOTOS.md`), the portfolio's
 own terms. Fork the engine and write your own drive; a drive you write
 is yours alone, and a fork that drops the pictures loses nothing the
 game needs.
+
+`provenance.json` lists how each picture and clip here was made
+(generated, photograph, composite and so on), with its IPTC digital source
+type and the record that says so. It covers the files as they stood on 21
+November 2026, which are not re-tagged; a generated or altered file added
+from now on also carries the tag in the file itself, where the format
+allows.

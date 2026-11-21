@@ -1,0 +1,236 @@
+{
+  "about": "Provenance of every image and video file in this repository as it stood on 21 November 2026, taken from the repository's own records. The files themselves are not re-tagged; new generated or altered files are tagged in-file (IPTC Digital Source Type in XMP) when they are added.",
+  "ruling": "Dermot, 21 November 2026: \"If metadata allows then all altered or generated images may be tagged as such, from now on.\" Likewise for videos; for existing files, this list.",
+  "digitalSourceTypeVocabulary": "http://cv.iptc.org/newscodes/digitalsourcetype/",
+  "sources": {
+    "photograph": "the author's own frame as taken, or with darkroom work only (digitalCapture)",
+    "edited-ai": "one of his photographs altered by an image model",
+    "composite-ai": "a composite in which an image model made or placed part of the picture (compositeWithTrainedAlgorithmicMedia)",
+    "generated": "made by an image or video model from a prompt (trainedAlgorithmicMedia)",
+    "composite": "a composite made without an image model (compositeSynthetic)",
+    "card": "a designed graphic, diagram, sheet or screenshot (digitalCreation)",
+    "third-party": "other people's media under their own terms, never claimed by this repository",
+    "unrecorded": "the record does not settle how the file was made; no code is given rather than a guess"
+  },
+  "counts": {
+    "photograph": 36
+  },
+  "files": [
+    {
+      "path": "images/a-single-sloe.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/african-jacana.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/cheetah-at-f8.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/dalkey-island-feral-goat.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/elephants-beneath-kilimanjaro.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/fish-eagle-with-a-catch.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/flamingos-feeding.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/gazelles-at-a-sixtieth.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/great-black-backed-gull-with-chick.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/great-white-pelican-on-naivasha.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/hooded-crow-watching.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/hyena-below-the-migration.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/irelands-eye-herring-gull-calling.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/lilac-breasted-roller.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/lion-portrait-at-dusk.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/ostrich-in-the-haze.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/ostrich-in-the-long-grass.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/pigeon-on-the-cafe-tray.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/reading-the-air.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/rock-hyrax-on-the-coffee-machine.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/the-break.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/the-coalition.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/the-line-before-the-sun.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/the-moon-behind-the-leaves.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/the-moon-by-day.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/the-pair.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/topi-at-sunrise.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/topi-on-the-birds-setting.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/tufted-duck-rising.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/two-and-a-half-seconds.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/two-bucks-at-fifty-millimetres.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/vulture-in-flight.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/vulture-landing.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/young-lion-at-f36.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/young-lion-in-morning-light.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    },
+    {
+      "path": "images/zebra-in-the-morning-dust.jpg",
+      "source": "photograph",
+      "digitalSourceType": "digitalCapture",
+      "record": "LICENSE-PHOTOS.md (the author's own frames, from the portfolio or straight from his archive); CLAUDE.md (\"no pictures but the author's own photographs\")"
+    }
+  ]
+}
