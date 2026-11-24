@@ -3897,7 +3897,12 @@ if (typeof globalThis !== "undefined") {
 
 function boot() {
   const CURRENT_KEY = "photo-safari-current";
-  const saveKey = (r) => "photo-safari-" + r.id + (r.daily ? ":" + todayString() + (r.pool ? ":" + r.pool : "") : "");
+  /* A daily route saves under its date: the date its day was opened on
+     (`day`, set when the route is loaded), not the clock's at each save,
+     so a page left open over the change of date goes on saving the day
+     it has on screen, under that day's key. */
+  let day = todayString();
+  const saveKey = (r, date) => "photo-safari-" + r.id + (r.daily ? ":" + (date || day) + (r.pool ? ":" + r.pool : "") : "");
 
   let currentRoute = 0;
   let stops = [];
@@ -3925,7 +3930,9 @@ function boot() {
   const inHand = () => state.inHand || "main";
 
   function loadState() {
-    stops = routeStops(route());
+    closeEarlierDay();
+    day = todayString();
+    stops = routeStops(route(), day);
     state = { stop: 0, decision: 0, choices: [], history: [], kit: null, inHand: "main" };
     try {
       const s = JSON.parse(localStorage.getItem(saveKey(route())));
@@ -3936,12 +3943,16 @@ function boot() {
     try {
       localStorage.setItem(saveKey(route()), JSON.stringify(state));
       localStorage.setItem(CURRENT_KEY, route().id);
+      // a daily route's card, as it stands, for the date that will close it
+      if (route().daily) localStorage.setItem(openKey(route()), JSON.stringify({ day, record: latestFrames().length ? dayRecord(day) : null }));
     } catch (e) { /* unsaved is still played */ }
   }
 
   /* The past days: one record a day, per route, newest first — the
-     day's scorecard line and each stop's line, never the transcript. */
-  const daysKey = () => saveKey(route()) + ".days";
+     day's scorecard line and each stop's line, never the transcript.
+     They are the route's, not the date's: today's drive saves under its
+     date, and its past days have to outlive it. */
+  const daysKey = () => "photo-safari-" + route().id + ".days";
   function loadDays() {
     try { const d = JSON.parse(localStorage.getItem(daysKey())); return Array.isArray(d) ? d : []; }
     catch (e) { return []; }
@@ -3953,10 +3964,10 @@ function boot() {
     const d = new Date(), z = (n) => (n < 10 ? "0" : "") + n;
     return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
   }
-  function dayRecord() {
+  function dayRecord(date) {
     const c = scorecard();
     return {
-      date: localDate(), card: c.text, stops: c.stops, keepers: c.keepers, firsts: c.firsts, abandoned: c.abandoned,
+      date: date || localDate(), card: c.text, stops: c.stops, keepers: c.keepers, firsts: c.firsts, abandoned: c.abandoned,
       kit: state.kit ? Object.assign({}, state.kit) : null,   // what was set out with, proposed again tomorrow
       lines: latestFrames().map((h) => {
         const e = enc(h.stop), r = develop(e, h.choices, kitIdOf(h.kit));
@@ -3968,6 +3979,25 @@ function boot() {
   function archiveDay() {
     if (!latestFrames().length) return;
     saveDays([dayRecord()].concat(loadDays()));
+  }
+  /* Today's drive changes with the date, so once the date has moved on
+     the next-day button can no longer reach the day before. Its card is
+     therefore kept as it is played (`openKey`: the day, and the record
+     the button would have written, if a shutter was pressed), and when
+     the route is next opened on another date that card goes to the past
+     days under the drive's own date and the day's save is cleared, as
+     the button would have left them (2026-11-24). */
+  const openKey = (r) => "photo-safari-" + r.id + ".open";
+  function closeEarlierDay() {
+    const r = route();
+    if (!r.daily) return;
+    try {
+      const open = JSON.parse(localStorage.getItem(openKey(r)));
+      if (!open || open.day === todayString()) return;
+      if (open.record) saveDays([open.record].concat(loadDays()));
+      localStorage.removeItem(saveKey(r, open.day));
+      localStorage.removeItem(openKey(r));
+    } catch (e) { /* unkept is still played */ }
   }
 
   function addParas(container, paras, cls) {

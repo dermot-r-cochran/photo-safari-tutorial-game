@@ -9,14 +9,16 @@
  * the next day and the past days, the endcard) had no test. This check
  * gives the same script a stub document: every element id the HTML
  * carries, elements that keep what is written to them, a localStorage in
- * memory, a `confirm` the check answers, and a `window.scrollTo` and
- * `scrollIntoView` that remember where the view was put. Then it does
+ * memory, a `confirm` the check answers, a `window.scrollTo` and
+ * `scrollIntoView` that remember where the view was put, and a clock the
+ * check can move on by a day. Then it does
  * what a player does: opens the page, sets
  * out on each drive with a pair of cameras, looks at something, picks up
  * the companion, answers the questions, presses the shutter, reads the
  * verdict and the frame it was learned on, tries a stop again, abandons
- * one, drives on to the endcard, reopens the page on its save, and
- * starts the next day. Which paths are keepers is read from the model
+ * one, drives on to the endcard, reopens the page on its save, starts
+ * the next day, and comes back to today's drive on the next date. Which
+ * paths are keepers is read from the model
  * through the SAFARI export, so a stop that changes is still played
  * right; only the element ids are read out of the markup, and the page
  * gets no test hook. Node only — nothing to install.
@@ -89,6 +91,11 @@ class El {
 // where the page last put the view: an element brought to the top, "top" for the top of the page, null for nowhere yet
 const scrolled = { el: null };
 
+// the page's clock: the real one, moved on by whole days when the check says so, so today's drive can be met again on a later date
+const clock = { days: 0 };
+class PageDate extends Date { constructor() { super(Date.now() + clock.days * 864e5); } }
+const pageDay = () => new PageDate().toISOString().slice(0, 10);   // the date today's drive is picked by
+
 // a fresh page: every element the HTML gives an id, the script run against it on the given store
 function openPage(store, answers) {
   scrolled.el = null;
@@ -114,6 +121,7 @@ function openPage(store, answers) {
     },
     localStorage: { getItem: (k) => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: (k) => { delete store[k]; } },
     confirm: () => { answers.asked++; return answers.yes; },
+    Date: PageDate,
     window: win
   };
   sandbox.globalThis = sandbox;
@@ -440,6 +448,70 @@ S.ROUTES.forEach((r, ri) => {
     try { reopen(); } catch (e2) { /* the next route reports its own */ }
   }
 });
+
+// ---- today's drive when the date moves on: the day before is in the past days, and its pair is proposed ----
+try {
+  const r = S.ROUTES.find((x) => x.daily);
+  if (r) {
+    const where = r.title + ", on the next date";
+    const pastDays = () => $("days").findAll((e) => e.tagName === "DETAILS");
+    const savedUnder = (day) => Object.keys(store).filter((k) => k.startsWith("photo-safari-" + r.id + ":" + day));
+    click($("routes").find((e) => e.tagName === "BUTTON" && e.textContent.startsWith(r.title)));
+    const before = pastDays().length;   // the day the play above closed with the button
+    // the fixed routes keep their past days where they always were
+    for (const x of S.ROUTES) if (!x.daily && !(("photo-safari-" + x.id + ".days") in store)) fail(where + ": the past days of " + x.title + " are no longer under its own key");
+    // a day set out on the pair swapped, so the proposal after the date has something of this day's to remember, and one frame pressed
+    const dflt = S.routeKit(r), pair = { main: dflt.companion, companion: dflt.main };
+    const day1 = pageDay(), enc = S.ENCOUNTERS[S.routeStops(r, day1)[0]];
+    $("kit-main").value = pair.main; $("kit-main").dispatch("change"); $("kit-companion").value = pair.companion;
+    click(button($("actions"), S.KIT_WORDS.go));
+    const path = combos(S, enc)[0], got = S.develop(enc, path, pair.main);
+    for (const c of path) {
+      const prompt = withClass($("actions"), "prompt")[0];
+      click(prompt.parent.children.slice(prompt.parent.children.indexOf(prompt) + 1).filter((e) => e.tagName === "BUTTON")[c]);
+    }
+    click(button($("actions"), "Press the shutter."));
+    const card = expectedCard(S, 1, got.keeper ? 1 : 0, got.keeper ? 1 : 0, 0);
+    if (!$("sheet").textContent.startsWith(card)) fail(where + ": the day's card is not \"" + card + "\": " + $("sheet").textContent.slice(0, 80));
+    // a page left open over the change of date goes on saving the day it has on screen
+    clock.days = 1;
+    const day2 = pageDay(), key = Object.keys(S.RULEBOOKS)[0];
+    click(button($("rulebooks"), key + " — " + S.RULEBOOKS[key].name));
+    if (savedUnder(day2).length) fail(where + ": a page left open over the change of date saved the day before under the new date: " + savedUnder(day2).join(", "));
+    // reopened on the new date: a new day on the kit card, the day before in the past days under its own date, its pair proposed, its save cleared
+    reopen();
+    if ($("stop-line").textContent !== r.title + " · " + r.sub) fail(where + ": the page did not come back to " + r.title + ": " + $("stop-line").textContent);
+    if ($("transcript").children.length || $("sheet").textContent !== "nothing yet" || !$("actions").textContent.includes(S.KIT_WORDS.prompt)) fail(where + ": the new date did not open a new day on the kit card");
+    if (pastDays().length !== before + 1) fail(where + ": " + pastDays().length + " past days, not " + (before + 1) + ": the day before was not kept");
+    else {
+      const sum = pastDays()[0].find((e) => e.tagName === "SUMMARY"), lis = pastDays()[0].findAll((e) => e.tagName === "LI");
+      if (!sum || sum.textContent !== day1 + " · " + card) fail(where + ": the day before's summary reads: " + (sum && sum.textContent) + "; expected: " + day1 + " · " + card);
+      if (lis.length !== 1 || !lis[0].textContent.startsWith(enc.title + " — ")) fail(where + ": the day before does not carry its one stop's line: " + lis.map((e) => e.textContent).join(" | "));
+    }
+    if (!$("kit-main") || $("kit-main").value !== pair.main || $("kit-companion").value !== pair.companion) fail(where + ": the new date proposes " + ($("kit-main") && $("kit-main").value) + " / " + ($("kit-companion") && $("kit-companion").value) + ", not the day before's " + pair.main + " / " + pair.companion);
+    if (savedUnder(day1).length) fail(where + ": the day before's save was left behind: " + savedUnder(day1).join(", "));
+    // opened again on the same date, the day before is not put in twice
+    reopen();
+    if (pastDays().length !== before + 1) fail(where + ": reopening on the same date left " + pastDays().length + " past days, not " + (before + 1));
+    // a day set out on and no shutter pressed leaves no card when the date moves on
+    click(button($("actions"), S.KIT_WORDS.go));
+    clock.days = 2;
+    reopen();
+    if (pastDays().length !== before + 1) fail(where + ": a day with no shutter pressed left a card in the past days");
+    if (savedUnder(day2).length) fail(where + ": the empty day's save was left behind");
+    // the page left open on another drive over the change of date: coming back to today's drive opens the new date's day
+    const routeButton = (x) => $("routes").find((e) => e.tagName === "BUTTON" && e.textContent.startsWith(x.title));
+    click(routeButton(S.ROUTES.find((x) => !x.daily)));
+    clock.days = 3;
+    click(routeButton(r));
+    click(button($("actions"), S.KIT_WORDS.go));
+    if (!savedUnder(pageDay()).length) fail(where + ": coming back to the route after the date changed did not open the new date's day: " + Object.keys(store).filter((k) => k.startsWith("photo-safari-" + r.id + ":")).join(", "));
+    ok();
+  }
+} catch (e) {
+  fail("today's drive on the next date: " + (e.stack || e).toString().split("\n").slice(0, 3).join(" | "));
+  try { reopen(); } catch (e2) { /* the rulebook reports its own */ }
+}
 
 // ---- a rulebook read mid-drive goes on the transcript with its link ----
 try {

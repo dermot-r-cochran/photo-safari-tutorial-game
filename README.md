@@ -118,9 +118,18 @@ Five drives:
   keeper has the world awards open and the federation's sections shut.*
 - **Today's drive** — six stops picked from the safari day by the date,
   in the order of the day. The same day gives everyone the same drive;
-  tomorrow is different. *`tools/check.js`, the route checks whose failures
+  tomorrow is different. A day played here needs no next-day button to
+  be kept: once the date has moved on, its card is in the past days
+  under the drive's own date, and the pair of cameras it was played on
+  is the pair proposed. *`tools/check.js`, the route checks whose failures
   read "today's drive is not deterministic" and "today's drive is not in
-  the order of the day"; that tomorrow differs is only a warning there.*
+  the order of the day"; that tomorrow differs is only a warning there.
+  `tools/check-play.js`, on a clock it can move: a day played and the
+  page reopened on the next date finds the card in the past days under
+  the drive's own date, its pair proposed and its save cleared, once and
+  not twice; a day with no shutter pressed leaves no card; and a page
+  left open over the change of date goes on saving the day it has on
+  screen.*
 
 ## What it teaches
 
@@ -240,13 +249,15 @@ is what CI runs, and it installs nothing.
 
 `tools/check-play.js` plays the page without a browser. It runs the same
 script with a stub for the document: every element the HTML gives an id,
-elements that keep what is written to them, a localStorage in memory and
-a `confirm` the check answers. Then it does what a player does, on every
+elements that keep what is written to them, a localStorage in memory, a
+`confirm` the check answers and a clock it can move on by a day. Then it
+does what a player does, on every
 drive: sets out with a pair of cameras, looks at something, picks up the
 companion, answers the questions, presses the shutter, reads the verdict
 and the frame beneath it, tries a stop again, abandons one, drives on to
 the endcard, reopens the page on its save and finds it where it was
-left, and starts the next day. Which
+left, starts the next day, and comes back to today's drive on the next
+date. Which
 paths are keepers it reads from the model, so a stop that changes is
 still played right. The page gets no test hook; the stub only stands in
 for the browser.

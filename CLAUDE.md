@@ -371,8 +371,8 @@ The About card's button reads *Next day on this drive* (or *walk*, the
 route's own noun). On confirming, `archiveDay` writes the day's record —
 the date, the scorecard line and each stop's line with its category and
 tags, never the transcript — to the front of that route's past days
-(`saveKey + ".days"`, newest first, `NEXT_DAY.keep` of them), and only
-if a shutter was pressed; then the route's state is cleared. *Past days*
+(the route's own key since 2026-11-24, newest first, `NEXT_DAY.keep` of
+them), and only if a shutter was pressed; then the route's state is cleared. *Past days*
 renders under the contact sheet as one `<details>` a day, the date and
 the card on the summary and the stops' lines inside. The words are
 `NEXT_DAY` in the data section beside `RETRY` and `ABANDON`; the check
@@ -584,6 +584,44 @@ Safari runs on this machine and installing a WebKit build was not within
 this session's grant; restoration on reload is a behaviour WebKit shares,
 so the fix is expected to carry. Nothing in the data section, the model,
 the words or the order of the page moved.
+
+**Today's drive keeps its day when the date moves on** (added 2026-11-24
+on the whole-repo question). The past days were keyed by `saveKey`, and a
+daily route's `saveKey` carries the date, so on *Today's drive* — the one
+route whose endcard says to come back tomorrow — every past day went out
+of reach when the date changed: a card closed with the button was under
+yesterday's key, a day simply left and come back to was never closed at
+all, yesterday's pair was never the one proposed (the ruling of
+2026-09-21, which held on the four fixed routes only), and each date's
+save stayed in the store for good. The shipped page of 21 November fails
+the new check seven times. Three things changed, all in the page
+section. The past days are the route's (`"photo-safari-" + id + ".days"`, which is the key the
+four fixed routes always had, so no card of theirs moved). A daily
+route's card is kept as it is played under `openKey` — the day, and the
+record the button would have written, or nothing if no shutter was
+pressed — and `closeEarlierDay`, called when the route is loaded, puts it
+with the past days under the drive's own date once the date is another
+one, and clears that day's save, as the button would have left them. It
+is kept as played rather than rebuilt later because a rebuilt day would
+be developed on whatever the safari pool had become by then. And the save
+goes under the date the day was opened on (`day`), not the clock's at
+each save: a page left open over the change of date had been writing
+yesterday's answers under today's key, where a reload replayed them
+against today's stops. The date is the daily seed's, UTC, the one in the
+drive's title; the button still writes the local date, as before.
+`tools/check-play.js` gives the stub a clock it can move by a day and
+holds each of these; ten mutations (the days keyed by date again, the
+earlier day never closed, the kept card not cleared, the save following
+the clock, the old save left behind, a card with no shutter pressed, the
+wrong date on the card, the card never written, the day not taken again
+on coming back to the route, the card closed on its own date) each fail
+it. Seen once in a browser as well, with a day's keys moved back a date
+by hand. Not done: past days already written under a dated key by the
+old page are not gathered up (nothing on the record says anyone has
+any), and *Next day on this drive* on today's drive still starts the
+same date's six stops again, which is Dermot's to word if he wants it
+otherwise. Nothing in the data section, the model or the words of the
+page moved.
 
 ## Publishing
 
